@@ -1,4 +1,5 @@
 import { AxiosClient } from "./client";
+import { CreateContact } from "./models";
 
 class WasapiClient {
     private client: AxiosClient;
@@ -19,12 +20,19 @@ class WasapiClient {
         return response.data;
     }
 
+    //GET /contacts
     public async getAllContacts(): Promise<any> {
 
         const response = await this.client.get('/contacts');
         return response.data;
     }
+    //POST /contacts
+    public async createContact(contact: CreateContact): Promise<any> {
+        const response = await this.client.post('/contacts', contact);
+        return response.data;
+    }
 
+    //PUT /
     // Aquí puedes agregar más métodos específicos de la API
 }
 
