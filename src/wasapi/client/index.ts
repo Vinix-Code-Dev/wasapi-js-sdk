@@ -8,8 +8,11 @@ class WasapiClient {
         this.client = new AxiosClient(apiKey, baseURL);
     }
 
-    public getAllContacts(): Promise<any> {
-        return this.client.get('/contacts');
+    public async getAllContacts(): Promise<any> {
+        console.log('Llamando a getAllContacts...');
+        const response = await this.client.get('/contacts');
+        console.log('Respuesta recibida:', response.status);
+        return response.data;
     }
 
     // Aquí puedes agregar más métodos específicos de la API
