@@ -1,11 +1,12 @@
 import dotenv from 'dotenv';
-import { WasapiClient } from "./wasapi/client";
+import { WasapiClient } from './wasapi';
+
 
 dotenv.config();
 
 const clientWasapi = new WasapiClient(process.env.API_KEY_WASAPI || '');
 
-const contacts = await clientWasapi.getAllContacts();
+const campaigns = await clientWasapi.getAllCampaigns();
 
-console.dir(contacts, { depth: null });
+console.dir(campaigns, { depth: null });
 

@@ -1,21 +1,33 @@
-import { AxiosClient } from "~/config";
+import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
+import { IAxiosClient } from '~/interfaces/axiosInterface';
 
 
-class WasapiClient {
-    private client: AxiosClient;
+export class AxiosClient implements IAxiosClient {
+    private api: AxiosInstance;
 
-    constructor(apiKey: string, baseURL?: string) {
-        this.client = new AxiosClient(apiKey, baseURL);
+    constructor(apiKey: string, baseURL: string = process.env.WASAPI_BASE_URL || 'https://api-ws.wasapi.io/api/v1') {
+        this.api = axios.create({
+            baseURL,
+            headers: {
+                'Authorization': `Bearer ${apiKey}`,
+                'Content-Type': 'application/json',
+            },
+        });
     }
 
-    public async getAllContacts(): Promise<any> {
-        console.log('Llamando a getAllContacts...');
-        const response = await this.client.get('/contacts');
-        console.log('Respuesta recibida:', response.status);
-        return response.data;
+    public get<T = any>(url: string, config?: AxiosRequestConfig): Promise<AxiosResponse<T>> {
+        return this.api.get<T>(url, config);
     }
 
-    // Aquí puedes agregar más métodos específicos de la API
+    public post<T = any>(url: string, data?: any, config?: AxiosRequestConfig): Promise<AxiosResponse<T>> {
+        return this.api.post<T>(url, data, config);
+    }
+
+    public put<T = any>(url: string, data?: any, config?: AxiosRequestConfig): Promise<AxiosResponse<T>> {
+        return this.api.put<T>(url, data, config);
+    }
+
+    public delete<T = any>(url: string, config?: AxiosRequestConfig): Promise<AxiosResponse<T>> {
+        return this.api.delete<T>(url, config);
+    }
 }
-
-export { WasapiClient }; 
