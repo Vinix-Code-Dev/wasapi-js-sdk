@@ -7,17 +7,23 @@ dotenv.config();
 
 const clientWasapi = new WasapiClient(process.env.API_KEY_WASAPI || '');
 
-// const campaigns = await clientWasapi.getCampaignById('3245a5bd-5d96-4691-a329-86cbbba65417');
-const campaigns = await clientWasapi.getAllCampaigns();
+// const campaigns = await clientWasapi.campaigns.getAll();
+// const contacts = await clientWasapi.contacts.getAll();
 
-console.dir(campaigns, { depth: null });
+// const bot = await clientWasapi.bot.toggleStatus('573165170740', { from_id: '11689', action: 'disable_permanently' });
+
+const contact = await clientWasapi.contacts.getSearch('cristian');
+
+
+// const moveContact = await clientWasapi.funnels.moveContactToFunnel("0971143d-74c9-47dd-90e3-f20f2440fe58");
+// // console.dir(contacts, { depth: null });
 
 // Ejemplo de creación de contacto
 // const nuevoContacto: CreateContact = {
 //     first_name: 'Juan',
 //     last_name: 'Pérez',
 //     email: 'juan.perez@ejemplo.com',
-//     country_code: '+57',
+//     country_code: '+57',`=
 //     phone: '3001234567',
 //     notes: 'Cliente potencial interesado en productos premium',
 //     blocked: false,
@@ -32,7 +38,7 @@ console.dir(campaigns, { depth: null });
 
 // try {
 //     console.log('Creando contacto...');
-//     const contactoCreado = await clientWasapi.createContact(nuevoContacto);
+//     const contactoCreado = await clientWasapi.contacts.create(nuevoContacto);
 //     console.log('Contacto creado exitosamente:');
 //     console.dir(contactoCreado, { depth: null });
 // } catch (error) {
