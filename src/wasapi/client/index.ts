@@ -1,5 +1,5 @@
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
-import { IAxiosClient } from '~/interfaces/axiosInterface';
+import { IAxiosClient } from '~/wasapi/interfaces/axiosInterface';
 
 
 export class AxiosClient implements IAxiosClient {

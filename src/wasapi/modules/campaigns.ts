@@ -1,4 +1,4 @@
-import { IModule } from "../../interfaces/IModule";
+import { IModule } from "../interfaces/IModule";
 import { AxiosClient } from "../client";
 import { Campaign } from "../models";
 
