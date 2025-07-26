@@ -5,3 +5,4 @@ export * from './bot.model';
 export * from './stage.model';
 export * from './whatsappnumber.model';
 export * from './funnel.model';
+export * from './label.model';
