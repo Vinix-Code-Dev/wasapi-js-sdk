@@ -1,11 +1,23 @@
-import { Label } from "./label.model";
-
  interface CustomField {
   id: number;
   contact_id: number;
   contacts_custom_field_id: number;
   field_value: string;
   field_name: string;
+}
+
+interface ContactLabel {
+  id: number;
+  user_id: number;
+  title: string;
+  description: string | null;
+  color: string;
+  created_at: string;
+  updated_at: string;
+  pivot: {
+    contact_id: number;
+    label_id: number;
+  };
 }
 
 
@@ -18,7 +30,7 @@ export interface CreateContact {
     notes?: string;
     blocked?: boolean;
     unsubscribed?: boolean;
-    labels?: Label[];
+    labels?: ContactLabel[];
     custom_fields?: Record<string, any>;
   }
   
@@ -37,7 +49,7 @@ export interface CreateContact {
     created_at: string;
     updated_at: string;
     nameLabels: string;
-    labels: Label[];
+    labels: ContactLabel[];
     custom_fields: CustomField[];
     funnel_contacts: any[]; 
   }
