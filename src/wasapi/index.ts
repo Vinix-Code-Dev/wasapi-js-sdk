@@ -1,5 +1,5 @@
 import { AxiosClient } from "./client";
-import { BotModule, CampaignsModule, ContactsModule, CustomFieldsModule, FunnelsModule, LabelsModule } from "./modules";
+import { BotModule, CampaignsModule, ContactsModule, CustomFieldsModule, FunnelsModule, LabelsModule, MetricsModule, UserModule } from "./modules";
 
 
 
@@ -11,6 +11,8 @@ class WasapiClient {
     public bot: BotModule;
     public funnels: FunnelsModule;
     public labels: LabelsModule;
+    public metrics: MetricsModule;
+    public user: UserModule;
     constructor(apiKey: string, baseURL?: string) {
         this.client = new AxiosClient(apiKey, baseURL);
         this.campaigns = new CampaignsModule(this.client);
@@ -19,6 +21,8 @@ class WasapiClient {
         this.bot = new BotModule(this.client);
         this.funnels = new FunnelsModule(this.client);
         this.labels = new LabelsModule(this.client);
+        this.metrics = new MetricsModule(this.client);
+        this.user = new UserModule(this.client);
     }
 
 }
