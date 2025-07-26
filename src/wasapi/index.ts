@@ -1,39 +1,24 @@
 import { AxiosClient } from "./client";
-import { CreateContact } from "./models";
+import { BotModule, CampaignsModule, ContactsModule, CustomFieldsModule, FunnelsModule } from "./modules";
+
+
 
 class WasapiClient {
     private client: AxiosClient;
-
+    public campaigns: CampaignsModule;
+    public contacts: ContactsModule;
+    public customFields: CustomFieldsModule;
+    public bot: BotModule;
+    public funnels: FunnelsModule;
     constructor(apiKey: string, baseURL?: string) {
         this.client = new AxiosClient(apiKey, baseURL);
+        this.campaigns = new CampaignsModule(this.client);
+        this.contacts = new ContactsModule(this.client);
+        this.customFields = new CustomFieldsModule(this.client);
+        this.bot = new BotModule(this.client);
+        this.funnels = new FunnelsModule(this.client);
     }
 
-    //GET /campaigns
-    public async getAllCampaigns(): Promise<any> {
-        const response = await this.client.get('/campaigns');
-        return response.data;
-    }
-
-    //GET /campaigns/{campaign_id}
-    public async getCampaignById(campaignId: string): Promise<any> {
-        const response = await this.client.get(`/campaigns/${campaignId}`);
-        return response.data;
-    }
-
-    //GET /contacts
-    public async getAllContacts(): Promise<any> {
-
-        const response = await this.client.get('/contacts');
-        return response.data;
-    }
-    //POST /contacts
-    public async createContact(contact: CreateContact): Promise<any> {
-        const response = await this.client.post('/contacts', contact);
-        return response.data;
-    }
-
-    //PUT /
-    // Aquí puedes agregar más métodos específicos de la API
 }
 
 export { WasapiClient }; 
