@@ -23,7 +23,7 @@ export class CampaignsModule implements IModule<Campaign> {
         throw new Error('Creación de campañas no implementada');
     }
 
-    async update(id: string, data: any): Promise<Campaign> {
+    async update(data: { id: string, data: any }): Promise<Campaign> {
         console.log('Actualmente no se puede actualizar una campaña, esto se implementa desde meta');
         throw new Error('Actualización de campañas no implementada');
     }

@@ -26,8 +26,8 @@ export class CustomFieldsModule implements IModule<CustomField> {
     }
 
     // Actualizar un custom field existente
-    async update(id: string, data: CreateCustomField): Promise<CustomField> {
-        const response = await this.client.put(`/custom-fields/${id}`, data);   
+    async update(data: { id: string, data: CreateCustomField }): Promise<CustomField> {
+        const response = await this.client.put(`/custom-fields/${data.id}`, data.data);
         console.log(response.data);
         return response.data;
     }
