@@ -13,12 +13,12 @@ export class ContactsModule implements IModule<Contact> {
         return response.data;
     }
 
-    async getSearch(search: string, labels?: number, page?: number): Promise<Contact> {
-        const params = new URLSearchParams();
-        if (search) params.append('search', search);
-        if (labels) params.append('labels', labels.toString());
-        if (page) params.append('page', page.toString());
-        const response = await this.client.get(`/contacts?${params.toString()}`);
+    async getSearch(params: { search?: string, labels?: number, page?: number }): Promise<Contact> {
+        const paramsSearch = new URLSearchParams();
+        if (params.search) paramsSearch.append('search', params.search);
+        if (params.labels) paramsSearch.append('labels', params.labels.toString());
+        if (params.page) paramsSearch.append('page', params.page.toString());
+        const response = await this.client.get(`/contacts?${paramsSearch.toString()}`);
         console.log(response.data.data);
         return response.data.data;
     }
@@ -35,8 +35,8 @@ export class ContactsModule implements IModule<Contact> {
         return response.data;
     }
 
-    async update(contactUuid: string, data: CreateContact): Promise<Contact> {
-        const response = await this.client.put(`/contacts/${contactUuid}`, data);
+    async update(data: { contactUuid: string, data: CreateContact }): Promise<Contact> {
+        const response = await this.client.put(`/contacts/${data.contactUuid}`, data.data);
         console.log(response.data);
         return response.data;
     }

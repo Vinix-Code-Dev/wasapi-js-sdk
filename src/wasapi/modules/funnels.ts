@@ -18,10 +18,10 @@ export class FunnelsModule {
      * @param contactUuid - uuuid unico del contacto (opcional)
      * @returns Promise<any>
      */
-    async searchContact(phoneNumber?: string, contactUuid?: string): Promise<FunnelContact> {
-        const params = new URLSearchParams();
-        if (phoneNumber) params.append('phone', phoneNumber);
-        if (contactUuid) params.append('contact_uuid', contactUuid);
+    async searchContact(params: { phoneNumber?: string, contactUuid?: string }): Promise<FunnelContact> {
+        const paramsSearch = new URLSearchParams();
+        if (params.phoneNumber) paramsSearch.append('phone', params.phoneNumber);
+        if (params.contactUuid) paramsSearch.append('contact_uuid', params.contactUuid);
 
         const response = await this.client.get(`/funnels/contacts/search?${params.toString()}`);
         console.log(response.data.data);
@@ -29,8 +29,8 @@ export class FunnelsModule {
     }
 
     //mover contacto a otro funnel
-    async moveContactToFunnel(contactUuid: string, toStageUuid: string): Promise<any> {
-        const response = await this.client.post(`/funnels/stage/move-contact`, { contact_id: contactUuid, to_stage_id: toStageUuid });
+    async moveContactToFunnel(params: { contactUuid: string, toStageUuid: string }): Promise<any> {
+        const response = await this.client.post(`/funnels/stage/move-contact`, { contact_id: params.contactUuid, to_stage_id: params.toStageUuid });
         console.log(response.data);
         return response.data;
     }

@@ -30,8 +30,8 @@ export class LabelsModule implements IModule<Label> {
         return response.data;
     }
 
-    async update(id: string, data: CreateLabel): Promise<Label> {
-        const response = await this.client.put(`/labels/${id}`, data);
+    async update(data: { id: string, data: CreateLabel }): Promise<Label> {
+        const response = await this.client.put(`/labels/${data.id}`, data.data);
         console.log(response.data);
         return response.data;
     }

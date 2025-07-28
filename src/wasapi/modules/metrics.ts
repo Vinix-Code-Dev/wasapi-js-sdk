@@ -9,20 +9,20 @@ export class MetricsModule {
         console.log(response.data.users);
         return response.data.users;
     }
-    async getTotalCampaigns(startDate: string, endDate: string): Promise<any> {
-        const response = await this.client.get(`/dashboard/metrics/total-campaigns?dates[]=${startDate}&dates[]=${endDate}`);
+    async getTotalCampaigns(params: { startDate: string, endDate: string }): Promise<any> {
+        const response = await this.client.get(`/dashboard/metrics/total-campaigns?dates[]=${params.startDate}&dates[]=${params.endDate}`);
         console.log(response.data);
         return response.data;
     }
 
-    async getConsolidatedConversations(startDate: string, endDate: string): Promise<any> {
-        const response = await this.client.get(`/dashboard/metrics/consolidated-conversations?dates[]=${startDate}&dates[]=${endDate}`);
+    async getConsolidatedConversations(params: { startDate: string, endDate: string }): Promise<any> {
+        const response = await this.client.get(`/dashboard/metrics/consolidated-conversations?dates[]=${params.startDate}&dates[]=${params.endDate}`);
         console.log(response.data);
         return response.data;
     }
 
-    async getAgentConversations(startDate: string, endDate: string): Promise<any> {
-        const response = await this.client.get(`/dashboard/metrics/agent-conversations?dates[]=${startDate}&dates[]=${endDate}`);
+    async getAgentConversations(params: { startDate: string, endDate: string }): Promise<any> {
+        const response = await this.client.get(`/dashboard/metrics/agent-conversations?dates[]=${params.startDate}&dates[]=${params.endDate}`);
         console.log(response.data);
         return response.data;
     }
@@ -33,14 +33,14 @@ export class MetricsModule {
         return response.data.data as StatusContacts;
     }
 
-    async getMessages(startDate: string, endDate: string): Promise<any> {
-        const response = await this.client.get(`/dashboard/metrics/messages?dates[]=${startDate}&dates[]=${endDate}`);
+    async getMessages(params: { startDate: string, endDate: string }): Promise<any> {
+        const response = await this.client.get(`/dashboard/metrics/messages?dates[]=${params.startDate}&dates[]=${params.endDate}`);
         console.log(response.data);
         return response.data;
     }
 
-    async getMessagesBot(startDate: string, endDate: string): Promise<any> {
-        const response = await this.client.get(`/dashboard/metrics/messages-bot?dates[]=${startDate}&dates[]=${endDate}`);
+    async getMessagesBot(params: { startDate: string, endDate: string }): Promise<any> {
+        const response = await this.client.get(`/dashboard/metrics/messages-bot?dates[]=${params.startDate}&dates[]=${params.endDate}`);
         console.log(response.data);
         return response.data;
     }
@@ -70,12 +70,12 @@ export class MetricsModule {
      * @param endDate - Fecha final (YYYY-MM-DD)
      * @returns Promise<AgentMetricResponse>
      */
-    async getAgentTimeResponse(agentId: number, startDate: string, endDate: string): Promise<AgentMetricResponse> {
+    async getAgentTimeResponse(params: { agentId: number, startDate: string, endDate: string }): Promise<AgentMetricResponse> {
         return this.getAgentMetric({
             type: MetricType.TIME_RESPONSE,
-            agent_id: agentId,
-            start: startDate,
-            end: endDate
+            agent_id: params.agentId,
+            start: params.startDate,
+            end: params.endDate
         });
     }
 
@@ -86,31 +86,31 @@ export class MetricsModule {
      * @param endDate - Fecha final (YYYY-MM-DD)
      * @returns Promise<AgentMetricResponse>
      */
-    async getAgentTransferred(agentId: number, startDate: string, endDate: string): Promise<AgentMetricResponse> {
+    async getAgentTransferred(params: { agentId: number, startDate: string, endDate: string }): Promise<AgentMetricResponse> {
         return this.getAgentMetric({
             type: MetricType.TRANSFERRED,
-            agent_id: agentId,
-            start: startDate,
-            end: endDate
+            agent_id: params.agentId,
+            start: params.startDate,
+            end: params.endDate
         });
     }
 
-    async getAgentVolumeOfWork(agentId: number, startDate: string, endDate: string): Promise<AgentMetricResponse> {
+    async getAgentVolumeOfWork(params: { agentId: number, startDate: string, endDate: string }): Promise<AgentMetricResponse> {
         return this.getAgentMetric({
             type: MetricType.VOLUME_OF_WORK,
-            agent_id: agentId,
-            start: startDate,
-            end: endDate
+            agent_id: params.agentId,
+            start: params.startDate,
+            end: params.endDate
         });
     }
 
 
-    async getAgentTimeInConversation(agentId: number, startDate: string, endDate: string): Promise<AgentMetricResponse> {
+    async getAgentTimeInConversation(params: { agentId: number, startDate: string, endDate: string }): Promise<AgentMetricResponse> {
         return this.getAgentMetric({
             type: MetricType.TIME_IN_CONVERSATION,
-            agent_id: agentId,
-            start: startDate,
-            end: endDate
+            agent_id: params.agentId,
+            start: params.startDate,
+            end: params.endDate
         });
     }
 
