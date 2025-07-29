@@ -1,6 +1,7 @@
 //create module for whatsapp
 
 import { AxiosClient } from "../client";
+import { SendAttachmentParams } from "../models/message.model";
 import { SendTemplateParams } from "../models/template.model";
 
 
@@ -19,8 +20,20 @@ export class WhatsappModule {
         }
     }
 
+    // POST https://api-ws.wasapi.io/api/v1/whatsapp-messages/attachment enviar un archivo multimedia a whatsapp
+    async sendAttachment(params: SendAttachmentParams): Promise<any> {
+        try {
+            const response = await this.client.post('/whatsapp-messages/attachment', params);
+            console.log(response.data);
+            return response.data;
+        } catch (error) {
+            console.error('Error al enviar el archivo multimedia:', error);
+            throw error;
+        }
+    }
+
     // POST https://api-ws.wasapi.io/api/v1/whatsapp-messages/send-template
-    // Enviar mensaje de plantilla de WhatsApp
+    // Enviar mensaje de plantilla de WhatsApp soporte hasta 20 destinarios por envio
     async sendTemplate(params: SendTemplateParams): Promise<any> {
         try {
             const response = await this.client.post('/whatsapp-messages/send-template', params);
@@ -92,6 +105,7 @@ export class WhatsappModule {
             throw error;
         }
     }
+
 
     
 } 
