@@ -7,5 +7,8 @@ export * from './whatsappnumber.model';
 export * from './funnel.model';
 export * from './metrics.model';
 export * from './label.model';
-export * from './user.modeL';
+export * from './user.model';
+export * from './message.model';
+
+
 
