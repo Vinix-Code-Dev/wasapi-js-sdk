@@ -4,21 +4,18 @@
 
 ### 🔴 Issues Críticos
 
-#### 1. **Creación de Campañas** 
-**Problema**: No se pueden crear campañas desde la API
-- **Endpoint**: `POST /campaigns`
-- **Estado**: ❌ No implementado
-- **Impacto**: Alto - Funcionalidad core faltante
-- **Solicitud**: Implementar endpoint para crear campañas programáticamente
+#### 2. **Inconsistencia de Tipos en from_id** 🔴 NUEVO
+**Problema**: El campo `from_id` tiene tipos inconsistentes entre endpoints
+- **Endpoints afectados**: 
+  - `POST /whatsapp-messages` → `from_id` es `string` (opcional)
+  - `POST /whatsapp-messages/send-template` → `from_id` es `number` (opcional)
+- **Estado**: ❌ Inconsistente
+- **Impacto**: Medio - Causa errores de TypeScript y confusión
+- **Solicitud**: Estandarizar el tipo de `from_id` en todos los endpoints
+- **Solución sugerida**: Usar `number` en todos los endpoints para consistencia
 
+### ✅ Issues Resueltos
 
-
-## 📞 Información de Contacto
-
-**Equipo de Desarrollo**: [Tu equipo]
-**Email**: [tu-email@empresa.com]
-**Prioridad**: Alta
-**Timeline**: [Fecha objetivo]
 
 ---
 
