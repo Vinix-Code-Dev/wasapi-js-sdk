@@ -9,6 +9,8 @@
 - **Endpoints afectados**: 
   - `POST /whatsapp-messages` → `from_id` es `string` (opcional)
   - `POST /whatsapp-messages/send-template` → `from_id` es `number` (opcional)
+  - `POST /whatsapp-messages/attachment` → `from_id` es `number`
+
 - **Estado**: ❌ Inconsistente
 - **Impacto**: Medio - Causa errores de TypeScript y confusión
 - **Solicitud**: Estandarizar el tipo de `from_id` en todos los endpoints
