@@ -84,7 +84,31 @@ export async function ImageTemplateExample() {
         console.error('❌ Error al enviar plantilla con archivo multimedia:', error);
         throw error;
     }
-}   
+}  
+
+// mensaje con archivo multimedia pdf
+
+export async function PdfTemplateExample() {
+    try {
+        console.log('📱 Enviando mensaje de plantilla con archivo multimedia pdf...');
+
+        const templateParams: SendTemplateParams = {
+            ...templateBase,
+            template_id: constants.TEMPLATE_UUID_FILE_PDF,
+            file: 'document' as const,
+            file_name: 'document.pdf',
+            body_vars: createVarList('Camilo', 'wasapi', 'wasapi'),
+            url_file: constants.URL_FILE_PDF,
+        };
+
+        const result = await client.whatsapp.sendTemplate(templateParams);
+        console.log('✅ plantilla enviada exitosamente con archivo multimedia pdf:', result);
+        return result;
+    } catch (error) {
+        console.error('❌ Error al enviar plantilla con archivo multimedia pdf:', error);
+        throw error;
+    }
+}
 
 
 
@@ -101,6 +125,9 @@ export async function runAllExamples() {
         console.log('---\n');
 
         await ImageTemplateExample();
+        console.log('---\n');
+
+        await PdfTemplateExample();
         console.log('---\n');
 
 
