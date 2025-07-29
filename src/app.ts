@@ -1,3 +1,3 @@
-import {runAllExamples} from '../examples/contacts/createContact';
+import {runAllExamples} from '../examples/whatsapp/sendTemplate';
 
 runAllExamples();
