@@ -1,6 +1,8 @@
 import { WasapiClient } from '../../src/wasapi';
 import constants from '../../src/constants';
 import dotenv from 'dotenv';
+import { createVarList } from '~/utils/createVars';
+import { SendTemplateParams } from '~/wasapi/models/template.model';
 
 
 dotenv.config();
@@ -17,13 +19,13 @@ export async function simpleTemplateExample() {
     try {
         console.log('📱 Enviando mensaje de plantilla simple...');
 
-        const templateParams = {
+        const templateParams: SendTemplateParams = {
             recipients: constants.CLIENT_WA_ID,
             template_id: constants.TEMPLATE_UUID,
-            contact_type: 'phone' as const,
+            contact_type: 'phone' ,
             from_id: parseInt(constants.MY_FROM_ID),
-            chatbot_status: 'enable' as const,
-            conversation_status: 'open' as const
+            chatbot_status: 'enable',
+            conversation_status: 'unchanged'
         };
 
         const result = await client.whatsapp.sendTemplate(templateParams);
@@ -35,35 +37,26 @@ export async function simpleTemplateExample() {
     }
 }
 
-// ejemplo 2: mensaje con archivo multimedia
-export async function fileTemplateExample() {
+// ejemplo 2: mensaje con variables
+export async function varsTemplateExample() {
     try {
-        console.log('📱 Enviando mensaje de plantilla con archivo multimedia...');
+        console.log('📱 Enviando mensaje de plantilla con variables...');
 
-        const templateParams = {
+        const templateParams: SendTemplateParams = {
             recipients: constants.CLIENT_WA_ID,
-            template_id: constants.TEMPLATE_UUID_FILE_PDF,
-            contact_type: 'phone' as const,
+            template_id: constants.TEMPLATE_UUID_EXAMPLE_VARIABLES,
+            contact_type: 'phone',
             from_id: parseInt(constants.MY_FROM_ID),
-            file: 'document' as const,
-            body_vars: [
-                { text: 'nombre', val: 'Mary' },
-                { text: 'empresa', val: 'wasapi' }
-            ],
-            url_file: 'https://example.com/catalog.pdf',
-            file_name: 'Product_Catalog_2024.pdf',
-            header_var: [
-                { text: 'url', val: 'https://example.com/promo.jpg' }
-            ],
-            chatbot_status: 'disable' as const,
-            conversation_status: 'hold' as const
+            body_vars: createVarList('Camilo', 'wasapi', '1234445'),
+            chatbot_status: 'disable',
+            conversation_status: 'hold'
         };
 
         const result = await client.whatsapp.sendTemplate(templateParams);
-        console.log('✅ plantilla enviada exitosamente con archivo multimedia:', result);
+        console.log('✅ plantilla enviada exitosamente con variables:', result);
         return result;
     } catch (error) {
-        console.error('❌ Error al enviar plantilla con archivo multimedia:', error);
+        console.error('❌ Error al enviar plantilla con variables:', error);
         throw error;
     }
 }
@@ -72,19 +65,19 @@ export async function fileTemplateExample() {
 
 // Function to run all examples
 export async function runAllExamples() {
-    console.log('🚀 Starting sendTemplate examples...\n');
+    console.log('🚀 Iniciando ejemplos de envio de plantilla\n'); 
 
     try {
         // Run examples one by one
         await simpleTemplateExample();
         console.log('---\n');
 
-        // await fileTemplateExample();
-        // console.log('---\n');
+        await varsTemplateExample();
+        console.log('---\n');
 
 
-        console.log('🎉 All sendTemplate examples executed successfully!');
+        console.log('🎉 Ejemplos de envio de plantilla ejecutados exitosamente!');
     } catch (error) {
-        console.error('💥 Error in examples execution:', error);
+        console.error('💥 Error en la ejecucion de ejemplos:', error);
     }
 }
