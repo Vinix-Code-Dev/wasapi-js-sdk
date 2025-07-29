@@ -1,6 +1,7 @@
 import { WasapiClient } from '../../src/wasapi';
 import constants from '../../src/constants';
 import dotenv from 'dotenv';
+import { SendAttachmentParams } from '~/wasapi/models/message.model';
 
 
 dotenv.config();
@@ -131,6 +132,28 @@ export async function confirmationMessageExample() {
     }
 }
 
+// ejemplo 6: enviar un archivo multimedia a whatsapp
+export async function sendAttachmentExample() {
+    try {
+        console.log('📱 Enviando archivo multimedia a whatsapp...');
+
+        const params: SendAttachmentParams = {
+            from_id: parseInt(constants.MY_FROM_ID),
+            wa_id: constants.CLIENT_WA_ID,
+            file: 'image_url',
+            image_url: constants.URL_FILE_IMAGE,
+            caption: 'Esta es una imagen de prueba usando metodo sendAttachment',
+            filename: 'image.jpg'
+        };
+
+        const result = await client.whatsapp.sendAttachment(params);
+        console.log('✅ Archivo multimedia enviado:', result);
+        return result;
+    } catch (error) {
+        console.error('❌ Error al enviar archivo multimedia:', error);
+        throw error;
+    }
+}
 // funcion para ejecutar todos los ejemplos
 export async function runAllExamples() {
     console.log('🚀 Iniciando ejemplos de envio de mensajes...\n');
@@ -150,6 +173,9 @@ export async function runAllExamples() {
         console.log('---\n');
 
         await confirmationMessageExample();
+        console.log('---\n');
+
+        await sendAttachmentExample();
         console.log('---\n');
 
         console.log('🎉 Todos los ejemplos de envio de mensajes ejecutados exitosamente!');
