@@ -19,17 +19,17 @@ export class CampaignsModule implements IModule<Campaign> {
     }
 
     async create(data: any): Promise<Campaign> {
-        console.log('Actualmente no se puede crear una campaña, esto se implementa desde meta');
+        console.log('Actualmente no esta disponible la creacion de campañas');
         throw new Error('Creación de campañas no implementada');
     }
 
     async update(data: { id: string, data: any }): Promise<Campaign> {
-        console.log('Actualmente no se puede actualizar una campaña, esto se implementa desde meta');
+        console.log('Actualmente no esta disponible la actualizacion de campañas');
         throw new Error('Actualización de campañas no implementada');
     }
 
     async delete(id: string): Promise<void> {
-        console.log('Actualmente no se puede eliminar una campaña, esto se implementa desde meta');
+        console.log('Actualmente no esta disponible la eliminacion de campañas');
         throw new Error('Eliminación de campañas no implementada');
     }
 }
