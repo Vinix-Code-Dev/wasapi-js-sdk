@@ -1,7 +1,8 @@
 //create module for whatsapp
 
 import { AxiosClient } from "../client";
-import { SendAttachmentParams } from "../models/message.model";
+import { ChangeStatusParams, SendAttachmentParams, SendMessageParams } from "../models/message.model";
+import { SendContactParams } from "../models/SendContactParams.model";
 import { SendTemplateParams } from "../models/template.model";
 
 
@@ -9,7 +10,7 @@ export class WhatsappModule {
     constructor(private client: AxiosClient) { }
 
     //posthttps://api-ws.wasapi.io/api/v1/whatsapp-messages  params message, wa_id, from_id  crea un try catch para manejar el error
-    async sendMessage(params: { message: string, wa_id: string, from_id?: string }): Promise<any> {
+    async sendMessage(params: SendMessageParams): Promise<any> {
         try {
             const response = await this.client.post('/whatsapp-messages', params);
             console.log(response.data);
@@ -106,6 +107,27 @@ export class WhatsappModule {
         }
     }
 
+    // POST https://api-ws.wasapi.io/api/v1/whatsapp-messages/change-status cambia el estado de una conversacion o la trasfiere a nuevo agente de chat
+    async changeStatus(params: ChangeStatusParams): Promise<any> {
+        try {
+            const response = await this.client.post('/whatsapp-messages/change-status', params);
+            console.log(response.data);
+            return response.data;
+        } catch (error) {
+            console.error('Error al cambiar el estado de la conversacion:', error);
+            throw error;
+        }
+    }
 
-    
-} 
+    // POST https://api-ws.wasapi.io/api/v1/whatsapp-messages/send-contacts
+    async sendContacts(params: SendContactParams): Promise<any> {
+        try {
+            const response = await this.client.post('/whatsapp-messages/send-contacts', params);
+            console.log(response.data);
+            return response.data;
+        } catch (error) {
+            console.error('Error al enviar los contactos:', error);
+            throw error;
+        }
+    }
+}   
