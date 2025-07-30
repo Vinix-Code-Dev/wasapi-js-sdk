@@ -15,3 +15,13 @@ export interface SendAttachmentParams {
     caption?: string;
     filename?: string;
 }
+
+export interface ChangeStatusParams {
+    from_id: number;
+    wa_id: string;
+    status: 'open' | 'hold' | 'closed';
+    message?: string;
+    agent_id: number;
+    validate_assigned_status: 1 | 0;
+    send_end_message: boolean;
+}
