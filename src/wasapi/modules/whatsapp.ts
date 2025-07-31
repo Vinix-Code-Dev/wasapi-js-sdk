@@ -4,6 +4,7 @@ import { AxiosClient } from "../client";
 import { ChangeStatusParams, SendAttachmentParams, SendMessageParams } from "../models/message.model";
 import { SendContactParams } from "../models/SendContactParams.model";
 import { SendTemplateParams } from "../models/template.model";
+import { FlowAssets, FlowResponse, SendFlowParams } from "../models/flows.model";
 
 
 export class WhatsappModule {
@@ -130,4 +131,53 @@ export class WhatsappModule {
             throw error;
         }
     }
+
+    // GET https://api-ws.wasapi.io/api/v1/whatsapp-flows
+    async getFlows(): Promise<any> {
+        try {
+            const response = await this.client.get('/whatsapp-flows');
+            console.log(response.data);
+            return response.data;
+        } catch (error) {
+            console.error('Error al cargar los flujos de whatsapp:', error);
+            throw error;
+        }
+    }
+
+    // POST https://api-ws.wasapi.io/api/v1/whatsapp-flows enviar un mensaje con un flujo
+    async sendFlow(params: SendFlowParams ): Promise<any> {
+        try {
+            const response = await this.client.post('/whatsapp-flows', params);
+            console.log(response.data);
+            return response.data;
+        } catch (error) {
+            console.error('Error al enviar el mensaje con un flujo:', error);
+            throw error;
+        }
+    }
+
+   // GET https://api-ws.wasapi.io/api/v1/whatsapp-flows/{flow_id}/responses?page=1&per_page=10 consultar las respuestas de un flujo
+   async getFlowResponses(params: FlowResponse): Promise<any> {
+    try {
+        const response = await this.client.get(`/whatsapp-flows/${params.flow_id}/responses?page=${params.page}&per_page=${params.per_page}`);
+        console.log(response.data);
+        return response.data;
+    } catch (error) {
+        console.error('Error al cargar las respuestas del flujo:', error);
+        throw error;
+    }
+    }
+
+    // POST https://api-ws.wasapi.io/api/v1/whatsapp-flows/{flow_id}/assets?phone_id={phone_id}  consultar los recursos de un flujo
+    async getFlowAssets(params: FlowAssets): Promise<any> {
+        try {
+            const response = await this.client.post(`/whatsapp-flows/${params.flow_id}/assets?phone_id=${params.phone_id}`);
+            console.log(response.data);
+            return response.data;
+        } catch (error) {   
+            console.error('Error al cargar los recursos del flujo:', error);
+            throw error;
+        }
+    }
+
 }   
