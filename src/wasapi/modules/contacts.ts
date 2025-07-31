@@ -3,7 +3,6 @@ import { AxiosClient } from "../client";
 import { ResponseAllContacts, ResponseContactById } from "../models/response/contact.model";
 import { ErrorResponse } from "../models/response/error.model";
 import { CreateContact } from "../models/request/contact.model";
-import { SearchParams } from "../models/shared/search.model";
 import { ExitResponse } from "../models/response/exit.model";
 import { ExportContactsRequest, isValidExportContactsRequest } from "../validator/exportContacts";
 
@@ -24,7 +23,7 @@ export class ContactsModule implements IModule {
     }
 
     // GET https://api-ws.wasapi.io/api/v1/contacts?page={page}&search={search}&labels={labels} consulta los contactos por nombre, email, telefono, etiquetas o paginacion
-    async getSearch(params: SearchParams): Promise<ResponseAllContacts> {
+    async getSearch(params: {search?: string, labels?: number, page?: number}): Promise<ResponseAllContacts> {
         try {
             const paramsSearch = new URLSearchParams();
             if (params.search) paramsSearch.append('search', params.search);
