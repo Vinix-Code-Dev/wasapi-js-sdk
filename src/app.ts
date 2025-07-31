@@ -1,3 +1,3 @@
-import {runAllExamples} from '../examples/campaigns/getCampaignById';
+import {runAllExamples} from '../examples/contacts/getAllContacts';
 
 runAllExamples();
