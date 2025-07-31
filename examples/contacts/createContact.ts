@@ -159,7 +159,7 @@ export async function blockedContactExample() {
         };
 
         const result = await client.contacts.create(newContact);
-        console.log('✅ Contacto bloqueado creado:', result);
+        console.log('✅ Contacto bloqueado creado:', result.data);
         return result;
     } catch (error) {
         console.error('❌ Error al crear contacto bloqueado:', error);
