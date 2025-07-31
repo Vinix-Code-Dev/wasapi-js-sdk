@@ -1,7 +1,7 @@
-export interface IModule<T> {
-    getAll(): Promise<T[]>;
-    getById(id: string): Promise<T>;
-    create(data: any): Promise<T>;
-    update(data: any): Promise<T>;
+export interface IModule {
+    getAll(): Promise<any>;
+    getById(id: string): Promise<any>;
+    create(data: any): Promise<any>;
+    update(data: any): Promise<any>;
     delete(id: string): Promise<void>;
   }
