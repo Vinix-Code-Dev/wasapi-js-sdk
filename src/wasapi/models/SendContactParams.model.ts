@@ -5,7 +5,7 @@ export interface SendContactParams {
     contacts: Contact[];
 }
 
-export interface Contact {
+interface Contact {
     name: ContactName;
     birthday?: string; 
     addresses?: ContactAddress[];
@@ -15,7 +15,7 @@ export interface Contact {
     urls?: ContactUrl[];
 }
 
-export interface ContactName {
+interface ContactName {
     formatted_name?: string;
     first_name?: string;
     last_name?: string;
@@ -24,7 +24,7 @@ export interface ContactName {
     prefix?: string;
 }
 
-export interface ContactAddress {
+interface ContactAddress {
     street: string;
     city: string;
     state: string;
@@ -33,25 +33,24 @@ export interface ContactAddress {
     country_code: string;
     type: string;
 }
-
-export interface ContactEmail {
+interface ContactEmail {
     email: string;
     type: string;
 }
 
-export interface ContactOrg {
+interface ContactOrg {
     company: string;
     department: string;
     title: string;
 }
 
-export interface ContactPhone {
+interface ContactPhone {
     phone: string;
     type: string;
     wa_id?: string;
 }
 
-export interface ContactUrl {
+interface ContactUrl {
     url: string;
     type: string;
 }
