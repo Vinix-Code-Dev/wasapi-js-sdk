@@ -1,6 +1,7 @@
-import { Contact } from "./contact.model";
+import { Contact } from "./response/contact.model";
 import { Stage } from "./stage.model";
 import { WhatsAppNumber } from "./whatsappnumber.model";
+
 
 
 export interface Funnel {
