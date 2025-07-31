@@ -1,6 +1,5 @@
 import { AxiosClient } from "./client";
-import { BotModule, CampaignsModule, ContactsModule, CustomFieldsModule, FunnelsModule, LabelsModule, MetricsModule, UserModule } from "./modules";
-import { WhatsappModule } from "./modules/whatsapp";
+import { BotModule, CampaignsModule, ContactsModule, CustomFieldsModule, FunnelsModule, LabelsModule, MetricsModule, UserModule, WhatsappModule, WorkflowModule } from "./modules";
 
 
 
@@ -15,7 +14,7 @@ class WasapiClient {
     public metrics: MetricsModule;
     public user: UserModule;
     public whatsapp: WhatsappModule;
-
+    public workflow: WorkflowModule;
     constructor(apiKey: string, baseURL?: string) {
         this.client = AxiosClient.getInstance(apiKey, baseURL);
         this.campaigns = new CampaignsModule(this.client);
@@ -27,6 +26,7 @@ class WasapiClient {
         this.metrics = new MetricsModule(this.client);
         this.user = new UserModule(this.client);
         this.whatsapp = new WhatsappModule(this.client);
+        this.workflow = new WorkflowModule(this.client);
     }
     //Metodos para obtener la instancia de Axios y que cumple con el patron singleton
 
