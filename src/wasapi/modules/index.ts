@@ -7,5 +7,6 @@ import { LabelsModule } from "./labels";
 import { MetricsModule } from "./metrics";
 import { UserModule } from "./user";
 import { WhatsappModule } from "./whatsapp";
+import { WorkflowModule } from "./workflow";
 
-export { CampaignsModule, ContactsModule, BotModule, CustomFieldsModule, FunnelsModule, LabelsModule, MetricsModule, UserModule, WhatsappModule };
+export { CampaignsModule, ContactsModule, BotModule, CustomFieldsModule, FunnelsModule, LabelsModule, MetricsModule, UserModule, WhatsappModule, WorkflowModule };  
