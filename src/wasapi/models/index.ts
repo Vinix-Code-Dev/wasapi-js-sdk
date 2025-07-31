@@ -9,6 +9,10 @@ export * from './metrics.model';
 export * from './label.model';
 export * from './user.model';
 export * from './message.model';
+export * from './flows.model';
+export * from './SendContactParams.model';
+
+
 
 
 
