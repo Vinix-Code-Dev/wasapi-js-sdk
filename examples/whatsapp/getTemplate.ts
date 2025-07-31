@@ -1,7 +1,7 @@
 // ejemplo de consulta de plantilla de whatsapp
 
 import { WasapiClient } from '../../src/wasapi';
-import constants from '../../src/constants';
+import constants from '../constants';
 import dotenv from 'dotenv';
 
 dotenv.config();

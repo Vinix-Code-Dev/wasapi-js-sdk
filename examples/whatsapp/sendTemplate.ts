@@ -1,5 +1,5 @@
 import { WasapiClient } from '../../src/wasapi';
-import constants from '../../src/constants';
+import constants from '../constants';
 import dotenv from 'dotenv';
 import { createVarList } from '~/wasapi/utils/createVars';
 import { SendTemplateParams } from '~/wasapi/models/template.model';
