@@ -1,4 +1,4 @@
-export {CreateContact} from './request/contact.model';
+export * from './request/contact.model';
 export * from './bot.model';
 export * from './stage.model';
 export * from './whatsappnumber.model';
