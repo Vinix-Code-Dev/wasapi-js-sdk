@@ -2,7 +2,7 @@
 
 import { AxiosClient } from "../client";
 import { ChangeStatusParams, SendAttachmentParams, SendMessageParams } from "../models/message.model";
-import { SendContactParams } from "../models/SendContactParams.model";
+import { SendContactParams } from "../models/SendContact.model";
 import { SendTemplateParams } from "../models/template.model";
 import { FlowAssets, FlowResponse, SendFlowParams } from "../models/flows.model";
 
