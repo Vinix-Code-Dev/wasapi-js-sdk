@@ -1,7 +1,7 @@
 import { WasapiClient } from '../../src/wasapi';
-import constants from '../../src/constants';
+import constants from '../constants';
 import dotenv from 'dotenv';
-import { SendContactParams, Contact } from '../../src/wasapi/models/SendContactParams.model';
+import { SendContactParams, SendContacts } from '../../src/wasapi/models/SendContact.model';
 
 dotenv.config();
 
@@ -17,7 +17,7 @@ export async function simpleContactExample() {
     try {
         console.log('📱 Enviando contacto simple...');
 
-        const contact: Contact = {
+        const contact: SendContacts = {
             name: {
                 formatted_name: 'Juan Pérez',
                 first_name: 'Juan',
@@ -51,7 +51,7 @@ export async function completeContactExample() {
     try {
         console.log('📱 Enviando contacto completo...');
 
-        const contact: Contact = {
+        const contact: SendContacts = {
             name: {
                 formatted_name: 'María González',
                 first_name: 'María',
@@ -126,7 +126,7 @@ export async function businessContactExample() {
     try {
         console.log('📱 Enviando contacto de empresa...');
 
-        const contact: Contact = {
+        const contact: SendContacts = {
             name: {
                 formatted_name: 'Carlos Rodríguez',
                 first_name: 'Carlos',
@@ -182,7 +182,7 @@ export async function multipleContactsExample() {
     try {
         console.log('📱 Enviando múltiples contactos...');
 
-        const contact1: Contact = {
+        const contact1: SendContacts = {
             name: {
                 formatted_name: 'Ana Martínez',
                 first_name: 'Ana',
@@ -202,7 +202,7 @@ export async function multipleContactsExample() {
             ]
         };
 
-        const contact2: Contact = {
+        const contact2: SendContacts = {
             name: {
                 formatted_name: 'Pedro López',
                 first_name: 'Pedro',
@@ -221,7 +221,7 @@ export async function multipleContactsExample() {
             }
         };
 
-        const contact3: Contact = {
+        const contact3: SendContacts = {
             name: {
                 formatted_name: 'Laura Silva',
                 first_name: 'Laura',
@@ -262,7 +262,7 @@ export async function contactWithContextExample() {
     try {
         console.log('📱 Enviando contacto con contexto...');
 
-        const contact: Contact = {
+        const contact: SendContacts = {
             name: {
                 formatted_name: 'Roberto Díaz',
                 first_name: 'Roberto',
@@ -302,7 +302,7 @@ export async function internationalContactExample() {
     try {
         console.log('📱 Enviando contacto internacional...');
 
-        const contact: Contact = {
+        const contact: SendContacts = {
             name: {
                 formatted_name: 'John Smith',
                 first_name: 'John',
