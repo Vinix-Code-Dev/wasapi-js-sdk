@@ -1,4 +1,4 @@
-import { BaseContact, CustomField } from "../shared/contact.model";
+import { BaseContact, ContactCustomField } from "../shared/contact.model";
 import { PaginatedResponse, ResponseById } from "./paginatedResponse";
 
 export interface Contact extends BaseContact {
@@ -10,7 +10,7 @@ export interface Contact extends BaseContact {
     created_at: string;
     updated_at: string;
     nameLabels: string;
-    custom_fields: CustomField[];
+    custom_fields: ContactCustomField[];
     funnel_contacts?: any[]; // TODO: cambiar a FunnelContact
 }
 // response para obtener todos los contactos

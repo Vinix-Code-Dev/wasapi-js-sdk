@@ -8,7 +8,7 @@ export interface ContactLabel {
   updated_at: string;
 }
 
-export interface CustomField {
+export interface ContactCustomField {
   id: number;
   contact_id: number;
   contacts_custom_field_id: number;
@@ -26,5 +26,5 @@ export interface BaseContact {
   blocked?: boolean | number; 
   unsubscribed?: boolean | number;
   labels?: ContactLabel[];
-  custom_fields?: CustomField[] | Record<string, any>;
+  custom_fields?: ContactCustomField[] | Record<string, any>;
 }
