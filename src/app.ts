@@ -1,3 +1,3 @@
-import {runAllExamples} from '../examples/whatsapp/sendTemplate';
+import {runAllExamples} from '../examples/campaigns/getCampaignById';
 
 runAllExamples();
