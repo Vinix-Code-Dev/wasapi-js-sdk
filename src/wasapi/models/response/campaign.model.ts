@@ -1,28 +1,14 @@
+import { DetailedCampaign, MessageStatus, CampaignListItem } from "../shared/campaign.model";
+import { PaginationLink } from "./paginatedResponse";
 
-interface Campaign {
-  id: number;
-  uuid: string;
-  user_id: number;
-  sender_id: number;
-  phone_id: number;
-  name: string;
-  description: string | null;
-  message: string;
-  status: 'sent' | 'scheduled' | 'cancel';
-  job_id: number;
-  contact_selection: string;
-  schedule_timestamp: number;
-  created_at: string; // ISO date string
-  updated_at: string; // ISO date string
-  messages: MessageStatus[];
-  jobs_count: number;
-}
+// response para obtener todas las campañas
+  export interface ResponseAllCampaigns {
+    success: boolean;
+    data: CampaignListItem[];
+    count: number;
+  }
 
-interface MessageStatus {
-  count: number;
-  status: string | null;
-}
-
+// response para obtener una campaña por su id
 interface JobsPagination {
   current_page: number;
   data: CampaignJob[];
@@ -62,21 +48,10 @@ interface Contact {
   errors?: string;
 }
 
-interface PaginationLink {
-  url: string | null;
-  label: string;
-  active: boolean;
-}
-
 export interface ResponseCampaignById {
   success: boolean;
   data: {
-    campaign: Campaign;
+    campaign: DetailedCampaign;
     jobs: JobsPagination;
   };
-}
-// interface para errores 
-export interface ErrorResponseCampaignById {
-  success: boolean;
-  message: string;
 }
