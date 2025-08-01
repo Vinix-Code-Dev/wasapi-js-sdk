@@ -1,6 +1,6 @@
 import { IModule } from "../interfaces/IModule";
 import { AxiosClient } from "../client";
-import { ResponseAllCampaigns, ResponseCampaignById } from "../models/response/Campaign.model";
+import { ResponseAllCampaigns, ResponseCampaignById } from "../models/response/campaign.model";
 import { ErrorResponse } from "../models/response/error.model";
 
 
