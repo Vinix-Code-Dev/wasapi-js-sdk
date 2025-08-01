@@ -1,45 +1,76 @@
 
 import { IModule } from "../interfaces/IModule";
 import { AxiosClient } from "../client";
-import { CreateLabel, Label } from "../models";
+import { ResponseAllLabels, ResponseLabelById } from "../models/response/label.model";
+import { CreateLabel } from "../models/request/label.model";
+import { ExitResponse } from "../models/response/exit.model";
 
-export class LabelsModule implements IModule<Label> {
+export class LabelsModule implements IModule {
     constructor(private client: AxiosClient) { }
-
-    async getAll(): Promise<Label[]> {
-        const response = await this.client.get('/labels');
-        console.log(response.data.labels);
-        return response.data.labels;
+  // Get https://api-ws.wasapi.io/api/v1/labels consultar todas las etiquetas
+    async getAll(): Promise<ResponseAllLabels> {
+        try {
+            const response = await this.client.get('/labels');
+            return response.data as ResponseAllLabels;
+        } catch (error) {
+            console.error('Error al obtener las etiquetas:', error);
+            throw error;
+        }
     }
 
-    async getSearch(name: string): Promise<any> {
-        const response = await this.client.post('/labels/search', { name });
-        console.log(response.data.data);
-        return response.data.data;
+    // POST https://api-ws.wasapi.io/api/v1/labels/search Buscar etiquetas por nombre
+
+    async getSearch(name: string): Promise<ResponseLabelById> {
+        try {
+            const response = await this.client.post('/labels/search', { name });
+            return response.data as ResponseLabelById;
+        } catch (error) {
+            console.error('Error al buscar etiquetas:', error);
+            throw error;
+        }
+    }
+    // POST https://api-ws.wasapi.io/api/v1/labels/{id} Obtener una etiqueta por id
+
+    async getById(id: string): Promise<ResponseLabelById> {
+        try {
+            const response = await this.client.get(`/labels/${id}`);
+            return response.data as ResponseLabelById;
+        } catch (error) {
+            console.error('Error al obtener la etiqueta por id:', error);
+            throw error;
+        }
     }
 
-    async getById(id: string): Promise<Label> {
-        const response = await this.client.get(`/labels/${id}`);
-        console.log(response.data);
-        return response.data;
+    // POST https://api-ws.wasapi.io/api/v1/labels Crear una etiqueta
+    async create(data: CreateLabel): Promise<ResponseLabelById> {
+        try {
+            const response = await this.client.post('/labels', data);
+            return response.data as ResponseLabelById;
+        } catch (error) {
+            console.error('Error al crear la etiqueta:', error);
+            throw error;
+        }
+    }
+  // PUT https://api-ws.wasapi.io/api/v1/labels/{id} Actualizar una etiqueta
+    async update(data: { id: string, data: CreateLabel }): Promise<ResponseLabelById> {
+        try {
+            const response = await this.client.put(`/labels/${data.id}`, data.data);
+            return response.data as ResponseLabelById;
+        } catch (error) {
+            console.error('Error al actualizar la etiqueta:', error);
+            throw error;
+        }
     }
 
-    async create(data: CreateLabel): Promise<Label> {
-        const response = await this.client.post('/labels', data);
-        console.log(response.data);
-        return response.data;
-    }
-
-    async update(data: { id: string, data: CreateLabel }): Promise<Label> {
-        const response = await this.client.put(`/labels/${data.id}`, data.data);
-        console.log(response.data);
-        return response.data;
-    }
-
-    async delete(id: string): Promise<void> {
-        const response = await this.client.delete(`/labels/${id}`);
-        console.log(response.data);
-        return response.data;
+    // DELETE https://api-ws.wasapi.io/api/v1/labels/{id} Eliminar una etiqueta
+    async delete(id: string): Promise<ExitResponse> {
+        try {
+            const response = await this.client.delete(`/labels/${id}`);
+            return response.data as ExitResponse;
+        } catch (error) {
+            console.error('Error al eliminar la etiqueta:', error);
+            throw error;
+        }
     }
 
 }
