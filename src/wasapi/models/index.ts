@@ -1,5 +1,6 @@
-export  * from './request/contact.model'; 
+export * from './request/contact.model';
 export * from './request/label.model';
+export * from './request/customField.model';
 
 export * from './bot.model';
 export * from './stage.model';
