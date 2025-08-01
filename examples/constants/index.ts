@@ -2,8 +2,8 @@
 // estos valores son de prueba y se deben cambiar por los valores reales    
 
 const constants = {
-    MY_FROM_ID: '11689', // id de la cuenta de whatsapp que esta vinculada a la cuenta de wasapi
-    CLIENT_WA_ID: '573165170740', // Este seria el numero de whatsapp del cliente
+    MY_FROM_ID: '11689', // id de la cuenta de whatsapp que esta vinculada a la cuenta de wasapi senders
+    CLIENT_WA_ID: '573165170740', // Este seria el numero de whatsapp del cliente receptor
     MESSAGE: 'Mensaje de prueba', // Este seria el mensaje que se va a enviar al cliente
     CAMPAIGN_ID: '3245a5bd-5d96-4691-a329-86cbbba65417', // Este seria el UUID de la campaña que se va a obtener
     TEMPLATE_UUID: '4d70b752-d6ed-4aa7-96e8-a693c07bff7f', // Este seria el uuid del template generado por meta 
