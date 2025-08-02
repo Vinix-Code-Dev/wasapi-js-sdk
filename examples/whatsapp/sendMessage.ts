@@ -1,7 +1,7 @@
 import { WasapiClient } from '../../src/wasapi';
 import constants from '../constants';
 import dotenv from 'dotenv';
-import { SendAttachmentParams } from '~/wasapi/models/message.model';
+import { SendAttachment } from '~/wasapi/models';
 
 
 dotenv.config();
@@ -137,7 +137,7 @@ export async function sendAttachmentExample() {
     try {
         console.log('📱 Enviando archivo multimedia a whatsapp...');
 
-        const params: SendAttachmentParams = {
+        const params: SendAttachment = {
             from_id: parseInt(constants.MY_FROM_ID),
             wa_id: constants.CLIENT_WA_ID,
             file: 'image_url',

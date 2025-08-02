@@ -1,12 +1,12 @@
 import { WasapiClient } from '../../src/wasapi';
 import constants from '../constants';
 import dotenv from 'dotenv';
-import { SendContactParams, SendContacts } from '../../src/wasapi/models/SendContact.model';
+import { SendContact, ContactWPP } from '~/wasapi/models';
 
 dotenv.config();
 
 /**
- * ejemplo de envio de contactos por whatsapp
+ * ejemplo de envio de contactos por whatsapp1
  */
 
 // configuracion del cliente
@@ -17,7 +17,7 @@ export async function simpleContactExample() {
     try {
         console.log('📱 Enviando contacto simple...');
 
-        const contact: SendContacts = {
+        const contact: ContactWPP = {
             name: {
                 formatted_name: 'Juan Pérez',
                 first_name: 'Juan',
@@ -31,7 +31,7 @@ export async function simpleContactExample() {
             ]
         };
 
-        const params: SendContactParams = {
+        const params: SendContact = {
             wa_id: constants.CLIENT_WA_ID,
             from_id: parseInt(constants.MY_FROM_ID),
             contacts: [contact]
@@ -51,7 +51,7 @@ export async function completeContactExample() {
     try {
         console.log('📱 Enviando contacto completo...');
 
-        const contact: SendContacts = {
+        const contact: ContactWPP = {
             name: {
                 formatted_name: 'María González',
                 first_name: 'María',
@@ -106,7 +106,7 @@ export async function completeContactExample() {
             ]
         };
 
-        const params: SendContactParams = {
+        const params: SendContact = {
             wa_id: constants.CLIENT_WA_ID,
             from_id: parseInt(constants.MY_FROM_ID),
             contacts: [contact]
@@ -126,7 +126,7 @@ export async function businessContactExample() {
     try {
         console.log('📱 Enviando contacto de empresa...');
 
-        const contact: SendContacts = {
+        const contact: ContactWPP = {
             name: {
                 formatted_name: 'Carlos Rodríguez',
                 first_name: 'Carlos',
@@ -162,7 +162,7 @@ export async function businessContactExample() {
             ]
         };
 
-        const params: SendContactParams = {
+        const params: SendContact = {
             wa_id: constants.CLIENT_WA_ID,
             from_id: parseInt(constants.MY_FROM_ID),
             contacts: [contact]
@@ -182,7 +182,7 @@ export async function multipleContactsExample() {
     try {
         console.log('📱 Enviando múltiples contactos...');
 
-        const contact1: SendContacts = {
+        const contact1: ContactWPP = {
             name: {
                 formatted_name: 'Ana Martínez',
                 first_name: 'Ana',
@@ -202,7 +202,7 @@ export async function multipleContactsExample() {
             ]
         };
 
-        const contact2: SendContacts = {
+        const contact2: ContactWPP = {
             name: {
                 formatted_name: 'Pedro López',
                 first_name: 'Pedro',
@@ -221,7 +221,7 @@ export async function multipleContactsExample() {
             }
         };
 
-        const contact3: SendContacts = {
+        const contact3: ContactWPP = {
             name: {
                 formatted_name: 'Laura Silva',
                 first_name: 'Laura',
@@ -242,7 +242,7 @@ export async function multipleContactsExample() {
             ]
         };
 
-        const params: SendContactParams = {
+        const params: SendContact = {
             wa_id: constants.CLIENT_WA_ID,
             from_id: parseInt(constants.MY_FROM_ID),
             contacts: [contact1, contact2, contact3]
@@ -262,7 +262,7 @@ export async function contactWithContextExample() {
     try {
         console.log('📱 Enviando contacto con contexto...');
 
-        const contact: SendContacts = {
+        const contact: ContactWPP = {
             name: {
                 formatted_name: 'Roberto Díaz',
                 first_name: 'Roberto',
@@ -281,7 +281,7 @@ export async function contactWithContextExample() {
             }
         };
 
-        const params: SendContactParams = {
+        const params: SendContact = {
             wa_id: constants.CLIENT_WA_ID,
             from_id: parseInt(constants.MY_FROM_ID),
             context_wam_id: 'wamid.123456789', // ID del mensaje al que se responde
@@ -302,7 +302,7 @@ export async function internationalContactExample() {
     try {
         console.log('📱 Enviando contacto internacional...');
 
-        const contact: SendContacts = {
+        const contact: ContactWPP = {
             name: {
                 formatted_name: 'John Smith',
                 first_name: 'John',
@@ -338,7 +338,7 @@ export async function internationalContactExample() {
             }
         };
 
-        const params: SendContactParams = {
+        const params: SendContact = {
             wa_id: constants.CLIENT_WA_ID,
             from_id: parseInt(constants.MY_FROM_ID),
             contacts: [contact]

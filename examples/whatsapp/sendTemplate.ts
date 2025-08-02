@@ -2,7 +2,7 @@ import { WasapiClient } from '../../src/wasapi';
 import constants from '../constants';
 import dotenv from 'dotenv';
 import { createVarList } from '~/wasapi/utils/createVars';
-import { SendTemplateParams } from '~/wasapi/models/template.model';
+import { SendTemplate } from '~/wasapi/models';
 
 
 dotenv.config();
@@ -14,7 +14,7 @@ dotenv.config();
 // configuracion del cliente
 const client = new WasapiClient(process.env.API_KEY_WASAPI || '');
 
-const templateBase: SendTemplateParams = {
+const templateBase: SendTemplate = {
     recipients: constants.CLIENT_WA_ID,
     template_id: constants.TEMPLATE_UUID,
     contact_type: 'phone',
@@ -28,7 +28,7 @@ export async function simpleTemplateExample() {
     try {
         console.log('📱 Enviando mensaje de plantilla simple...');
 
-        const templateParams: SendTemplateParams = {
+        const templateParams: SendTemplate = {
             ...templateBase,
             template_id: constants.TEMPLATE_UUID,
         };
@@ -47,7 +47,7 @@ export async function varsTemplateExample() {
     try {
         console.log('📱 Enviando mensaje de plantilla con variables...');
 
-        const templateParams: SendTemplateParams = {
+        const templateParams: SendTemplate = {
             ...templateBase,
             template_id: constants.TEMPLATE_UUID_EXAMPLE_VARIABLES,
             body_vars: createVarList('Camilo', 'wasapi', '1234445'),
@@ -68,7 +68,7 @@ export async function ImageTemplateExample() {
     try {
         console.log('📱 Enviando mensaje de plantilla con archivo multimedia...');
 
-        const templateParams: SendTemplateParams = {
+        const templateParams: SendTemplate = {
             ...templateBase,
             template_id: constants.TEMPLATE_UUID_FILE_IMAGE,
             file: 'image' as const,
@@ -92,7 +92,7 @@ export async function PdfTemplateExample() {
     try {
         console.log('📱 Enviando mensaje de plantilla con archivo multimedia pdf...');
 
-        const templateParams: SendTemplateParams = {
+        const templateParams: SendTemplate = {
             ...templateBase,
             template_id: constants.TEMPLATE_UUID_FILE_PDF,
             file: 'document' as const,
