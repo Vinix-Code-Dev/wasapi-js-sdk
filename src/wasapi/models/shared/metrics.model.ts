@@ -6,16 +6,6 @@ export interface OnlineAgent {
   ip_address: string | null;
 }
 
-export interface OnlineAgentsResponse {
-  success: boolean;
-  users: OnlineAgent[];
-  updated_at: string; // ISO date string
-}
-
-export interface StatusContacts {
-  enabled: number;
-  active: number;
-}
 
 export enum MetricType {
   TRANSFERRED = 'transferred',
@@ -30,9 +20,3 @@ export interface AgentMetricRequest {
   start: string;
   end: string;
 }
-
-export interface AgentMetricResponse {
-  success: boolean;
-  data: any; 
-  created_at: string;
-} 
