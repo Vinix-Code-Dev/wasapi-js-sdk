@@ -1,5 +1,4 @@
 import { AxiosClient } from "../client";
-import { Funnel, FunnelContact } from "../models";
 import {  ResponseAllFunnels, ResponseMoveContactToFunnel, ResponseSearchContactFunnel } from "../models/response/funnel.model";
 
 
