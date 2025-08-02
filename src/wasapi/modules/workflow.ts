@@ -1,6 +1,6 @@
 import { AxiosClient } from "../client";
 import { WorkflowResponse } from "../models/response/workflow.model";
-import { WorkflowStatuses } from "../models/workflow.model";
+import { WorkflowStatuses } from "../models/shared/workflow.model";
 
 export class WorkflowModule {
     constructor(private client: AxiosClient) { }
