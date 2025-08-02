@@ -1,11 +1,11 @@
-export interface SendContactParams {
+export interface SendContact {
     wa_id: string;
     from_id: number;
     context_wam_id?: string | null;
-    contacts: SendContacts[];
+    contacts: ContactWPP[];
 }
 
-export interface SendContacts{
+export interface ContactWPP{
     name: ContactName;
     birthday?: string; 
     addresses?: ContactAddress[];

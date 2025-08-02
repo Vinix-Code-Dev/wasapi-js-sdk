@@ -3,7 +3,7 @@ export interface TemplateVariable {
     val: string | number;
 }
 
-export interface SendTemplateParams {
+export interface SendTemplate {
     recipients: string;
     template_id: string;
     contact_type: 'phone' | 'contact';

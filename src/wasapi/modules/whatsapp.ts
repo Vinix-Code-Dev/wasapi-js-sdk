@@ -1,21 +1,23 @@
-//create module for whatsapp
-
 import { AxiosClient } from "../client";
-import { ChangeStatusParams, SendAttachmentParams, SendMessageParams } from "../models/message.model";
-import { SendContactParams } from "../models/SendContact.model";
-import { SendTemplateParams } from "../models/template.model";
+import { ChangeStatusParams} from "../models/shared/message.model";
+import { SendContact } from "../models/request/contactWpp.model";
+import { SendTemplate} from "../models/request/template.model";
 import { FlowAssets, FlowResponse, SendFlowParams } from "../models/flows.model";
+import { ResponseAttachmentWPP, ResponseConversation, ResponseMessageWPP, ResponseSendContact, ResponseWhatsappNumbers } from "../models/response/whatsapp.model";
+import { SendAttachment, SendMessage } from "../models/request/message.model";
+import { ResponseTemplate, ResponseTemplateById, ResponseTemplateSyncMeta } from "../models/response/template.model";
+import { ExitResponse } from "../models/response/exit.model";
 
 
 export class WhatsappModule {
     constructor(private client: AxiosClient) { }
 
     //posthttps://api-ws.wasapi.io/api/v1/whatsapp-messages  params message, wa_id, from_id  crea un try catch para manejar el error
-    async sendMessage(params: SendMessageParams): Promise<any> {
+    async sendMessage(params: SendMessage): Promise<ResponseMessageWPP> {
         try {
             const response = await this.client.post('/whatsapp-messages', params);
-            console.log(response.data);
-            return response.data;
+            console.log('Mensaje enviado:');
+            return response.data as ResponseMessageWPP;
         } catch (error) {
             console.error('Error al enviar el mensaje:', error);
             throw error;
@@ -23,11 +25,11 @@ export class WhatsappModule {
     }
 
     // POST https://api-ws.wasapi.io/api/v1/whatsapp-messages/attachment enviar un archivo multimedia a whatsapp
-    async sendAttachment(params: SendAttachmentParams): Promise<any> {
+    async sendAttachment(params: SendAttachment): Promise<ResponseAttachmentWPP> {
         try {
             const response = await this.client.post('/whatsapp-messages/attachment', params);
-            console.log(response.data);
-            return response.data;
+            console.log('Archivo multimedia enviado:');
+            return response.data as ResponseAttachmentWPP;
         } catch (error) {
             console.error('Error al enviar el archivo multimedia:', error);
             throw error;
@@ -36,11 +38,11 @@ export class WhatsappModule {
 
     // POST https://api-ws.wasapi.io/api/v1/whatsapp-messages/send-template
     // Enviar mensaje de plantilla de WhatsApp soporte hasta 20 destinarios por envio
-    async sendTemplate(params: SendTemplateParams): Promise<any> {
+    async sendTemplate(params: SendTemplate): Promise<ResponseTemplate> {
         try {
             const response = await this.client.post('/whatsapp-messages/send-template', params);
-            console.log('Mensaje de plantilla enviado:', response.data);
-            return response.data;
+            console.log('Mensaje de plantilla enviado:');
+            return response.data as ResponseTemplate;
         } catch (error) {
             console.error('Error al enviar mensaje de plantilla:', error);
             throw error;
@@ -48,12 +50,12 @@ export class WhatsappModule {
     }
 
     // get https://api-ws.wasapi.io/api/v1/whatsapp-messages/{wa_id} cargar la conversacion de whatsapp con wa_id y from_id
-    async getConversation(params: { wa_id: string, from_id?: string, page?: number }): Promise<any> {
+    async getConversation(params: { wa_id: string, from_id?: string, page?: number }): Promise<ResponseConversation> {
 
         try {
             const response = await this.client.get(`/whatsapp-messages/${params.wa_id}?from_id=${params.from_id}&page=${params.page}`);
-            console.log(response.data);
-            return response.data;
+            console.log('Conversacion cargada:');
+            return response.data as ResponseConversation;
         } catch (error) {
             console.error('Error al cargar la conversacion:', error);
             throw error;
@@ -61,11 +63,11 @@ export class WhatsappModule {
     }
 
     //https://api-ws.wasapi.io/api/v1/whatsapp-numbers consultar lineas de whatsapp de mi cuenta wasapi 
-    async getWhatsappNumbers(): Promise<any> {
+    async getWhatsappNumbers(): Promise<ResponseWhatsappNumbers> {
         try {
             const response = await this.client.get('/whatsapp-numbers');
-            console.log(response.data);
-            return response.data;
+            console.log('Numeros de whatsapp cargados:');
+            return response.data as ResponseWhatsappNumbers;
         } catch (error) {
             console.error('Error al cargar los numeros de whatsapp:', error);
             throw error;
@@ -73,11 +75,11 @@ export class WhatsappModule {
     }
 
     //https://api-ws.wasapi.io/api/v1/whatsapp-templates consultar plantillas de whatsapp
-    async getWhatsappTemplates(): Promise<any> {
+    async getWhatsappTemplates(): Promise<ResponseTemplate> {
         try {
             const response = await this.client.get('/whatsapp-templates');
-            console.log(response.data);
-            return response.data;
+            console.log('Plantillas de whatsapp cargadas:');
+            return response.data as ResponseTemplate;
         } catch (error) {
             console.error('Error al cargar las plantillas de whatsapp:', error);
             throw error;
@@ -85,11 +87,11 @@ export class WhatsappModule {
     }
 
     //https://api-ws.wasapi.io/api/v1/whatsapp-templates/{template_uuid} consultar una plantilla de whatsapp
-    async getWhatsappTemplate(data: { template_uuid: string }): Promise<any> {
+    async getWhatsappTemplate(data: { template_uuid: string }): Promise<ResponseTemplateById> {
         try {
             const response = await this.client.get(`/whatsapp-templates/${data.template_uuid}`);
-            console.log(response.data);
-            return response.data;
+            console.log('Plantilla de whatsapp cargada con uuid: ' + data.template_uuid);
+            return response.data as ResponseTemplateById;
         } catch (error) {
             console.error('Error al cargar la plantilla de whatsapp:', error);
             throw error;
@@ -97,11 +99,11 @@ export class WhatsappModule {
     }
 
     // https://api-ws.wasapi.io/api/v1/whatsapp-templates/sync-meta sincronizar plantillas de meta con wasapi
-    async syncMetaTemplates(): Promise<any> {
+    async syncMetaTemplates(): Promise<ResponseTemplateSyncMeta> {
         try {
             const response = await this.client.get('/whatsapp-templates/sync-meta');
-            console.log(response.data);
-            return response.data;
+            console.log('Plantillas de meta sincronizadas:');
+            return response.data as ResponseTemplateSyncMeta;
         } catch (error) {
             console.error('Error al sincronizar las plantillas de meta:', error);
             throw error;
@@ -109,11 +111,11 @@ export class WhatsappModule {
     }
 
     // POST https://api-ws.wasapi.io/api/v1/whatsapp-messages/change-status cambia el estado de una conversacion o la trasfiere a nuevo agente de chat
-    async changeStatus(params: ChangeStatusParams): Promise<any> {
+    async changeStatus(params: ChangeStatusParams): Promise<ExitResponse> {
         try {
             const response = await this.client.post('/whatsapp-messages/change-status', params);
-            console.log(response.data);
-            return response.data;
+            console.log('Estado de la conversacion cambiado:');
+            return response.data as ExitResponse;
         } catch (error) {
             console.error('Error al cambiar el estado de la conversacion:', error);
             throw error;
@@ -121,11 +123,11 @@ export class WhatsappModule {
     }
 
     // POST https://api-ws.wasapi.io/api/v1/whatsapp-messages/send-contacts
-    async sendContacts(params: SendContactParams): Promise<any> {
+    async sendContacts(params: SendContact): Promise<ResponseSendContact> {
         try {
             const response = await this.client.post('/whatsapp-messages/send-contacts', params);
-            console.log(response.data);
-            return response.data;
+            console.log('Contactos enviados:');
+            return response.data as ResponseSendContact;
         } catch (error) {
             console.error('Error al enviar los contactos:', error);
             throw error;
