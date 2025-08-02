@@ -1,4 +1,4 @@
-export interface WhatsAppNumber {
+export interface WhatsAppNumberBase {
     id: number;
     uuid: string;
     user_id: number;
@@ -13,4 +13,18 @@ export interface WhatsAppNumber {
     default: number;
     created_at: string;
     updated_at: string;
+}
+
+export interface WhatsAppNumber extends WhatsAppNumberBase {
+}
+
+export interface WhassappNumberWithApp extends WhatsAppNumberBase {
+    app: APP;
+}
+
+interface APP {
+    id: number;
+    uuid: string;
+    name: string;
+    waba_id: string;
 }
