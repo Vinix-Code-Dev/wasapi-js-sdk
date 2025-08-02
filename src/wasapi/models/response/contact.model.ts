@@ -1,5 +1,5 @@
 import { BaseContact, ContactCustomField } from "../shared/contact.model";
-import { FunnelContactStage } from "../funnel.model";
+import { FunnelContactStage } from "../shared/funnel.model";
 import { PaginatedResponse, ResponseById } from "./paginatedResponse";
 
 export interface Contact extends BaseContact {
