@@ -11,7 +11,8 @@ const constants = {
     TEMPLATE_UUID_FILE_IMAGE: 'cfab3081-8b2f-44b0-be74-dc9699973cb4', // Este seria el uuid del template generado por meta con archivo de imagen
     TEMPLATE_UUID_FILE_PDF: '494eb68c-dc2c-4049-8309-3ca7c9ff3018', // Este seria el uuid del template generado por meta con archivo de pdf
     URL_FILE_IMAGE: 'https://picsum.photos/800/600',  // Este seria la url de la imagen que se va a enviar al cliente
-    URL_FILE_PDF: 'https://wasapi-assets.s3.us-east-2.amazonaws.com/media/8868091365386-1749679468.pdf' // Este seria la url del archivo pdf que se va a enviar al cliente
+    URL_FILE_PDF: 'https://wasapi-assets.s3.us-east-2.amazonaws.com/media/8868091365386-1749679468.pdf', // Este seria la url del archivo pdf que se va a enviar al cliente
+    FLOW_ID: '632822722677573' // Este seria el id del flujo que se va a enviar al cliente del numero de my_from_id
 }
 
 export default constants;
