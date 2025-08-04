@@ -2,11 +2,12 @@ import { AxiosClient } from "../client";
 import { ChangeStatusParams} from "../models/shared/message.model";
 import { SendContact } from "../models/request/contactWpp.model";
 import { SendTemplate} from "../models/request/template.model";
-import { FlowAssets, FlowResponse, SendFlowParams } from "../models/flows.model";
 import { ResponseAttachmentWPP, ResponseConversation, ResponseMessageWPP, ResponseSendContact, ResponseWhatsappNumbers } from "../models/response/whatsapp.model";
 import { SendAttachment, SendMessage } from "../models/request/message.model";
 import { ResponseTemplate, ResponseTemplateById, ResponseTemplateSyncMeta } from "../models/response/template.model";
 import { ExitResponse } from "../models/response/exit.model";
+import { ResponseAllFlows, ResponseFlowResponses, ResponseSendFlow } from "../models/response/flow.model";
+import { GetFlowAssets, GetFlowDetail, GetFlowResponses, SendFlow } from "../models/request/flow.model";
 
 
 export class WhatsappModule {
@@ -135,11 +136,11 @@ export class WhatsappModule {
     }
 
     // GET https://api-ws.wasapi.io/api/v1/whatsapp-flows
-    async getFlows(): Promise<any> {
+    async getFlows(): Promise<ResponseAllFlows> {
         try {
             const response = await this.client.get('/whatsapp-flows');
-            console.log(response.data);
-            return response.data;
+            console.log('Flujos de whatsapp cargados:');
+            return response.data as ResponseAllFlows;
         } catch (error) {
             console.error('Error al cargar los flujos de whatsapp:', error);
             throw error;
@@ -147,11 +148,11 @@ export class WhatsappModule {
     }
 
     // POST https://api-ws.wasapi.io/api/v1/whatsapp-flows enviar un mensaje con un flujo
-    async sendFlow(params: SendFlowParams ): Promise<any> {
+    async sendFlow(params: SendFlow ): Promise<ResponseSendFlow> {
         try {
             const response = await this.client.post('/whatsapp-flows', params);
-            console.log(response.data);
-            return response.data;
+            console.log('Mensaje con flujo enviado:');
+            return response.data as ResponseSendFlow;
         } catch (error) {
             console.error('Error al enviar el mensaje con un flujo:', error);
             throw error;
@@ -159,11 +160,11 @@ export class WhatsappModule {
     }
 
    // GET https://api-ws.wasapi.io/api/v1/whatsapp-flows/{flow_id}/responses?page=1&per_page=10 consultar las respuestas de un flujo
-   async getFlowResponses(params: FlowResponse): Promise<any> {
+   async getFlowResponses(params: GetFlowResponses): Promise<ResponseFlowResponses> {
     try {
         const response = await this.client.get(`/whatsapp-flows/${params.flow_id}/responses?page=${params.page}&per_page=${params.per_page}`);
-        console.log(response.data);
-        return response.data;
+        console.log('Respuestas del flujo cargadas:');
+        return response.data as ResponseFlowResponses;
     } catch (error) {
         console.error('Error al cargar las respuestas del flujo:', error);
         throw error;
@@ -171,11 +172,11 @@ export class WhatsappModule {
     }
 
     // POST https://api-ws.wasapi.io/api/v1/whatsapp-flows/{flow_id}/assets?phone_id={phone_id}  consultar los recursos de un flujo
-    async getFlowAssets(params: FlowAssets): Promise<any> {
+    async getFlowAssets(params: GetFlowAssets): Promise<GetFlowDetail> {
         try {
             const response = await this.client.post(`/whatsapp-flows/${params.flow_id}/assets?phone_id=${params.phone_id}`);
-            console.log(response.data);
-            return response.data;
+            console.log('Recursos del flujo cargados:');
+            return response.data as GetFlowDetail;
         } catch (error) {   
             console.error('Error al cargar los recursos del flujo:', error);
             throw error;
