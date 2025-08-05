@@ -34,19 +34,16 @@ export type WasapiMessage = {
 export class WasapiEvents extends EventEmitterClass<ProviderEventTypes> {
 
     private wasapiClient: WasapiClient;
-    private apiKey: string;
-    private baseURL?: string;
+    private token: string;
 
     /**
      * Constructor de la clase WasapiEvents
-     * @param apiKey - Clave de API para autenticación con Wasapi
-     * @param baseURL - URL base opcional para el cliente Wasapi
+     * @param token - Token de autenticación para Wasapi
      */
-    constructor(apiKey: string, baseURL?: string)  {
+    constructor(token: string)  {
         super();
-        this.apiKey = apiKey;
-        this.baseURL = baseURL;
-        this.wasapiClient = new WasapiClient(apiKey, baseURL);
+        this.token = token;
+        this.wasapiClient = new WasapiClient(token);
     }
 
     /**
@@ -75,6 +72,14 @@ export class WasapiEvents extends EventEmitterClass<ProviderEventTypes> {
     }
 
 
+
+    /**
+     * Obtiene el cliente Wasapi para uso externo.
+     * @returns Instancia del cliente Wasapi
+     */
+    public getClient(): WasapiClient {
+        return this.wasapiClient;
+    }
 
     /**
      * Función para obtener el nombre de la cuenta de WhatsApp.
