@@ -229,7 +229,6 @@ export class WasapiProvider extends ProviderClass<WasapiEvents> {
 
         try {
             const response = await this.vendor.getClient().whatsapp.sendMessage(payload);
-            console.log('mensaje enviado', response.success)
             return response;
         } catch (error) {
             console.error('Error sending message:', error);
