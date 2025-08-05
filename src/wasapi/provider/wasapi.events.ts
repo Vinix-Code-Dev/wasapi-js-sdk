@@ -1,6 +1,6 @@
 import { EventEmitterClass, utils } from "@builderbot/bot";
 import { ProviderEventTypes } from "@builderbot/bot/dist/types";
-import { WasapiClient } from "../";
+import { WasapiClient } from "..";
 
 
 export type WasapiMessage = {

@@ -1,6 +1,6 @@
 // wasapiWebhook.ts
 import { Application, Request, Response } from "express";
-import { WasapiEvents, WasapiMessage } from "~/wasapi/provider/wasapi";
+import { WasapiEvents, WasapiMessage } from "~/wasapi/provider/wasapi.events";
 
 export function registerWasapiWebhook(app: Application, apiKey: string) {
   const wasapiEvents = new WasapiEvents(apiKey);
