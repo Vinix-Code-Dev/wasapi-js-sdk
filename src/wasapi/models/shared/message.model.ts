@@ -22,7 +22,7 @@ export interface baseMessage {
     id: number;
     message: string;
     type: 'in' | 'out';
-    message_type: string;
+    message_type: "text" | "image" | "video" | "audio" | "document" | "location";
     wa_id: string;
     wam_id: string;
     status: string;
