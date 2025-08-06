@@ -13,7 +13,7 @@ const deviceId = process.env.DEVICE_ID
 const flowPrincipal = addKeyword(['Hola', 'Buenos dias'])
   .addAnswer('Hola Bienvenido! desde addAnswer ')
   .addAction(async (ctx, { provider }) => {
-    await provider.sendMessage(ctx.from, 'Prueba desde provider')
+    await provider.sendAttachment(ctx.from, 'https://wasapi-assets.s3.us-east-2.amazonaws.com/media/6617529600737-1754405177.jpeg', "esto viene con un caption", 'Video')
   })
 
 
