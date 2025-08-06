@@ -11,10 +11,11 @@ const deviceId = process.env.DEVICE_ID
 
 //Creacion del flujo
 const flowPrincipal = addKeyword(['Hola', 'Buenos dias'])
-  .addAnswer('Hola Bienvenido! ❤️ ')
-  .addAnswer('Como te llamas', { capture: true }, async (ctx, { flowDynamic }) => {
-    await flowDynamic([`Genial! ${ctx.body}`, 'Encantado de conocerte'])
+  .addAnswer('Hola Bienvenido! desde addAnswer ')
+  .addAction(async (ctx, { provider }) => {
+    await provider.sendMessage(ctx.from, 'Prueba desde provider')
   })
-  
+
+
 //iniciar bot
 initBot({ token, deviceId, port, flow: [flowPrincipal] })

@@ -217,9 +217,7 @@ export class WasapiProvider extends ProviderClass<WasapiEvents> {
      * @param options - Additional options for sending the message.
      * @returns Promise<any>
      */
-    async sendMessage(userId: string, message: any, options?: SendOptions): Promise<any> {
-        options = { ...options, ...options['options'] }
-
+    async sendMessage(userId: string, message: any): Promise<any> {
         // Preparar el payload para Wasapi
         const payload: SendMessage = {
             message: message,
