@@ -1,0 +1,15 @@
+import mime from 'mime-types';
+
+export type FileType = 'image_url' | 'video_url' | 'document_url' | 'audio_url';
+
+export function getFileType(filePath: string): FileType {
+    const extension = filePath.split('.').pop()?.toLowerCase();
+    if (['jpg', 'jpeg', 'png', 'gif', 'webp'].includes(extension)) return 'image_url';
+    if (['mp4', 'avi', 'mov', 'wmv'].includes(extension)) return 'video_url';
+    if (['mp3', 'wav', 'ogg', 'm4a'].includes(extension)) return 'audio_url';
+    return 'document_url';
+}
+
+export function getMimeType(filePath: string): string {
+    return mime.lookup(filePath) || 'application/octet-stream';
+}

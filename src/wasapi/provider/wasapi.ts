@@ -9,7 +9,9 @@ import axios, { AxiosResponse } from 'axios'
 import FormData from 'form-data'
 import mime from 'mime-types'
 import { WasapiEvents } from './wasapi.events';
-import { SendMessage } from '../models';
+import { SendAttachment, SendMessage } from '../models';
+import { ResponseAttachmentWPP, ResponseMessageWPP } from '../models/response/whatsapp.model';
+import { getFileType } from '../helpers/fileType.helper';
 
 const URL_S3 = 'https://wasapi-assets.s3.us-east-2.amazonaws.com/media'
 
@@ -50,7 +52,7 @@ export class WasapiProvider extends ProviderClass<WasapiEvents> {
         this.vendor = vendor
         this.server = this.server
             .post('/webhook/wasapi', this.ctrlInMsg)
-    await this.checkStatus(this.globalVendorArgs.deviceId);
+        await this.checkStatus(this.globalVendorArgs.deviceId);
         return vendor
     }
 
@@ -139,39 +141,6 @@ export class WasapiProvider extends ProviderClass<WasapiEvents> {
     }
 
 
-
-    /**
-     * Upload a file to get a URL for Wasapi attachment
-     * @param urlOrPathfile - URL or path of the file to upload.
-     * @returns Promise<string> - URL of the uploaded file.
-     */
-    private uploadToVendor = async (urlOrPathfile: string): Promise<string> => {
-        const fileDownloaded = await utils.generalDownload(urlOrPathfile)
-        const formData = new FormData()
-        const mimeType = mime.lookup(fileDownloaded) || 'application/octet-stream'
-        formData.append('file', createReadStream(fileDownloaded), {
-            contentType: mimeType,
-        })
-
-        try {
-            // Subir archivo a Wasapi (necesitas implementar este endpoint)
-            const response = await axios.post(
-                `https://api-ws.wasapi.io/api/v1/files`,
-                formData,
-                {
-                    headers: {
-                        'Authorization': `Bearer ${this.globalVendorArgs.token}`,
-                        ...formData.getHeaders()
-                    },
-                }
-            )
-            return response.data.url || response.data.data.url
-        } catch (err) {
-            console.error('Error uploading file:', err.response?.data || err.message)
-            throw err
-        }
-    }
-
     /**
      * Check the status of the Wasapi device.
      * @param deviceId - ID of the device to check.
@@ -200,11 +169,11 @@ export class WasapiProvider extends ProviderClass<WasapiEvents> {
             return;
         } catch (err) {
             console.error('Error checking device status:', err);
-            this.emit('auth_failure', { 
+            this.emit('auth_failure', {
                 instructions: [
                     'Unable to check device status',
                     'Please verify your token and device ID'
-                ] 
+                ]
             });
             return;
         }
@@ -227,29 +196,33 @@ export class WasapiProvider extends ProviderClass<WasapiEvents> {
 
         try {
             const response = await this.vendor.getClient().whatsapp.sendMessage(payload);
-            return response;
+            return response as ResponseMessageWPP;
         } catch (error) {
             console.error('Error sending message:', error);
             throw error;
         }
     }
 
-    /**
-     * Helper method to determine file type for Wasapi attachment
-     */
-    private getFileType(filePath: string): 'image_url' | 'video_url' | 'document_url' | 'audio_url' {
-        const extension = filePath.split('.').pop()?.toLowerCase();
-
-        if (['jpg', 'jpeg', 'png', 'gif', 'webp'].includes(extension)) {
-            return 'image_url';
-        } else if (['mp4', 'avi', 'mov', 'wmv'].includes(extension)) {
-            return 'video_url';
-        } else if (['mp3', 'wav', 'ogg', 'm4a'].includes(extension)) {
-            return 'audio_url';
-        } else {
-            return 'document_url';
+    async sendAttachment(userId: string, filePath: string, caption?: string, filename?: string): Promise<any> {
+        const fileType = getFileType(filePath);
+        const payload: SendAttachment = {
+            from_id: Number(this.globalVendorArgs.deviceId),
+            wa_id: userId,
+            file: fileType,
+            [fileType]: filePath,
+            ...(caption ? { caption } : {}),
+            ...(filename ? { filename } : {})
+        }
+        try {
+            const response = await this.vendor.getClient().whatsapp.sendAttachment(payload)
+            return response as ResponseAttachmentWPP;
+        } catch (error) {
+            console.error('Error Sending message with multimedia', error)
         }
     }
+
+
+
 
     /**
      * Save a file from a message context.
