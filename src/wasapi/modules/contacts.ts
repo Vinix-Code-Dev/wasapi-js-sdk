@@ -2,7 +2,7 @@ import { IModule } from "../interfaces/IModule";
 import { AxiosClient } from "../client";
 import { ResponseAllContacts, ResponseContactById } from "../models/response/contact.model";
 import { ErrorResponse } from "../models/response/error.model";
-import { CreateContact } from "../models/request/contact.model";
+import { CreateContact, SearchContactParams, UpdateContactParams } from "../models/request/contact.model";
 import { ExitResponse } from "../models/response/exit.model";
 import { ExportContactsRequest, isValidExportContactsRequest } from "../validator/exportContacts";
 
@@ -23,12 +23,12 @@ export class ContactsModule implements IModule {
     }
 
     // GET https://api-ws.wasapi.io/api/v1/contacts?page={page}&search={search}&labels={labels} consulta los contactos por nombre, email, telefono, etiquetas o paginacion
-    async getSearch(params: {search?: string, labels?: number, page?: number}): Promise<ResponseAllContacts> {
+    async getSearch({search, labels, page}: SearchContactParams): Promise<ResponseAllContacts> {
         try {
             const paramsSearch = new URLSearchParams();
-            if (params.search) paramsSearch.append('search', params.search);
-            if (params.labels) paramsSearch.append('labels', params.labels.toString());
-            if (params.page) paramsSearch.append('page', params.page.toString());
+            if (search) paramsSearch.append('search', search);
+            if (labels) paramsSearch.append('labels', labels.toString());
+            if (page) paramsSearch.append('page', page.toString());
             const response = await this.client.get(`/contacts?${paramsSearch.toString()}`);
             return response.data as ResponseAllContacts;
         } catch (error) {
@@ -60,9 +60,9 @@ export class ContactsModule implements IModule {
     }
 
     // PUT https://api-ws.wasapi.io/api/v1/contacts/{wa_id} actualiza un contacto existente
-    async update(data: { wa_id: string, data: CreateContact }): Promise<ResponseContactById> {
+    async update({ wa_id, data}: UpdateContactParams): Promise<ResponseContactById> {
         try {
-            const response = await this.client.put(`/contacts/${data.wa_id}`, data.data);
+            const response = await this.client.put(`/contacts/${wa_id}`, data);
             return response.data as ResponseContactById;
         } catch (error) {
             console.error('Error al actualizar el contacto:', error);
