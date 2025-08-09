@@ -1,17 +1,14 @@
 import { Middleware } from 'polka';
 import { writeFile } from 'fs/promises'
-import { createReadStream } from 'fs';
 import { join } from 'path';
 import { tmpdir } from 'os';
-import { ProviderClass, utils } from "@builderbot/bot";
-import { BotContext, GlobalVendorArgs, SendOptions } from "@builderbot/bot/dist/types";
+import { ProviderClass} from "@builderbot/bot";
+import { BotContext, GlobalVendorArgs} from "@builderbot/bot/dist/types";
 import axios, { AxiosResponse } from 'axios'
-import FormData from 'form-data'
 import mime from 'mime-types'
 import { WasapiEvents } from './wasapi.events';
-import { SendAttachment, SendMessage } from '../models';
+import { SendAttachmentParams, SendMessage } from '../models';
 import { ResponseAttachmentWPP, ResponseMessageWPP } from '../models/response/whatsapp.model';
-import { getFileType } from '../helpers/fileType.helper';
 
 const URL_S3 = 'https://wasapi-assets.s3.us-east-2.amazonaws.com/media'
 
@@ -204,14 +201,12 @@ export class WasapiProvider extends ProviderClass<WasapiEvents> {
     }
 
     async sendAttachment(userId: string, filePath: string, caption?: string, filename?: string): Promise<any> {
-        const fileType = getFileType(filePath);
-        const payload: SendAttachment = {
-            from_id: Number(this.globalVendorArgs.deviceId),
+        const payload: SendAttachmentParams = {
+            from_id: this.globalVendorArgs.deviceId,
             wa_id: userId,
-            file: fileType,
-            [fileType]: filePath,
-            ...(caption ? { caption } : {}),
-            ...(filename ? { filename } : {})
+            filePath,
+            caption,
+            filename
         }
         try {
             const response = await this.vendor.getClient().whatsapp.sendAttachment(payload)
