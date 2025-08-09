@@ -45,7 +45,7 @@
     "url": "git+https://github.com/juanalvarezPro/wasapi-sdk"
   },
   "dependencies": {
-    "axios": "^1.11.0",
+    "axios": "^1.11.0"
   },
   "peerDependencies": {
     "@builderbot/bot": ">=1.2.9"
