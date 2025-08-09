@@ -1,5 +1,4 @@
 import { WasapiClient } from '../../src/wasapi';
-import { CreateLabel } from '../../src/wasapi/models';
 
 import dotenv from 'dotenv';
 
