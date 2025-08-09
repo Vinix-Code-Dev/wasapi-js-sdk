@@ -1,6 +1,6 @@
 import dotenv from "dotenv";
 import { createBot, createFlow, createProvider, addKeyword} from '@builderbot/bot'
-import { WasapiProvider as  Provider } from "./wasapi/provider/wasapi";
+import { WasapiProvider as  Provider } from "../../src";
 import { MemoryDB as Database } from '@builderbot/bot'
 //Exportamos libreria wasapi-sdk
 
