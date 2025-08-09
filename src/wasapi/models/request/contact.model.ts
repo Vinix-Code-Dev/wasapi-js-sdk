@@ -3,7 +3,7 @@ import { BaseContact } from "../shared/contact.model";
 export interface CreateContact extends BaseContact {
     blocked?: boolean;
     unsubscribed?: boolean;
-    custom_fields?: Record<string, any>;
+    custom_fields?: Record<string, unknown>;
 }
 
 export interface SearchContactParams { search?: string; labels?: number; page?: number; }
