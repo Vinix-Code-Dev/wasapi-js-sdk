@@ -42,7 +42,8 @@ export class LabelsModule implements IModule {
     }
 
     // POST https://api-ws.wasapi.io/api/v1/labels Crear una etiqueta
-    async create(data: CreateLabel): Promise<ResponseLabelById> {
+    async create({title, description, color}: CreateLabel): Promise<ResponseLabelById> {
+        const data = {title, description, color}
         try {
             const response = await this.client.post('/labels', data);
             return response.data as ResponseLabelById;

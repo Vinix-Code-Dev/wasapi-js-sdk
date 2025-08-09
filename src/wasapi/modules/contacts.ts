@@ -23,7 +23,7 @@ export class ContactsModule implements IModule {
     }
 
     // GET https://api-ws.wasapi.io/api/v1/contacts?page={page}&search={search}&labels={labels} consulta los contactos por nombre, email, telefono, etiquetas o paginacion
-    async getSearch({search, labels, page}: SearchContactParams): Promise<ResponseAllContacts> {
+    async getSearch({ search, labels, page }: SearchContactParams): Promise<ResponseAllContacts> {
         try {
             const paramsSearch = new URLSearchParams();
             if (search) paramsSearch.append('search', search);
@@ -49,7 +49,8 @@ export class ContactsModule implements IModule {
     }
 
     // POST https://api-ws.wasapi.io/api/v1/contacts crea un nuevo contacto
-    async create(data: CreateContact): Promise<ResponseContactById> {
+    async create({ first_name, last_name, email, country_code, phone, ...options }: CreateContact): Promise<ResponseContactById> {
+        const data = {first_name, last_name, email, country_code, phone, ...options }
         try {
             const response = await this.client.post('/contacts', data);
             return response.data as ResponseContactById;
@@ -60,7 +61,7 @@ export class ContactsModule implements IModule {
     }
 
     // PUT https://api-ws.wasapi.io/api/v1/contacts/{wa_id} actualiza un contacto existente
-    async update({ wa_id, data}: UpdateContactParams): Promise<ResponseContactById> {
+    async update({ wa_id, data }: UpdateContactParams): Promise<ResponseContactById> {
         try {
             const response = await this.client.put(`/contacts/${wa_id}`, data);
             return response.data as ResponseContactById;
