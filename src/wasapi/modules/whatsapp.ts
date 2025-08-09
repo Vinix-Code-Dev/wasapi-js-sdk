@@ -19,7 +19,7 @@ export class WhatsappModule {
         try {
             const params = { from_id, wa_id, message };
             const response = await this.client.post('/whatsapp-messages', params);
-            console.log('Mensaje enviado:', response.data);
+            console.log('Mensaje enviado:');
             return response.data as ResponseMessageWPP;
         } catch (error) {
             console.error('Error al enviar el mensaje:', error);
