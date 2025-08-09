@@ -45,14 +45,19 @@
     "url": "git+https://github.com/juanalvarezPro/wasapi-sdk"
   },
   "dependencies": {
-    "@builderbot/bot": "1.2.9",
-    "@types/express": "^5.0.3",
     "axios": "^1.11.0",
-    "dotenv": "^17.2.1",
-    "express": "^5.1.0"
+  },
+  "peerDependencies": {
+    "@builderbot/bot": ">=1.2.9"
+  },
+  "peerDependenciesMeta": {
+    "@builderbot/bot": { "optional": true }
   },
   "devDependencies": {
     "@types/mime-types": "^3.0.1",
+    "dotenv": "^17.2.1",
+    "express": "^5.1.0",
+    "@types/express": "^5.0.3",
     "@types/node": "^20.11.30",
     "@typescript-eslint/eslint-plugin": "^7.2.0",
     "@typescript-eslint/parser": "^7.4.0",
