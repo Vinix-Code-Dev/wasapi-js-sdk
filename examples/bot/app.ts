@@ -22,7 +22,11 @@ const flowPrincipal = addKeyword<Provider, Database>(['Hola', 'Buenos dias'])
 
 const main = async () => {
     const adapterFlow = createFlow([flowPrincipal])
-    const adapterProvider = createProvider(Provider, { token, deviceId })
+    // Aseguramos que token y deviceId sean strings, no undefined
+    if (!token || !deviceId) {
+        throw new Error("Las variables de entorno API_KEY_WASAPI y DEVICE_ID deben estar definidas.")
+    }
+    const adapterProvider = createProvider(Provider, { token: token as string, deviceId: deviceId as string })
     const adapterDB = new Database()
 
     const { httpServer } = await createBot({
