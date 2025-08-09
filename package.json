@@ -1,6 +1,6 @@
 {
   "name": "wasapi-sdk",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "SDK oficial para Wasapi (WhatsApp, campañas, contactos, flujos, bots etc.)",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
@@ -29,10 +29,21 @@
     "build": "rollup -c",
     "prepare": "npm run build"
   },
-  "files": ["dist", "README.md", "LICENSE"],
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
   "sideEffects": false,
-  "keywords": ["wasapi", "whatsapp", "sdk"],
-  "repository": { "type": "git", "url": "git+https://github.com/juanalvarezPro/wasapi-sdk" },
+  "keywords": [
+    "wasapi",
+    "whatsapp",
+    "sdk"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/juanalvarezPro/wasapi-sdk"
+  },
   "dependencies": {
     "@builderbot/bot": "1.2.9",
     "@types/express": "^5.0.3",
