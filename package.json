@@ -1,19 +1,40 @@
 {
-  "name": "base-bailey-json",
-  "version": "1.0.0",
-  "description": "",
-  "main": "dist/app.js",
+  "name": "wasapi-sdk",
+  "version": "0.1.0",
+  "description": "SDK oficial para Wasapi (WhatsApp, campañas, contactos, flujos, bots etc.)",
+  "main": "dist/cjs/index.js",
+  "module": "dist/esm/index.js",
+  "types": "dist/types/index.d.ts",
   "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/types/index.d.ts",
+      "import": "./dist/esm/index.js",
+      "require": "./dist/cjs/index.js"
+    },
+    "./provider": {
+      "types": "./dist/types/wasapi/provider/index.d.ts",
+      "import": "./dist/esm/wasapi/provider/index.js",
+      "require": "./dist/cjs/wasapi/provider/index.js"
+    },
+    "./models": {
+      "types": "./dist/types/wasapi/models/index.d.ts",
+      "import": "./dist/esm/wasapi/models/index.js",
+      "require": "./dist/cjs/wasapi/models/index.js"
+    }
+  },
   "scripts": {
-    "start": "node ./dist/app.js",
     "lint": "eslint . --no-ignore",
     "dev": "npm run lint && nodemon ./src/app.ts",
-    "build": "npx rollup -c"
+    "build": "rollup -c",
+    "prepare": "npm run build"
   },
-  "keywords": [],
+  "files": ["dist", "README.md", "LICENSE"],
+  "sideEffects": false,
+  "keywords": ["wasapi", "whatsapp", "sdk"],
+  "repository": { "type": "git", "url": "git+https://github.com/juanalvarezPro/wasapi-sdk" },
   "dependencies": {
     "@builderbot/bot": "1.2.9",
-    "@builderbot/provider-evolution-api": "1.2.9",
     "@types/express": "^5.0.3",
     "axios": "^1.11.0",
     "dotenv": "^17.2.1",
@@ -32,6 +53,6 @@
     "tsx": "^4.7.1",
     "typescript": "^5.4.3"
   },
-  "author": "",
+  "author": "juanalvarez.pro",
   "license": "ISC"
 }
