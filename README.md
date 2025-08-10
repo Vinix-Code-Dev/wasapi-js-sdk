@@ -1,6 +1,6 @@
 ## wasapi-sdk
 
-SDK oficial de Wasapi para integrarte rápido con WhatsApp, campañas, contactos, flujos y más. Incluye tipos TypeScript y soporta ESM y CJS.
+SDK no oficial de Wasapi para integrarte rápido con WhatsApp, campañas, contactos, flujos y más. Incluye tipos TypeScript y soporta ESM y CJS.
 
 - **Ecosistema**: WhatsApp Messages, Templates, Contacts, Labels, Campaigns, Flows, Metrics, Workflow, Bot Provider Asistente IA
 - **Runtime**: Node >= 18
