@@ -28,11 +28,6 @@ import { WasapiClient } from 'wasapi-sdk'
 const { WasapiClient } = require('wasapi-sdk')
 ```
 
-- Subpaths (opcional):
-```ts
-import { SendTemplate } from 'wasapi-sdk/models'
-import { initBot, addKeyword } from 'wasapi-sdk/provider'
-```
 
 ## Uso rápido
 
