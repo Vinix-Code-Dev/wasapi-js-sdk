@@ -12,7 +12,6 @@ export class WorkflowModule {
             console.log(response.data);
             return response.data as WorkflowResponse;
         } catch (error) {
-            console.error('Error al cargar los flujos de trabajo:', error);
             throw error;
         }
     }

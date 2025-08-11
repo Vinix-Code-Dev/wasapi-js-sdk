@@ -9,10 +9,8 @@ export class BotModule {
     async toggleStatus(data: {wa_id: string, data: BotStatusRequest}): Promise<ResponseBotStatus> {
         try {
             const response = await this.client.post(`/contacts/${data.wa_id}/toggle-bot`, data.data);
-            console.log('Estado del bot cambiado:');
             return response.data as ResponseBotStatus;
         } catch (error) {
-            console.error('Error al cambiar el estado del bot:', error);
             throw error;
         }
     }

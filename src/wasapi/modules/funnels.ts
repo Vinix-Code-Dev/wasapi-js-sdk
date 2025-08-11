@@ -11,7 +11,6 @@ export class FunnelsModule {
             const response = await this.client.get('/funnels');
             return response.data as ResponseAllFunnels;
         } catch (error) {
-            console.error('Error al obtener todos los funnels:', error);
             throw error;
         }
     }
@@ -31,7 +30,6 @@ export class FunnelsModule {
             const response = await this.client.get(`/funnels/contacts/search?${paramsSearch.toString()}`);
             return response.data as ResponseSearchContactFunnel;
         } catch (error) {
-            console.error('Error al buscar contacto en funnel:', error);
             throw error;
         }
     }
@@ -42,7 +40,6 @@ export class FunnelsModule {
             const response = await this.client.post(`/funnels/stage/move-contact`, { contact_id: params.contactUuid, to_stage_id: params.toStageUuid });
             return response.data as ResponseMoveContactToFunnel;
         } catch (error) {
-            console.error('Error al mover contacto a funnel:', error);
             throw error;
         }
     }

@@ -19,10 +19,8 @@ export class WhatsappModule {
         try {
             const params = { from_id, wa_id, message };
             const response = await this.client.post('/whatsapp-messages', params);
-            console.log('Mensaje enviado:');
             return response.data as ResponseMessageWPP;
         } catch (error) {
-            console.error('Error al enviar el mensaje:', error);
             throw error;
         }
     }
@@ -40,10 +38,8 @@ export class WhatsappModule {
         }
         try {
             const response = await this.client.post('/whatsapp-messages/attachment', payload);
-            console.log('Archivo multimedia enviado:');
             return response.data as ResponseAttachmentWPP;
         } catch (error) {
-            console.error('Error al enviar el archivo multimedia:', error);
             throw error;
         }
     }
@@ -54,10 +50,8 @@ export class WhatsappModule {
         try {
             const params = { recipients, template_id, contact_type, ...options };
             const response = await this.client.post('/whatsapp-messages/send-template', params);
-            console.log('Mensaje de plantilla enviado:');
             return response.data as ResponseTemplate;
         } catch (error) {
-            console.error('Error al enviar mensaje de plantilla:', error);
             throw error;
         }
     }
@@ -67,10 +61,8 @@ export class WhatsappModule {
 
         try {
             const response = await this.client.get(`/whatsapp-messages/${params.wa_id}?from_id=${params.from_id}&page=${params.page}`);
-            console.log('Conversacion cargada:');
             return response.data as ResponseConversation;
         } catch (error) {
-            console.error('Error al cargar la conversacion:', error);
             throw error;
         }
     }
@@ -79,10 +71,8 @@ export class WhatsappModule {
     async getWhatsappNumbers(): Promise<ResponseWhatsappNumbers> {
         try {
             const response = await this.client.get('/whatsapp-numbers');
-            console.log('Numeros de whatsapp cargados:');
             return response.data as ResponseWhatsappNumbers;
         } catch (error) {
-           // console.error('Error al cargar los numeros de whatsapp:');
             throw error;
         }
     }
@@ -91,10 +81,8 @@ export class WhatsappModule {
     async getWhatsappTemplates(): Promise<ResponseTemplate> {
         try {
             const response = await this.client.get('/whatsapp-templates');
-            console.log('Plantillas de whatsapp cargadas:');
             return response.data as ResponseTemplate;
         } catch (error) {
-            console.error('Error al cargar las plantillas de whatsapp:', error);
             throw error;
         }
     }
@@ -103,10 +91,8 @@ export class WhatsappModule {
     async getWhatsappTemplate(data: { template_uuid: string }): Promise<ResponseTemplateById> {
         try {
             const response = await this.client.get(`/whatsapp-templates/${data.template_uuid}`);
-            console.log('Plantilla de whatsapp cargada con uuid: ' + data.template_uuid);
             return response.data as ResponseTemplateById;
         } catch (error) {
-            console.error('Error al cargar la plantilla de whatsapp:', error);
             throw error;
         }
     }
@@ -115,10 +101,8 @@ export class WhatsappModule {
     async syncMetaTemplates(): Promise<ResponseTemplateSyncMeta> {
         try {
             const response = await this.client.get('/whatsapp-templates/sync-meta');
-            console.log('Plantillas de meta sincronizadas:');
             return response.data as ResponseTemplateSyncMeta;
         } catch (error) {
-            console.error('Error al sincronizar las plantillas de meta:', error);
             throw error;
         }
     }
@@ -128,10 +112,8 @@ export class WhatsappModule {
         const params = {from_id, wa_id, status, message, ...options}
         try {
             const response = await this.client.post('/whatsapp-messages/change-status', params);
-            console.log('Estado de la conversacion cambiado:');
             return response.data as ExitResponse;
         } catch (error) {
-            console.error('Error al cambiar el estado de la conversacion:', error);
             throw error;
         }
     }
@@ -141,10 +123,8 @@ export class WhatsappModule {
         const params = {wa_id, from_id, context_wam_id, contacts}
         try {
             const response = await this.client.post('/whatsapp-messages/send-contacts', params);
-            console.log('Contactos enviados:');
             return response.data as ResponseSendContact;
         } catch (error) {
-            console.error('Error al enviar los contactos:', error);
             throw error;
         }
     }
@@ -153,10 +133,8 @@ export class WhatsappModule {
     async getFlows(): Promise<ResponseAllFlows> {
         try {
             const response = await this.client.get('/whatsapp-flows');
-            console.log('Flujos de whatsapp cargados:');
             return response.data as ResponseAllFlows;
         } catch (error) {
-            console.error('Error al cargar los flujos de whatsapp:', error);
             throw error;
         }
     }
@@ -166,10 +144,8 @@ export class WhatsappModule {
         const params = {wa_id, message, phone_id, cta, screen, flow_id, action}
         try {
             const response = await this.client.post('/whatsapp-flows', params);
-            console.log('Mensaje con flujo enviado:');
             return response.data as ResponseSendFlow;
         } catch (error) {
-            console.error('Error al enviar el mensaje con un flujo:', error);
             throw error;
         }
     }
@@ -178,10 +154,8 @@ export class WhatsappModule {
     async getFlowResponses({flow_id, page, per_page}: GetFlowResponses): Promise<ResponseFlowResponses> {
         try {
             const response = await this.client.get(`/whatsapp-flows/${flow_id}/responses?page=${page}&per_page=${per_page}`);
-            console.log('Respuestas del flujo cargadas:');
             return response.data as ResponseFlowResponses;
         } catch (error) {
-            console.error('Error al cargar las respuestas del flujo:', error);
             throw error;
         }
     }
@@ -190,10 +164,8 @@ export class WhatsappModule {
     async getFlowAssets({ flow_id, phone_id}: GetFlowAssets): Promise<GetFlowDetail> {
         try {
             const response = await this.client.post(`/whatsapp-flows/${flow_id}/assets?phone_id=${phone_id}`);
-            console.log('Recursos del flujo cargados:');
             return response.data as GetFlowDetail;
         } catch (error) {
-            console.error('Error al cargar los recursos del flujo:', error);
             throw error;
         }
     }

@@ -94,7 +94,7 @@ export class WasapiEvents extends EventEmitterClass<ProviderEventTypes> {
             }
             return "Usuario";
         } catch (error) {
-            console.error('Error al obtener nombre del contacto:', error);
+            console.error('Error getting contact name:', error);
             return "Usuario";
         }
     }

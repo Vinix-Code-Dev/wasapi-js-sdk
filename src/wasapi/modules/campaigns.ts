@@ -14,7 +14,6 @@ export class CampaignsModule implements IModule {
             const response = await this.client.get('/campaigns');
             return response.data as ResponseAllCampaigns;
         } catch (error) {
-            console.error('Error al obtener todas las campañas:', error);
             throw error as ErrorResponse;
         }
     }
@@ -25,23 +24,20 @@ export class CampaignsModule implements IModule {
             const response = await this.client.get(`/campaigns/${campaign_id}`);
             return response.data as ResponseCampaignById;
         } catch (error) {
-            console.error('Error al obtener la campaña:', error);
             throw error as ErrorResponse;
         }
     }
 
     async create(data: any): Promise<void> {
         //console.log('Actualmente no esta disponible la creacion de campañas');
-        throw new Error('Creación de campañas no implementada');
+        throw new Error('Campaign creation not implemented');
     }
 
     async update(data: { id: string, data: any }): Promise<void> {
-        console.log('Actualmente no esta disponible la actualizacion de campañas');
-        throw new Error('Actualización de campañas no implementada');
+        throw new Error('Campaign update not implemented');
     }
 
     async delete(id: string): Promise<void> {
-        console.log('Actualmente no esta disponible la eliminacion de campañas');
-        throw new Error('Eliminación de campañas no implementada');
+        throw new Error('Deleting unimplemented campaigns');
     }
 }

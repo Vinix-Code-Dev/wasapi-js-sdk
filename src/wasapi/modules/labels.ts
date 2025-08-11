@@ -13,7 +13,6 @@ export class LabelsModule implements IModule {
             const response = await this.client.get('/labels');
             return response.data as ResponseAllLabels;
         } catch (error) {
-            console.error('Error al obtener las etiquetas:', error);
             throw error;
         }
     }
@@ -25,7 +24,6 @@ export class LabelsModule implements IModule {
             const response = await this.client.post('/labels/search', { name });
             return response.data as ResponseLabelById;
         } catch (error) {
-            console.error('Error al buscar etiquetas:', error);
             throw error;
         }
     }
@@ -36,7 +34,6 @@ export class LabelsModule implements IModule {
             const response = await this.client.get(`/labels/${id}`);
             return response.data as ResponseLabelById;
         } catch (error) {
-            console.error('Error al obtener la etiqueta por id:', error);
             throw error;
         }
     }
@@ -48,7 +45,6 @@ export class LabelsModule implements IModule {
             const response = await this.client.post('/labels', data);
             return response.data as ResponseLabelById;
         } catch (error) {
-            console.error('Error al crear la etiqueta:', error);
             throw error;
         }
     }
@@ -58,7 +54,6 @@ export class LabelsModule implements IModule {
             const response = await this.client.put(`/labels/${data.id}`, data.data);
             return response.data as ResponseLabelById;
         } catch (error) {
-            console.error('Error al actualizar la etiqueta:', error);
             throw error;
         }
     }
@@ -69,7 +64,6 @@ export class LabelsModule implements IModule {
             const response = await this.client.delete(`/labels/${id}`);
             return response.data as ExitResponse;
         } catch (error) {
-            console.error('Error al eliminar la etiqueta:', error);
             throw error;
         }
     }

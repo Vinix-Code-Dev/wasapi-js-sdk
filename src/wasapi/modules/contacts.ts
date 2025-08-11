@@ -17,7 +17,6 @@ export class ContactsModule implements IModule {
             const response = await this.client.get('/contacts');
             return response.data as ResponseAllContacts;
         } catch (error) {
-            console.error('Error al obtener todos los contactos:', error);
             throw error as ErrorResponse;
         }
     }
@@ -32,7 +31,6 @@ export class ContactsModule implements IModule {
             const response = await this.client.get(`/contacts?${paramsSearch.toString()}`);
             return response.data as ResponseAllContacts;
         } catch (error) {
-            console.error('Error al obtener los contactos:', error);
             throw error as ErrorResponse;
         }
     }
@@ -43,7 +41,6 @@ export class ContactsModule implements IModule {
             const response = await this.client.get(`/contacts/${wa_id}`);
             return response.data as ResponseContactById;
         } catch (error) {
-            console.error('Error al obtener el contacto:', error);
             throw error as ErrorResponse;
         }
     }
@@ -55,7 +52,6 @@ export class ContactsModule implements IModule {
             const response = await this.client.post('/contacts', data);
             return response.data as ResponseContactById;
         } catch (error) {
-            console.error('Error al crear el contacto:', error);
             throw error as ErrorResponse;
         }
     }
@@ -66,7 +62,6 @@ export class ContactsModule implements IModule {
             const response = await this.client.put(`/contacts/${wa_id}`, data);
             return response.data as ResponseContactById;
         } catch (error) {
-            console.error('Error al actualizar el contacto:', error);
             throw error as ErrorResponse;
         }
     }
@@ -77,7 +72,6 @@ export class ContactsModule implements IModule {
             const response = await this.client.delete(`/contacts/${id}`);
             return response.data as ExitResponse;
         } catch (error) {
-            console.error('Error al eliminar el contacto:', error);
             throw error as ErrorResponse;
         }
     }
@@ -90,7 +84,7 @@ export class ContactsModule implements IModule {
     async export(data: ExportContactsRequest): Promise<void> {
         // Validar la solicitud antes de enviarla
         if (!isValidExportContactsRequest(data)) {
-            throw new Error('Solicitud de exportación inválida: máximo 5 correos electrónicos válidos permitidos');
+            throw new Error('Invalid export request: maximum 5 valid emails allowed');
         }
 
         const response = await this.client.post('/export-contacts', data);

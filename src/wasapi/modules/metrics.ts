@@ -11,7 +11,6 @@ export class MetricsModule {
             const response = await this.client.get('/dashboard/metrics/online-agents');
             return response.data as OnlineAgentsResponse;
         } catch (error) {
-            console.error('Error al obtener los agentes en línea:', error);
             throw error;
         }
     }
@@ -22,7 +21,6 @@ export class MetricsModule {
             const response = await this.client.get(`/dashboard/metrics/total-campaigns?dates[]=${params.startDate}&dates[]=${params.endDate}`);
             return response.data as TotalCampaignsResponse;
         } catch (error) {
-            console.error('Error al obtener las campañas totales:', error);
             throw error;
         }
     }
@@ -33,7 +31,6 @@ export class MetricsModule {
             const response = await this.client.get(`/dashboard/metrics/consolidated-conversations?dates[]=${params.startDate}&dates[]=${params.endDate}`);
             return response.data as ConsolidatedConversationsResponse;
         } catch (error) {
-            console.error('Error al obtener las conversaciones consolidadas:', error);
             throw error;
         }
     }
@@ -44,7 +41,6 @@ export class MetricsModule {
             const response = await this.client.get(`/dashboard/metrics/agent-conversations?dates[]=${params.startDate}&dates[]=${params.endDate}`);
             return response.data as AgentConversationsResponse;
         } catch (error) {
-            console.error('Error al obtener las conversaciones del agente:', error);
             throw error;
         }
     }
@@ -55,7 +51,6 @@ export class MetricsModule {
             const response = await this.client.get('/dashboard/metrics/contacts');
             return response.data as StatusContactsResponse;
         } catch (error) {
-            console.error('Error al obtener el estado de los contactos:', error);
             throw error;
         }
     }
@@ -66,7 +61,6 @@ export class MetricsModule {
             const response = await this.client.get(`/dashboard/metrics/messages?dates[]=${params.startDate}&dates[]=${params.endDate}`);
             return response.data as MessagesResponse;
         } catch (error) {
-            console.error('Error al obtener las conversaciones:', error);
             throw error;
         }
     }
@@ -77,7 +71,6 @@ export class MetricsModule {
             const response = await this.client.get(`/dashboard/metrics/messages-bot?dates[]=${params.startDate}&dates[]=${params.endDate}`);
             return response.data as MessagesBotResponse;
         } catch (error) {
-            console.error('Error al obtener las conversaciones del bot:', error);
             throw error;
         }
     }
@@ -100,7 +93,6 @@ export class MetricsModule {
         const response = await this.client.get(`/metrics?${params.toString()}`);
             return response.data as AgentMetricResponse;
         } catch (error) {
-            console.error('Error al obtener las métricas:', error);
             throw error;
         }
     }
