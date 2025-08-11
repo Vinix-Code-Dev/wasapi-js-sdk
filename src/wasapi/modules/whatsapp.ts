@@ -82,7 +82,7 @@ export class WhatsappModule {
             console.log('Numeros de whatsapp cargados:');
             return response.data as ResponseWhatsappNumbers;
         } catch (error) {
-            console.error('Error al cargar los numeros de whatsapp:', error);
+           // console.error('Error al cargar los numeros de whatsapp:');
             throw error;
         }
     }
