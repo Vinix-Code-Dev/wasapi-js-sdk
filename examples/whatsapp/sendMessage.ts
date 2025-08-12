@@ -1,7 +1,7 @@
 import { WasapiClient } from '../../src/wasapi';
 import constants from '../constants';
 import dotenv from 'dotenv';
-import { SendAttachmentParams } from '~/wasapi/models';
+import { SendAttachmentParams } from '../../src/wasapi/models';
 
 
 dotenv.config();
