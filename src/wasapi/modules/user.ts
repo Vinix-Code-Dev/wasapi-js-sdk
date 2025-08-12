@@ -10,7 +10,6 @@ export class UserModule {
             const response = await this.client.get('/user');
             return response.data as UserResponse;
         } catch (error) {
-            console.error('Error al obtener el usuario:', error);
             throw error;
         }
     }
