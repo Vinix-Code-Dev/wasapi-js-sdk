@@ -1,6 +1,6 @@
 // crea varios ejemplos para obtener todos los datos y la busqueda de contactos
 
-import constants from 'examples/constants';
+import constants from '../constants';
 import { WasapiClient } from '../../src/wasapi';
 import dotenv from 'dotenv';
 

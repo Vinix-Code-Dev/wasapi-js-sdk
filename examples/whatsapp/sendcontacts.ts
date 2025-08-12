@@ -1,7 +1,7 @@
 import { WasapiClient } from '../../src/wasapi';
 import constants from '../constants';
 import dotenv from 'dotenv';
-import { SendContact, ContactWPP } from '~/wasapi/models';
+import { SendContact, ContactWPP } from '../../src/wasapi/models';
 
 dotenv.config();
 
