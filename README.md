@@ -2,11 +2,11 @@
 
 SDK no oficial de Wasapi para integrarte rápido con WhatsApp, campañas, contactos, flujos y más. Incluye tipos TypeScript y soporta ESM y CJS.
 
-- **Ecosistema**: WhatsApp Messages, Templates, Contacts, Labels, Campaigns, Flows, Metrics, Workflow, Bot Provider Asistente IA
+- **Ecosistema**: WhatsApp Messages, Templates, Contacts, Labels, Campaigns, Flows, Metrics, Workflow...
 - **Runtime**: Node >= 18
 - **Tipos**: incluidos (.d.ts)
 - **Módulos**: ESM y CJS
-- **Subpaths**: `wasapi-sdk`, `wasapi-sdk/models`, `wasapi-sdk/provider`
+- **Subpaths**: `wasapi-sdk`, `wasapi-sdk/models`
 
 ### Instalación
 
@@ -85,8 +85,6 @@ const sent = await client.whatsapp.sendTemplate({
 })
 ```
 
-## Bot Provider
-Si usas Builderbot, puedes iniciar un bot con el provider de Wasapi. Muy Pronto!
 
 
 ## API principal
