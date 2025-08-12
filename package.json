@@ -1,6 +1,6 @@
 {
   "name": "wasapi-sdk",
-  "version": "0.1.11",
+  "version": "0.1.12",
   "description": "SDK oficial para Wasapi (WhatsApp, campañas, contactos, flujos, bots etc.)",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
