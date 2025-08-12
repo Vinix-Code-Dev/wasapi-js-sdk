@@ -14,7 +14,6 @@ export default [
     {
         input: {
             index: 'src/index.ts',
-            'wasapi/provider/index': 'src/wasapi/provider/index.ts',
             'wasapi/models/index': 'src/wasapi/models/index.ts',
         },
         external,

@@ -12,11 +12,6 @@
       "import": "./dist/esm/index.js",
       "require": "./dist/cjs/index.js"
     },
-    "./provider": {
-      "types": "./dist/types/wasapi/provider/index.d.ts",
-      "import": "./dist/esm/wasapi/provider/index.js",
-      "require": "./dist/cjs/wasapi/provider/index.js"
-    },
     "./models": {
       "types": "./dist/types/wasapi/models/index.d.ts",
       "import": "./dist/esm/wasapi/models/index.js",
@@ -45,8 +40,7 @@
     "url": "git+https://github.com/juanalvarezPro/wasapi-sdk"
   },
   "dependencies": {
-    "axios": "^1.11.0",
-    "@builderbot/bot": ">=1.2.9"
+    "axios": "^1.11.0"
   },
   "devDependencies": {
     "@types/mime-types": "^3.0.1",
@@ -57,7 +51,6 @@
     "@typescript-eslint/eslint-plugin": "^7.2.0",
     "@typescript-eslint/parser": "^7.4.0",
     "eslint": "^8.52.0",
-    "eslint-plugin-builderbot": "latest",
     "nodemon": "^3.1.0",
     "rollup": "^4.10.0",
     "rollup-plugin-typescript2": "^0.36.0",
