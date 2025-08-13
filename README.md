@@ -1,4 +1,4 @@
-## wasapi-sdk
+## @laiyon/wasapi-sdk
 
 SDK no oficial de Wasapi para integrarte rápido con WhatsApp, campañas, contactos, flujos y más. Incluye tipos TypeScript y soporta ESM y CJS.
 
@@ -6,26 +6,26 @@ SDK no oficial de Wasapi para integrarte rápido con WhatsApp, campañas, contac
 - **Runtime**: Node >= 18
 - **Tipos**: incluidos (.d.ts)
 - **Módulos**: ESM y CJS
-- **Subpaths**: `wasapi-sdk`, `wasapi-sdk/models`
+- **Subpaths**: `@laiyon/wasapi-sdk`, `@laiyon/wasapi-sdk/models`
 
 ### Instalación
 
 ```bash
-npm i wasapi-sdk
+npm i @laiyon/wasapi-sdk
 # o
-yarn add wasapi-sdk
+yarn add @laiyon/wasapi-sdk
 ```
 
 ### Importación
 
 - ESM:
 ```ts
-import { WasapiClient } from 'wasapi-sdk'
+import { WasapiClient } from '@laiyon/wasapi-sdk'
 ```
 
 - CJS:
 ```js
-const { WasapiClient } = require('wasapi-sdk')
+const { WasapiClient } = require('@laiyon/wasapi-sdk')
 ```
 
 
@@ -33,7 +33,7 @@ const { WasapiClient } = require('wasapi-sdk')
 
 ### Crear cliente
 ```ts
-import { WasapiClient } from 'wasapi-sdk'
+import { WasapiClient } from '@laiyon/wasapi-sdk'
 
 const API_KEY = process.env.API_KEY_WASAPI as string
 // baseURL opcional (usa el default del servicio si lo omites)
@@ -64,7 +64,7 @@ const result = await client.whatsapp.sendAttachment({
 ### Enviar template (plantilla de WhatsApp)
 Usa una “base” y agrega solo lo necesario con spread:
 ```ts
-import { SendTemplate } from 'wasapi-sdk/models'
+import { SendTemplate } from '@laiyon/wasapi-sdk/models'
 
 const templateBase: SendTemplate = {
   recipients: '57300XXXXXXX',
@@ -93,13 +93,13 @@ const sent = await client.whatsapp.sendTemplate({
 - **Módulos** (accesibles vía `client.X`):
   - `whatsapp`: `sendMessage`, `sendAttachment`, `sendTemplate`, `getConversation`, `getWhatsappNumbers`, `getWhatsappTemplates`, `getWhatsappTemplate`, `syncMetaTemplates`, `changeStatus`, `sendContacts`, `getFlows`, `sendFlow`, `getFlowResponses`, `getFlowAssets`
   - `contacts`, `labels`, `campaigns`, `customFields`, `funnels`, `metrics`, `workflow`, `user`, `bot`
-- **Modelos y tipos**: disponibles en `wasapi-sdk/models`
+- **Modelos y tipos**: disponibles en `@laiyon/wasapi-sdk/models`
 
 ## Tipos y DX
 - El paquete incluye `.d.ts` para todo el SDK
 - Importa tipos directamente:
 ```ts
-import { SendTemplate } from 'wasapi-sdk/models'
+import { SendTemplate } from '@laiyon/wasapi-sdk/models'
 ```
 
 ## Requisitos
@@ -108,7 +108,7 @@ import { SendTemplate } from 'wasapi-sdk/models'
 
 
 ## Enlaces
-- Repositorio: https://github.com/juanalvarezPro/wasapi-sdk
+- Repositorio: https://github.com/juanalvarezPro/@laiyon/wasapi-sdk
 - Issues: usa el repositorio para reportar errores o solicitar features
 
 
