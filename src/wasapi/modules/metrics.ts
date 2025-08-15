@@ -7,72 +7,44 @@ export class MetricsModule {
 
     //GET https://api-ws.wasapi.io/api/v1/dashboard/metrics/online-agents obtener los agentes en línea 
     async getOnlineAgents(): Promise<OnlineAgentsResponse> {
-        try {
-            const response = await this.client.get('/dashboard/metrics/online-agents');
-            return response.data as OnlineAgentsResponse;
-        } catch (error) {
-            throw error;
-        }
+        const response = await this.client.get('/dashboard/metrics/online-agents');
+        return response.data as OnlineAgentsResponse;
     }
 
     //GET https://api-ws.wasapi.io/api/v1/dashboard/metrics/total-campaigns obtener las campañas totales
     async getTotalCampaigns(params: { startDate: string, endDate: string }): Promise<TotalCampaignsResponse> {
-        try {
-            const response = await this.client.get(`/dashboard/metrics/total-campaigns?dates[]=${params.startDate}&dates[]=${params.endDate}`);
-            return response.data as TotalCampaignsResponse;
-        } catch (error) {
-            throw error;
-        }
+        const response = await this.client.get(`/dashboard/metrics/total-campaigns?dates[]=${params.startDate}&dates[]=${params.endDate}`);
+        return response.data as TotalCampaignsResponse;
     }
 
     //GET https://api-ws.wasapi.io/api/v1/dashboard/metrics/consolidated-conversations obtener las conversaciones consolidadas
     async getConsolidatedConversations(params: { startDate: string, endDate: string }): Promise<ConsolidatedConversationsResponse> {
-        try {
-            const response = await this.client.get(`/dashboard/metrics/consolidated-conversations?dates[]=${params.startDate}&dates[]=${params.endDate}`);
-            return response.data as ConsolidatedConversationsResponse;
-        } catch (error) {
-            throw error;
-        }
+        const response = await this.client.get(`/dashboard/metrics/consolidated-conversations?dates[]=${params.startDate}&dates[]=${params.endDate}`);
+        return response.data as ConsolidatedConversationsResponse;
     }
 
     //GET https://api-ws.wasapi.io/api/v1/dashboard/metrics/agent-conversations obtener las conversaciones del agente
     async getAgentConversations(params: { startDate: string, endDate: string }): Promise<AgentConversationsResponse> {
-        try {
-            const response = await this.client.get(`/dashboard/metrics/agent-conversations?dates[]=${params.startDate}&dates[]=${params.endDate}`);
-            return response.data as AgentConversationsResponse;
-        } catch (error) {
-            throw error;
-        }
+        const response = await this.client.get(`/dashboard/metrics/agent-conversations?dates[]=${params.startDate}&dates[]=${params.endDate}`);
+        return response.data as AgentConversationsResponse;
     }
 
     //GET https://api-ws.wasapi.io/api/v1/dashboard/metrics/contacts obtener el estado de los contactos
     async getStatusContacts(): Promise<StatusContactsResponse> {
-        try {
-            const response = await this.client.get('/dashboard/metrics/contacts');
-            return response.data as StatusContactsResponse;
-        } catch (error) {
-            throw error;
-        }
+        const response = await this.client.get('/dashboard/metrics/contacts');
+        return response.data as StatusContactsResponse;
     }
 
     //GET https://api-ws.wasapi.io/api/v1/dashboard/metrics/messages obtener las conversaciones
     async getMessages(params: { startDate: string, endDate: string }): Promise<MessagesResponse> {
-        try {
-            const response = await this.client.get(`/dashboard/metrics/messages?dates[]=${params.startDate}&dates[]=${params.endDate}`);
-            return response.data as MessagesResponse;
-        } catch (error) {
-            throw error;
-        }
+        const response = await this.client.get(`/dashboard/metrics/messages?dates[]=${params.startDate}&dates[]=${params.endDate}`);
+        return response.data as MessagesResponse;
     }
 
     //GET https://api-ws.wasapi.io/api/v1/dashboard/metrics/messages-bot obtener las conversaciones del bot
     async getMessagesBot(params: { startDate: string, endDate: string }): Promise<MessagesBotResponse> {
-        try {
-            const response = await this.client.get(`/dashboard/metrics/messages-bot?dates[]=${params.startDate}&dates[]=${params.endDate}`);
-            return response.data as MessagesBotResponse;
-        } catch (error) {
-            throw error;
-        }
+        const response = await this.client.get(`/dashboard/metrics/messages-bot?dates[]=${params.startDate}&dates[]=${params.endDate}`);
+        return response.data as MessagesBotResponse;
     }
 
     /**
@@ -81,8 +53,7 @@ export class MetricsModule {
      * @param request - Parámetros de la solicitud de métricas
      * @returns Promise<AgentMetricResponse>
      */
-    private async  getAgentMetric(request: AgentMetricRequest): Promise<AgentMetricResponse> {
-        try {
+    private async getAgentMetric(request: AgentMetricRequest): Promise<AgentMetricResponse> {
         const params = new URLSearchParams({
             type: request.type,
             agent_id: request.agent_id.toString(),
@@ -91,10 +62,7 @@ export class MetricsModule {
         });
 
         const response = await this.client.get(`/metrics?${params.toString()}`);
-            return response.data as AgentMetricResponse;
-        } catch (error) {
-            throw error;
-        }
+        return response.data as AgentMetricResponse;
     }
 
     /**

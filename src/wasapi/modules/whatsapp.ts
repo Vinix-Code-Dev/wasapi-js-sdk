@@ -5,7 +5,6 @@ import { SendTemplate } from "../models/request/template.model";
 import { ResponseAttachmentWPP, ResponseConversation, ResponseMessageWPP, ResponseSendContact, ResponseWhatsappNumbers } from "../models/response/whatsapp.model";
 import { SendAttachment, SendAttachmentParams, SendMessage } from "../models/request/message.model";
 import { ResponseTemplate, ResponseTemplateById, ResponseTemplateSyncMeta } from "../models/response/template.model";
-import { ExitResponse } from "../models/response/exit.model";
 import { ResponseAllFlows, ResponseFlowResponses, ResponseSendFlow } from "../models/response/flow.model";
 import { GetFlowAssets, GetFlowDetail, GetFlowResponses, SendFlow } from "../models/request/flow.model";
 import { getFileType } from "../helpers/fileType.helper";
@@ -16,17 +15,13 @@ export class WhatsappModule {
 
     //posthttps://api-ws.wasapi.io/api/v1/whatsapp-messages  params message, wa_id, from_id  crea un try catch para manejar el error
     async sendMessage({ from_id, wa_id, message }: SendMessage): Promise<ResponseMessageWPP> {
-        try {
-            const params = { from_id, wa_id, message };
-            const response = await this.client.post('/whatsapp-messages', params);
-            return response.data as ResponseMessageWPP;
-        } catch (error) {
-            throw error;
-        }
+        const params = { from_id, wa_id, message };
+        const response = await this.client.post('/whatsapp-messages', params);
+        return response.data as ResponseMessageWPP;
     }
 
     // POST https://api-ws.wasapi.io/api/v1/whatsapp-messages/attachment enviar un archivo multimedia a whatsapp
-    async sendAttachment({from_id, wa_id, filePath, caption, filename}: SendAttachmentParams): Promise<ResponseAttachmentWPP> {
+    async sendAttachment({ from_id, wa_id, filePath, caption, filename }: SendAttachmentParams): Promise<ResponseAttachmentWPP> {
         const fileType = getFileType(filePath);
         const payload: SendAttachment = {
             from_id: Number(from_id),
@@ -36,138 +31,88 @@ export class WhatsappModule {
             ...(caption ? { caption } : {}),
             ...(filename ? { filename } : {})
         }
-        try {
-            const response = await this.client.post('/whatsapp-messages/attachment', payload);
-            return response.data as ResponseAttachmentWPP;
-        } catch (error) {
-            throw error;
-        }
+        const response = await this.client.post('/whatsapp-messages/attachment', payload);
+        return response.data as ResponseAttachmentWPP;
     }
 
     // POST https://api-ws.wasapi.io/api/v1/whatsapp-messages/send-template
     // Enviar mensaje de plantilla de WhatsApp soporte hasta 20 destinarios por envio
     async sendTemplate({ recipients, template_id, contact_type, ...options }: SendTemplate): Promise<ResponseTemplate> {
-        try {
-            const params = { recipients, template_id, contact_type, ...options };
-            const response = await this.client.post('/whatsapp-messages/send-template', params);
-            return response.data as ResponseTemplate;
-        } catch (error) {
-            throw error;
-        }
+
+        const params = { recipients, template_id, contact_type, ...options };
+        const response = await this.client.post('/whatsapp-messages/send-template', params);
+        return response.data as ResponseTemplate;
     }
 
     // get https://api-ws.wasapi.io/api/v1/whatsapp-messages/{wa_id} cargar la conversacion de whatsapp con wa_id y from_id
     async getConversation(params: { wa_id: string, from_id?: string, page?: number }): Promise<ResponseConversation> {
 
-        try {
-            const response = await this.client.get(`/whatsapp-messages/${params.wa_id}?from_id=${params.from_id}&page=${params.page}`);
-            return response.data as ResponseConversation;
-        } catch (error) {
-            throw error;
-        }
+        const response = await this.client.get(`/whatsapp-messages/${params.wa_id}?from_id=${params.from_id}&page=${params.page}`);
+        return response.data as ResponseConversation;
     }
 
     //https://api-ws.wasapi.io/api/v1/whatsapp-numbers consultar lineas de whatsapp de mi cuenta wasapi 
     async getWhatsappNumbers(): Promise<ResponseWhatsappNumbers> {
-        try {
-            const response = await this.client.get('/whatsapp-numbers');
-            return response.data as ResponseWhatsappNumbers;
-        } catch (error) {
-            throw error;
-        }
+        const response = await this.client.get('/whatsapp-numbers');
+        return response.data as ResponseWhatsappNumbers;
     }
 
     //https://api-ws.wasapi.io/api/v1/whatsapp-templates consultar plantillas de whatsapp
     async getWhatsappTemplates(): Promise<ResponseTemplate> {
-        try {
-            const response = await this.client.get('/whatsapp-templates');
-            return response.data as ResponseTemplate;
-        } catch (error) {
-            throw error;
-        }
+        const response = await this.client.get('/whatsapp-templates');
+        return response.data as ResponseTemplate;
     }
 
     //https://api-ws.wasapi.io/api/v1/whatsapp-templates/{template_uuid} consultar una plantilla de whatsapp
     async getWhatsappTemplate(data: { template_uuid: string }): Promise<ResponseTemplateById> {
-        try {
-            const response = await this.client.get(`/whatsapp-templates/${data.template_uuid}`);
-            return response.data as ResponseTemplateById;
-        } catch (error) {
-            throw error;
-        }
+        const response = await this.client.get(`/whatsapp-templates/${data.template_uuid}`);
+        return response.data as ResponseTemplateById;
     }
 
     // https://api-ws.wasapi.io/api/v1/whatsapp-templates/sync-meta sincronizar plantillas de meta con wasapi
     async syncMetaTemplates(): Promise<ResponseTemplateSyncMeta> {
-        try {
-            const response = await this.client.get('/whatsapp-templates/sync-meta');
-            return response.data as ResponseTemplateSyncMeta;
-        } catch (error) {
-            throw error;
-        }
+        const response = await this.client.get('/whatsapp-templates/sync-meta');
+        return response.data as ResponseTemplateSyncMeta;
     }
 
     // POST https://api-ws.wasapi.io/api/v1/whatsapp-messages/change-status cambia el estado de una conversacion o la trasfiere a nuevo agente de chat
-    async changeStatus({ from_id, wa_id, status, message, ...options}: ChangeStatusParams): Promise<ExitResponse> {
-        const params = {from_id, wa_id, status, message, ...options}
-        try {
-            const response = await this.client.post('/whatsapp-messages/change-status', params);
-            return response.data as ExitResponse;
-        } catch (error) {
-            throw error;
-        }
+    async changeStatus({ from_id, wa_id, status, message, ...options }: ChangeStatusParams): Promise<any> {
+        const params = { from_id, wa_id, status, message, ...options }
+        const response = await this.client.post('/whatsapp-messages/change-status', params);
+        return response.data;
     }
 
     // POST https://api-ws.wasapi.io/api/v1/whatsapp-messages/send-contacts
-    async sendContacts({wa_id, from_id, context_wam_id, contacts}: SendContact): Promise<ResponseSendContact> {
-        const params = {wa_id, from_id, context_wam_id, contacts}
-        try {
-            const response = await this.client.post('/whatsapp-messages/send-contacts', params);
-            return response.data as ResponseSendContact;
-        } catch (error) {
-            throw error;
-        }
+    async sendContacts({ wa_id, from_id, context_wam_id, contacts }: SendContact): Promise<ResponseSendContact> {
+        const params = { wa_id, from_id, context_wam_id, contacts }
+        const response = await this.client.post('/whatsapp-messages/send-contacts', params);
+        return response.data as ResponseSendContact;
     }
 
     // GET https://api-ws.wasapi.io/api/v1/whatsapp-flows
     async getFlows(): Promise<ResponseAllFlows> {
-        try {
-            const response = await this.client.get('/whatsapp-flows');
-            return response.data as ResponseAllFlows;
-        } catch (error) {
-            throw error;
-        }
+        const response = await this.client.get('/whatsapp-flows');
+        return response.data as ResponseAllFlows;
     }
 
     // POST https://api-ws.wasapi.io/api/v1/whatsapp-flows enviar un mensaje con un flujo
-    async sendFlow({ wa_id, message, phone_id, cta, screen, flow_id, action} :SendFlow): Promise<ResponseSendFlow> {
-        const params = {wa_id, message, phone_id, cta, screen, flow_id, action}
-        try {
-            const response = await this.client.post('/whatsapp-flows', params);
-            return response.data as ResponseSendFlow;
-        } catch (error) {
-            throw error;
-        }
+    async sendFlow({ wa_id, message, phone_id, cta, screen, flow_id, action }: SendFlow): Promise<ResponseSendFlow> {
+        const params = { wa_id, message, phone_id, cta, screen, flow_id, action }
+        const response = await this.client.post('/whatsapp-flows', params);
+        return response.data as ResponseSendFlow;
+
     }
 
     // GET https://api-ws.wasapi.io/api/v1/whatsapp-flows/{flow_id}/responses?page=1&per_page=10 consultar las respuestas de un flujo
-    async getFlowResponses({flow_id, page, per_page}: GetFlowResponses): Promise<ResponseFlowResponses> {
-        try {
-            const response = await this.client.get(`/whatsapp-flows/${flow_id}/responses?page=${page}&per_page=${per_page}`);
-            return response.data as ResponseFlowResponses;
-        } catch (error) {
-            throw error;
-        }
+    async getFlowResponses({ flow_id, page, per_page }: GetFlowResponses): Promise<ResponseFlowResponses> {
+        const response = await this.client.get(`/whatsapp-flows/${flow_id}/responses?page=${page}&per_page=${per_page}`);
+        return response.data as ResponseFlowResponses;
     }
 
     // POST https://api-ws.wasapi.io/api/v1/whatsapp-flows/{flow_id}/assets?phone_id={phone_id}  consultar los recursos de un flujo
-    async getFlowAssets({ flow_id, phone_id}: GetFlowAssets): Promise<GetFlowDetail> {
-        try {
-            const response = await this.client.post(`/whatsapp-flows/${flow_id}/assets?phone_id=${phone_id}`);
-            return response.data as GetFlowDetail;
-        } catch (error) {
-            throw error;
-        }
+    async getFlowAssets({ flow_id, phone_id }: GetFlowAssets): Promise<GetFlowDetail> {
+        const response = await this.client.post(`/whatsapp-flows/${flow_id}/assets?phone_id=${phone_id}`);
+        return response.data as GetFlowDetail;
     }
 
 }   

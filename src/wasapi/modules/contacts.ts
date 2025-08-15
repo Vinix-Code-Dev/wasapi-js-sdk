@@ -1,9 +1,7 @@
 import { IModule } from "../interfaces/IModule";
 import { AxiosClient } from "../client";
 import { ResponseAllContacts, ResponseContactById } from "../models/response/contact.model";
-import { ErrorResponse } from "../models/response/error.model";
 import { CreateContact, SearchContactParams, UpdateContactParams } from "../models/request/contact.model";
-import { ExitResponse } from "../models/response/exit.model";
 import { ExportContactsRequest, isValidExportContactsRequest } from "../validator/exportContacts";
 
 
@@ -13,67 +11,44 @@ export class ContactsModule implements IModule {
 
     // GET https://api-ws.wasapi.io/api/v1/contacts consulta todos los contactos
     async getAll(): Promise<ResponseAllContacts> {
-        try {
-            const response = await this.client.get('/contacts');
-            return response.data as ResponseAllContacts;
-        } catch (error) {
-            throw error as ErrorResponse;
-        }
+        const response = await this.client.get('/contacts');
+        return response.data as ResponseAllContacts;
     }
 
     // GET https://api-ws.wasapi.io/api/v1/contacts?page={page}&search={search}&labels={labels} consulta los contactos por nombre, email, telefono, etiquetas o paginacion
     async getSearch({ search, labels, page }: SearchContactParams): Promise<ResponseAllContacts> {
-        try {
-            const paramsSearch = new URLSearchParams();
-            if (search) paramsSearch.append('search', search);
-            if (labels) paramsSearch.append('labels', labels.toString());
-            if (page) paramsSearch.append('page', page.toString());
-            const response = await this.client.get(`/contacts?${paramsSearch.toString()}`);
-            return response.data as ResponseAllContacts;
-        } catch (error) {
-            throw error as ErrorResponse;
-        }
+        const paramsSearch = new URLSearchParams();
+        if (search) paramsSearch.append('search', search);
+        if (labels) paramsSearch.append('labels', labels.toString());
+        if (page) paramsSearch.append('page', page.toString());
+        const response = await this.client.get(`/contacts?${paramsSearch.toString()}`);
+        return response.data as ResponseAllContacts;
     }
 
     // GET https://api-ws.wasapi.io/api/v1/contacts/{wa_id} consulta un contacto por su uuid
     async getById(wa_id: string): Promise<ResponseContactById> {
-        try {
-            const response = await this.client.get(`/contacts/${wa_id}`);
-            return response.data as ResponseContactById;
-        } catch (error) {
-            throw error as ErrorResponse;
-        }
+        const response = await this.client.get(`/contacts/${wa_id}`);
+        return response.data as ResponseContactById;
+
     }
 
     // POST https://api-ws.wasapi.io/api/v1/contacts crea un nuevo contacto
     async create({ first_name, last_name, email, country_code, phone, ...options }: CreateContact): Promise<ResponseContactById> {
-        const data = {first_name, last_name, email, country_code, phone, ...options }
-        try {
-            const response = await this.client.post('/contacts', data);
-            return response.data as ResponseContactById;
-        } catch (error) {
-            throw error as ErrorResponse;
-        }
+        const data = { first_name, last_name, email, country_code, phone, ...options }
+        const response = await this.client.post('/contacts', data);
+        return response.data as ResponseContactById;
     }
 
     // PUT https://api-ws.wasapi.io/api/v1/contacts/{wa_id} actualiza un contacto existente
     async update({ wa_id, data }: UpdateContactParams): Promise<ResponseContactById> {
-        try {
-            const response = await this.client.put(`/contacts/${wa_id}`, data);
-            return response.data as ResponseContactById;
-        } catch (error) {
-            throw error as ErrorResponse;
-        }
+        const response = await this.client.put(`/contacts/${wa_id}`, data);
+        return response.data as ResponseContactById;
     }
 
     // DELETE https://api-ws.wasapi.io/api/v1/contacts/{wa_id} elimina un contacto existente
-    async delete(id: string): Promise<ExitResponse> {
-        try {
-            const response = await this.client.delete(`/contacts/${id}`);
-            return response.data as ExitResponse;
-        } catch (error) {
-            throw error as ErrorResponse;
-        }
+    async delete(id: string): Promise<any> {
+        const response = await this.client.delete(`/contacts/${id}`);
+        return response.data;
     }
 
     /**

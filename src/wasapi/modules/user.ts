@@ -6,11 +6,7 @@ export class UserModule {
 
     //GET https://api-ws.wasapi.io/api/v1/user obtener el usuario MANAGER de la cuenta
     async getUser(): Promise<UserResponse> {
-        try {
-            const response = await this.client.get('/user');
-            return response.data as UserResponse;
-        } catch (error) {
-            throw error;
-        }
+        const response = await this.client.get('/user');
+        return response.data as UserResponse;
     }
 }
