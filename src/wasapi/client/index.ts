@@ -1,40 +1,61 @@
-import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
+import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse, AxiosError } from 'axios';
 import { IAxiosClient } from '../interfaces/axiosInterface';
-
+import { WasapiErrorHandler } from '../handler/errorHandler';
 
 export class AxiosClient implements IAxiosClient {
-    private static instance: AxiosClient | null = null;
-    private static axiosInstance: AxiosInstance | null = null;
     private api: AxiosInstance;
+    private errorHandler: WasapiErrorHandler;
 
-    private constructor(apiKey: string, baseURL: string = process.env.WASAPI_BASE_URL || 'https://api-ws.wasapi.io/api/v1') {
-        // Singleton para Axios - solo una instancia de axios en toda la app
-        if (!AxiosClient.axiosInstance) {
-            AxiosClient.axiosInstance = axios.create({
-                baseURL,
-                headers: {
-                    'Authorization': `Bearer ${apiKey}`,
-                    'Content-Type': 'application/json',
-                },
-            });
+    constructor(apiKey: string, baseURL?: string) {
+        // Validate that API key is not empty
+        if (!apiKey || apiKey.trim() === '') {
+            throw new Error('WasAPI: API key is required and cannot be empty');
         }
-        this.api = AxiosClient.axiosInstance;
+
+        // Set default baseURL if not provided
+        const finalBaseURL = baseURL || 'https://api-ws.wasapi.io/api/v1';
+        
+        // Get error handler instance
+        this.errorHandler = WasapiErrorHandler.getInstance();
+        
+        // Create new axios instance for each client
+        this.api = axios.create({
+            baseURL: finalBaseURL,
+            headers: {
+                'Authorization': `Bearer ${apiKey}`,
+                'Content-Type': 'application/json',
+            },
+            timeout: 30000, // 30 seconds timeout
+        });
+
+        // Setup interceptors for HTTP handling only
+        this.setupInterceptors();
     }
 
-    public static getInstance(apiKey: string, baseURL?: string): AxiosClient {
-        if (!AxiosClient.instance) {
-            AxiosClient.instance = new AxiosClient(apiKey, baseURL);
-        }
-        return AxiosClient.instance;
-    }
+    private setupInterceptors(): void {
+        // Request interceptor - just logging
+        this.api.interceptors.request.use(
+            (config) => {
+                this.errorHandler.logRequest(config.method || 'GET', config.url || '');
+                return config;
+            },
+            (error) => {
+                this.errorHandler.handleRequestError(error);
+                return Promise.reject(error);
+            }
+        );
 
-    public static resetInstance(): void {
-        AxiosClient.instance = null;
-        AxiosClient.axiosInstance = null;
-    }
-
-    public static getAxiosInstance(): AxiosInstance | null {
-        return AxiosClient.axiosInstance;
+        // Response interceptor - delegate error handling
+        this.api.interceptors.response.use(
+            (response) => {
+                this.errorHandler.logResponse(response.status, response.config.url || '');
+                return response;
+            },
+            (error: AxiosError) => {
+                this.errorHandler.handleResponseError(error);
+                return Promise.reject(error);
+            }
+        );
     }
 
     public get<T = any>(url: string, config?: AxiosRequestConfig): Promise<AxiosResponse<T>> {
@@ -51,5 +72,15 @@ export class AxiosClient implements IAxiosClient {
 
     public delete<T = any>(url: string, config?: AxiosRequestConfig): Promise<AxiosResponse<T>> {
         return this.api.delete<T>(url, config);
+    }
+
+    // Method to validate connection
+    public async validateConnection(): Promise<boolean> {
+        try {
+            await this.api.get('/user'); // Simple endpoint to validate
+            return true;
+        } catch (error) {
+            return false;
+        }
     }
 }
