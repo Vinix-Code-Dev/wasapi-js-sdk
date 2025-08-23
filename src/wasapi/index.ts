@@ -1,7 +1,7 @@
 import { AxiosClient } from "./client";
 import { BotModule, CampaignsModule, ContactsModule, CustomFieldsModule, FunnelsModule, LabelsModule, MetricsModule, UserModule, WhatsappModule, WorkflowModule } from "./modules";
 
-interface WasapiConfig {
+export interface WasapiConfig {
     apiKey: string;
     baseURL?: string;
     from_id?: string | number;
@@ -28,7 +28,7 @@ class WasapiClient {
             this.config = config;
         }
         
-        this.client = AxiosClient.getInstance(this.config.apiKey, this.config.baseURL);
+        this.client = new AxiosClient(this.config.apiKey, this.config.baseURL);
         this.campaigns = new CampaignsModule(this.client);
         this.contacts = new ContactsModule(this.client);
         this.customFields = new CustomFieldsModule(this.client);
@@ -41,7 +41,7 @@ class WasapiClient {
         this.workflow = new WorkflowModule(this.client);
     }
     
-    // Métodos para obtener la instancia de Axios y que cumple con el patrón singleton
+    // Method to get client instance
     public getClient(): AxiosClient {
         return this.client;
     }
@@ -50,17 +50,10 @@ class WasapiClient {
         return this.config;
     }
 
-    public resetClient(): void {
-        AxiosClient.resetInstance();
-    }
-
-    public static sharesSameAxiosInstance(client1: WasapiClient, client2: WasapiClient): boolean {
-        return client1.getClient() === client2.getClient();
-    }
-
-    public static getSharedAxiosInstance(): any {
-        return AxiosClient.getAxiosInstance();
+    // Method to validate connection
+    public async validateConnection(): Promise<boolean> {
+        return await this.client.validateConnection();
     }
 }
 
-export { WasapiClient, WasapiConfig }; 
+export { WasapiClient }; 
