@@ -1,10 +1,15 @@
 import { AxiosClient } from "./client";
 import { BotModule, CampaignsModule, ContactsModule, CustomFieldsModule, FunnelsModule, LabelsModule, MetricsModule, UserModule, WhatsappModule, WorkflowModule } from "./modules";
 
-
+interface WasapiConfig {
+    apiKey: string;
+    baseURL?: string;
+    from_id?: string | number;
+}
 
 class WasapiClient {
     private client: AxiosClient;
+    private config: WasapiConfig;
     public campaigns: CampaignsModule;
     public contacts: ContactsModule;
     public customFields: CustomFieldsModule;
@@ -15,8 +20,15 @@ class WasapiClient {
     public user: UserModule;
     public whatsapp: WhatsappModule;
     public workflow: WorkflowModule;
-    constructor(apiKey: string, baseURL?: string) {
-        this.client = AxiosClient.getInstance(apiKey, baseURL);
+    
+    constructor(config: WasapiConfig | string) {
+        if (typeof config === 'string') {
+            this.config = { apiKey: config };
+        } else {
+            this.config = config;
+        }
+        
+        this.client = AxiosClient.getInstance(this.config.apiKey, this.config.baseURL);
         this.campaigns = new CampaignsModule(this.client);
         this.contacts = new ContactsModule(this.client);
         this.customFields = new CustomFieldsModule(this.client);
@@ -25,13 +37,17 @@ class WasapiClient {
         this.labels = new LabelsModule(this.client);
         this.metrics = new MetricsModule(this.client);
         this.user = new UserModule(this.client);
-        this.whatsapp = new WhatsappModule(this.client);
+        this.whatsapp = new WhatsappModule(this.client, this.config.from_id);
         this.workflow = new WorkflowModule(this.client);
     }
-    //Metodos para obtener la instancia de Axios y que cumple con el patron singleton
-
+    
+    // Métodos para obtener la instancia de Axios y que cumple con el patrón singleton
     public getClient(): AxiosClient {
         return this.client;
+    }
+
+    public getConfig(): WasapiConfig {
+        return this.config;
     }
 
     public resetClient(): void {
@@ -47,4 +63,4 @@ class WasapiClient {
     }
 }
 
-export { WasapiClient }; 
+export { WasapiClient, WasapiConfig }; 

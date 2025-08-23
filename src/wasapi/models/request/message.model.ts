@@ -17,7 +17,7 @@ export interface SendAttachment {
 }
 
 export interface SendAttachmentParams {
-    from_id: string;
+    from_id?: string;
     wa_id: string;
     filePath: string;
     caption?: string;

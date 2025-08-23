@@ -10,18 +10,22 @@ dotenv.config();
  * ejemplo de envio de mensaje de whatsapp
  */
 
-// configuracion del cliente
-const client = new WasapiClient(process.env.API_KEY_WASAPI || '');
+// configuracion del cliente con from_id incluido
+const client = new WasapiClient({
+    apiKey: process.env.API_KEY_WASAPI || '',
+    from_id: constants.MY_FROM_ID
+});
 
-// ejemplo 1: mensaje simple
+
+// ejemplo 1: mensaje simple (sin necesidad de especificar from_id)
 export async function simpleMessageExample() {
     try {
         console.log('📱 Enviando mensaje simple...');
 
         const params = {
             message: 'Hola! ¿Cómo estás? esto es un mensaje simple',
-            wa_id: constants.CLIENT_WA_ID,
-            from_id: constants.MY_FROM_ID
+            wa_id: constants.CLIENT_WA_ID
+            // from_id se usa automáticamente desde la configuración del cliente
         };
 
         const result = await client.whatsapp.sendMessage(params);
@@ -33,21 +37,22 @@ export async function simpleMessageExample() {
     }
 }
 
-// ejemplo 2: mensaje sin from_id (usa el default)
-export async function withoutFromIdExample() {
+// ejemplo 2: mensaje con from_id personalizado (override)
+export async function customFromIdExample() {
     try {
-        console.log('📱 Enviando mensaje sin from_id...');
+        console.log('📱 Enviando mensaje con from_id personalizado...');
 
         const params = {
-            message: 'Hola! ¿Cómo estás? esto es un mensaje simple sin from_id',
-            wa_id: constants.CLIENT_WA_ID
+            message: 'Hola! ¿Cómo estás? esto es un mensaje con from_id personalizado',
+            wa_id: constants.CLIENT_WA_ID,
+            from_id: '99999' // Override del from_id por defecto
         };
 
         const result = await client.whatsapp.sendMessage(params);
-        console.log('✅ Mensaje enviado sin from_id:', result);
+        console.log('✅ Mensaje enviado con from_id personalizado:', result);
         return result;
     } catch (error) {
-        console.error('❌ Error al enviar mensaje sin from_id:', error);
+        console.error('❌ Error al enviar mensaje con from_id personalizado:', error);
         throw error;
     }
 }
@@ -79,8 +84,8 @@ Equipo de Ventas
 
         const params = {
             message: longMessage,
-            wa_id: constants.CLIENT_WA_ID,
-            from_id: constants.MY_FROM_ID
+            wa_id: constants.CLIENT_WA_ID
+            // from_id se usa automáticamente desde la configuración del cliente
         };
 
         const result = await client.whatsapp.sendMessage(params);
@@ -92,15 +97,15 @@ Equipo de Ventas
     }
 }
 
-// Exa`mple 4: Message with emojis`
+// Example 4: Message with emojis
 export async function emojiMessageExample() {
     try {
         console.log('📱 Enviando mensaje con emojis...');
 
         const params = {
             message: '🎉 ¡Feliz cumpleaños! 🎂 ¡Esperamos que tengas un día maravilloso! 🎁✨',
-            wa_id: constants.CLIENT_WA_ID,
-            from_id: constants.MY_FROM_ID
+            wa_id: constants.CLIENT_WA_ID
+            // from_id se usa automáticamente desde la configuración del cliente
         };
 
         const result = await client.whatsapp.sendMessage(params);
@@ -119,8 +124,8 @@ export async function confirmationMessageExample() {
 
         const params = {
             message: '✅ Tu pedido #12345 ha sido confirmado y está siendo procesado. Te notificaremos cuando esté listo para envío.',
-            wa_id: constants.CLIENT_WA_ID,
-            from_id: constants.MY_FROM_ID
+            wa_id: constants.CLIENT_WA_ID
+            // from_id se usa automáticamente desde la configuración del cliente
         };
 
         const result = await client.whatsapp.sendMessage(params);
@@ -138,11 +143,11 @@ export async function sendAttachmentExample() {
         console.log('📱 Enviando archivo multimedia a whatsapp...');
 
         const params: SendAttachmentParams = {
-            from_id: constants.MY_FROM_ID,
             wa_id: constants.CLIENT_WA_ID,
             filePath: constants.URL_FILE_IMAGE,
             caption: 'Esta es una imagen de prueba usando metodo sendAttachment',
             filename: 'image.jpg'
+            // from_id se usa automáticamente desde la configuración del cliente
         };
 
         const result = await client.whatsapp.sendAttachment(params);
@@ -153,6 +158,7 @@ export async function sendAttachmentExample() {
         throw error;
     }
 }
+
 // funcion para ejecutar todos los ejemplos
 export async function runAllExamples() {
     console.log('🚀 Iniciando ejemplos de envio de mensajes...\n');
@@ -162,7 +168,7 @@ export async function runAllExamples() {
         await simpleMessageExample();
         console.log('---\n');
 
-        await withoutFromIdExample();
+        await customFromIdExample();
         console.log('---\n');
 
         await longMessageExample();

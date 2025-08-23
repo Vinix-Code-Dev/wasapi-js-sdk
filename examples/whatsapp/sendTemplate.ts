@@ -11,16 +11,22 @@ dotenv.config();
  * ejemplo de envio de mensaje de plantilla de whatsapp
  */
 
-// configuracion del cliente
-const client = new WasapiClient(process.env.API_KEY_WASAPI || '');
+// configuracion del cliente con from_id incluido
+const client = new WasapiClient({
+    apiKey: process.env.API_KEY_WASAPI || '',
+    from_id: constants.MY_FROM_ID
+});
+
+// Ejemplo de compatibilidad con constructor anterior
+// const client = new WasapiClient(process.env.API_KEY_WASAPI || '');
 
 const templateBase: SendTemplate = {
     recipients: constants.CLIENT_WA_ID,
     template_id: constants.TEMPLATE_UUID,
     contact_type: 'phone',
-    from_id: parseInt(constants.MY_FROM_ID),
     chatbot_status: 'enable',
     conversation_status: 'unchanged'
+    // from_id se usa automáticamente desde la configuración del cliente
 }
 
 // ejemplo 1: mensaje simple con variables
@@ -110,7 +116,25 @@ export async function PdfTemplateExample() {
     }
 }
 
+// ejemplo 3: mensaje con from_id personalizado (override)
+export async function customFromIdTemplateExample() {
+    try {
+        console.log('📱 Enviando mensaje de plantilla con from_id personalizado...');
 
+        const templateParams: SendTemplate = {
+            ...templateBase,
+            template_id: constants.TEMPLATE_UUID,
+            from_id: 99999, // Override del from_id por defecto
+        };
+
+        const result = await client.whatsapp.sendTemplate(templateParams);
+        console.log('✅ plantilla enviada con from_id personalizado:', result);
+        return result;
+    } catch (error) {
+        console.error('❌ Error al enviar plantilla con from_id personalizado:', error);
+        throw error;
+    }
+}
 
 // Function to run all examples
 export async function runAllExamples() {
@@ -130,6 +154,8 @@ export async function runAllExamples() {
         await PdfTemplateExample();
         console.log('---\n');
 
+        await customFromIdTemplateExample();
+        console.log('---\n');
 
         console.log('🎉 Ejemplos de envio de plantilla ejecutados exitosamente!');
     } catch (error) {

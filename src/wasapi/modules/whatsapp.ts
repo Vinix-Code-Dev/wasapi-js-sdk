@@ -11,11 +11,19 @@ import { getFileType } from "../helpers/fileType.helper";
 
 
 export class WhatsappModule {
-    constructor(private client: AxiosClient) { }
+    private defaultFromId?: string | number;
+
+    constructor(private client: AxiosClient, defaultFromId?: string | number) {
+        this.defaultFromId = defaultFromId;
+    }
 
     //posthttps://api-ws.wasapi.io/api/v1/whatsapp-messages  params message, wa_id, from_id  crea un try catch para manejar el error
     async sendMessage({ from_id, wa_id, message }: SendMessage): Promise<ResponseMessageWPP> {
-        const params = { from_id, wa_id, message };
+        const params = { 
+            from_id: from_id || this.defaultFromId, 
+            wa_id, 
+            message 
+        };
         const response = await this.client.post('/whatsapp-messages', params);
         return response.data as ResponseMessageWPP;
     }
@@ -24,7 +32,7 @@ export class WhatsappModule {
     async sendAttachment({ from_id, wa_id, filePath, caption, filename }: SendAttachmentParams): Promise<ResponseAttachmentWPP> {
         const fileType = getFileType(filePath);
         const payload: SendAttachment = {
-            from_id: Number(from_id),
+            from_id: Number(from_id || this.defaultFromId),
             wa_id,
             file: fileType,
             [fileType]: filePath,
@@ -37,9 +45,15 @@ export class WhatsappModule {
 
     // POST https://api-ws.wasapi.io/api/v1/whatsapp-messages/send-template
     // Enviar mensaje de plantilla de WhatsApp soporte hasta 20 destinarios por envio
-    async sendTemplate({ recipients, template_id, contact_type, ...options }: SendTemplate): Promise<ResponseTemplate> {
+    async sendTemplate({ recipients, template_id, contact_type, from_id, ...options }: SendTemplate): Promise<ResponseTemplate> {
 
-        const params = { recipients, template_id, contact_type, ...options };
+        const params = { 
+            recipients, 
+            template_id, 
+            contact_type, 
+            from_id: from_id || this.defaultFromId, 
+            ...options 
+        };
         const response = await this.client.post('/whatsapp-messages/send-template', params);
         return response.data as ResponseTemplate;
     }
@@ -77,14 +91,25 @@ export class WhatsappModule {
 
     // POST https://api-ws.wasapi.io/api/v1/whatsapp-messages/change-status cambia el estado de una conversacion o la trasfiere a nuevo agente de chat
     async changeStatus({ from_id, wa_id, status, message, ...options }: ChangeStatusParams): Promise<any> {
-        const params = { from_id, wa_id, status, message, ...options }
+        const params = { 
+            from_id: from_id || this.defaultFromId, 
+            wa_id, 
+            status, 
+            message, 
+            ...options 
+        }
         const response = await this.client.post('/whatsapp-messages/change-status', params);
         return response.data;
     }
 
     // POST https://api-ws.wasapi.io/api/v1/whatsapp-messages/send-contacts
     async sendContacts({ wa_id, from_id, context_wam_id, contacts }: SendContact): Promise<ResponseSendContact> {
-        const params = { wa_id, from_id, context_wam_id, contacts }
+        const params = { 
+            wa_id, 
+            from_id: from_id || this.defaultFromId, 
+            context_wam_id, 
+            contacts 
+        }
         const response = await this.client.post('/whatsapp-messages/send-contacts', params);
         return response.data as ResponseSendContact;
     }
