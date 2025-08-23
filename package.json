@@ -1,7 +1,7 @@
 {
   "name": "@laiyon/wasapi-sdk",
   "version": "0.1.15",
-  "description": "SDK oficial para Wasapi (WhatsApp, campañas, contactos, flujos, bots etc.)",
+  "description": "SDK no oficial para Wasapi (WhatsApp, campañas, contactos, flujos, bots etc.)",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
   "types": "dist/types/index.d.ts",
