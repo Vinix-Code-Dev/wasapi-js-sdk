@@ -1,115 +1,150 @@
-## @laiyon/wasapi-sdk
+# @laiyon/wasapi-sdk
 
-SDK no oficial de Wasapi para integrarte rápido con WhatsApp, campañas, contactos, flujos y más. Incluye tipos TypeScript y soporta ESM y CJS.
+[![npm version](https://img.shields.io/npm/v/@laiyon/wasapi-sdk.svg)](https://www.npmjs.com/package/@laiyon/wasapi-sdk)
+[![npm downloads](https://img.shields.io/npm/dm/@laiyon/wasapi-sdk.svg)](https://www.npmjs.com/package/@laiyon/wasapi-sdk)
+[![Node.js version](https://img.shields.io/node/v/@laiyon/wasapi-sdk.svg)](https://nodejs.org/)
+[![License](https://img.shields.io/npm/l/@laiyon/wasapi-sdk.svg)](https://github.com/juanalvarezPro/@laiyon/wasapi-sdk/blob/main/LICENSE)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.0+-blue.svg)](https://www.typescriptlang.org/)
 
-- **Ecosistema**: WhatsApp Messages, Templates, Contacts, Labels, Campaigns, Flows, Metrics, Workflow...
-- **Runtime**: Node >= 18
-- **Tipos**: incluidos (.d.ts)
-- **Módulos**: ESM y CJS
-- **Subpaths**: `@laiyon/wasapi-sdk`, `@laiyon/wasapi-sdk/models`
+Unofficial Wasapi SDK to quickly integrate with WhatsApp, campaigns, contacts, flows and more.
 
-### Instalación
+## 🚀 Installation
 
 ```bash
-npm i @laiyon/wasapi-sdk
-# o
+npm install @laiyon/wasapi-sdk
+# or
 yarn add @laiyon/wasapi-sdk
 ```
 
-### Importación
+## 📦 Import
 
-- ESM:
-```ts
+```typescript
 import { WasapiClient } from '@laiyon/wasapi-sdk'
 ```
 
-- CJS:
-```js
-const { WasapiClient } = require('@laiyon/wasapi-sdk')
-```
+## ⚡ Quick Start
 
+### 1. Client with from_id (Recommended for production)
 
-## Uso rápido
-
-### Crear cliente
-```ts
+```typescript
 import { WasapiClient } from '@laiyon/wasapi-sdk'
 
-const API_KEY = process.env.API_KEY_WASAPI as string
-// baseURL opcional (usa el default del servicio si lo omites)
-const client = new WasapiClient(API_KEY /*, 'https://api-ws.wasapi.io/api/v1' */)
+const client = new WasapiClient({
+  apiKey: API_KEY,
+  from_id: 123456, // Your WhatsApp number ID in Wasapi
+})
+
+// Validate connection
+const isValid = await client.validateConnection()
+if (isValid) {
+  console.log('✅ Connection successful')
+} else {
+  console.log('❌ Connection error')
+}
 ```
 
-### Enviar mensaje simple (WhatsApp)
-```ts
+### 2. Client without from_id (For specific cases)
+
+```typescript
+import { WasapiClient } from '@laiyon/wasapi-sdk'
+
+// Option A: API key only
+const client = new WasapiClient(API_KEY)
+
+// Option B: With custom configuration
+const client = new WasapiClient({
+  apiKey: API_KEY,
+  baseURL: 'https://api-ws.wasapi.io/api/v1' // Optional
+})
+
+// You'll need to specify from_id in each request
+```
+
+## 💬 Usage Examples
+
+### Send Simple Message
+
+```typescript
+// With from_id in client
 const result = await client.whatsapp.sendMessage({
   wa_id: '57300XXXXXXX',
-  message: 'Hola! 👋',
-  from_id: 123456 // el id de tu numero en la base de datos de wasapi
+  message: 'Hello! 👋'
+  // from_id is automatically taken from client
 })
-console.log(result)
-```
 
-### Enviar adjunto (imagen/video/documento/audio)
-```ts
-const result = await client.whatsapp.sendAttachment({
-  from_id: 123456,
+// Without from_id in client
+const result = await client.whatsapp.sendMessage({
   wa_id: '57300XXXXXXX',
-  filePath: 'https://example.com/image.jpg',
-  caption: 'Imagen de prueba',
-  filename: 'image.jpg'
+  message: 'Hello! 👋',
+  from_id: 123456 // You must specify it in each request
 })
 ```
 
-### Enviar template (plantilla de WhatsApp)
-Usa una “base” y agrega solo lo necesario con spread:
-```ts
+### Send Template
+
+```typescript
 import { SendTemplate } from '@laiyon/wasapi-sdk/models'
 
-const templateBase: SendTemplate = {
+const template: SendTemplate = {
   recipients: '57300XXXXXXX',
   template_id: 'TEMPLATE_UUID',
   contact_type: 'phone',
-  from_id: 123456,
   chatbot_status: 'enable',
   conversation_status: 'unchanged'
+  // from_id is taken from client if configured
 }
 
-const sent = await client.whatsapp.sendTemplate({
-  ...templateBase,
-  // agrega variables solo si tu plantilla las requiere
-  // archivo opcional
-  // file: 'image',
-  // url_file: 'https://example.com/image.jpg',
-  // file_name: 'image.jpg'
+const sent = await client.whatsapp.sendTemplate(template)
+```
+
+### Send Attachment
+
+```typescript
+const result = await client.whatsapp.sendAttachment({
+  wa_id: '57300XXXXXXX',
+  filePath: 'https://example.com/image.jpg',
+  caption: 'Test image',
+  filename: 'image.jpg'
+  // from_id is taken from client if configured
 })
 ```
 
+## 🔧 Client Configuration
 
+```typescript
+interface WasapiConfig {
+  apiKey: string;           // Your Wasapi API key (required)
+  from_id?: string | number; // Your WhatsApp number ID (recommended)
+  baseURL?: string;         // API base URL (optional, handled internally)
+}
 
-## API principal
-- **Cliente**
-  - `new WasapiClient(apiKey: string, baseURL?: string)`
-- **Módulos** (accesibles vía `client.X`):
-  - `whatsapp`: `sendMessage`, `sendAttachment`, `sendTemplate`, `getConversation`, `getWhatsappNumbers`, `getWhatsappTemplates`, `getWhatsappTemplate`, `syncMetaTemplates`, `changeStatus`, `sendContacts`, `getFlows`, `sendFlow`, `getFlowResponses`, `getFlowAssets`
-  - `contacts`, `labels`, `campaigns`, `customFields`, `funnels`, `metrics`, `workflow`, `user`, `bot`
-- **Modelos y tipos**: disponibles en `@laiyon/wasapi-sdk/models`
-
-## Tipos y DX
-- El paquete incluye `.d.ts` para todo el SDK
-- Importa tipos directamente:
-```ts
-import { SendTemplate } from '@laiyon/wasapi-sdk/models'
+// Two ways to instantiate:
+const client1 = new WasapiClient(API_KEY) // API key only
+const client2 = new WasapiClient({ apiKey: API_KEY, from_id: 123 }) // With configuration
 ```
 
-## Requisitos
+## 📚 Available Modules
+
+- **`whatsapp`**: Messages, templates, attachments, conversations
+- **`contacts`**: Contact management
+- **`campaigns`**: Marketing campaigns
+- **`flows`**: Automated flows
+- **`labels`**: Contact labels
+- **`metrics`**: Metrics and reports
+- **`workflow`**: Process automation
+
+
+## 📖 Complete Documentation
+
+For detailed documentation, visit: **[wasapi-sdk.juanalvarez.pro](https://wasapi-sdk.juanalvarez.pro)**
+
+## 🔗 Links
+
+- 📦 [NPM Package](https://www.npmjs.com/package/@laiyon/wasapi-sdk)
+- 🐛 [Issues](https://github.com/juanalvarezPro/@laiyon/wasapi-sdk/issues)
+- 📚 [Documentation](https://wasapi-sdk.juanalvarez.pro)
+
+## 📋 Requirements
+
 - Node.js >= 18
-- API Key de Wasapi (`API_KEY_WASAPI`)
-
-
-## Enlaces
-- Repositorio: https://github.com/juanalvarezPro/@laiyon/wasapi-sdk
-- Issues: usa el repositorio para reportar errores o solicitar features
-
-
-
+- Wasapi API Key
