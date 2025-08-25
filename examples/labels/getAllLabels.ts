@@ -3,35 +3,36 @@ import { WasapiClient } from '../../src/wasapi';
 import dotenv from 'dotenv';
 
 dotenv.config();
-// configuracion del cliente
-const client = new WasapiClient(process.env.API_KEY_WASAPI || '');
+// client configuration
+const client = new WasapiClient(process.env.API_KEY || '');
 
-export async function getAllLabels() {
+async function getAllLabels() {
     try {
 
-        console.log('🔄 Obteniendo todas las etiquetas...');
+        console.log('🔄 getting all labels...');
         
-        // Obtener todas las etiquetas
+        // get all labels
         const response = await client.labels.getAll();
         
         if (response.success) {
-            console.log('✅ Etiquetas obtenidas exitosamente:');
-            console.log(`📊 Total de etiquetas: ${response.labels.length}`);
+            console.log('✅ labels obtained successfully:');
+            console.log(`📊 Total labels: ${response.labels.length}`);
             
             response.labels.forEach((label, index) => {
                 console.log(`\n🏷️  Etiqueta ${index + 1}:`);
                 console.log(`   ID: ${label.id}`);
-                console.log(`   Título: ${label.title}`);
-                console.log(`   Descripción: ${label.description || 'Sin descripción'}`);
+                console.log(`   Title: ${label.title}`);
+                console.log(`   Description: ${label.description || 'No description'}`);
                 console.log(`   Color: ${label.color}`);
-                console.log(`   Última actualización: ${label.updated_at}`);
+                console.log(`   Last update: ${label.updated_at}`);
             });
         } else {
-            console.log('❌ Error al obtener las etiquetas');
+            console.log('❌ Error getting labels');
         }
         
     } catch (error) {
-        console.error('❌ Error en getAllLabels:', error);
+        console.error('❌ Error getting labels:', error);
     }
 }
 
+getAllLabels();
