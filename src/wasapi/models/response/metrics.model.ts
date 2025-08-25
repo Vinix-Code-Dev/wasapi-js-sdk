@@ -7,11 +7,12 @@ export interface OnlineAgentsResponse {
 
   export interface TotalCampaignsResponse {
     success: boolean;
-    data: TotalCampaigns;
+    total: TotalCampaigns;
   }
 
   export interface TotalCampaigns {
-    total: number;
+    created_at: number;
+    data: number;
   }
 
   export interface ConsolidatedConversationsResponse {
