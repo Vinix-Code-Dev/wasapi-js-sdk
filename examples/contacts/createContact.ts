@@ -9,35 +9,35 @@ dotenv.config();
  */
 
 // configuracion del cliente
-const client = new WasapiClient(process.env.API_KEY_WASAPI || '');
+const client = new WasapiClient(process.env.API_KEY || '');
 
-// ejemplo 1: contacto basico
+// basic contact example
 export async function basicContactExample() {
     try {
-        console.log('👤 Creando contacto basico...');
+        console.log('👤 creating basic contact...');
         
         const newContact: CreateContact = {
-            first_name: 'John',
-            last_name: 'Doe',
-            email: 'john.doe@example.com',
+            first_name: 'Daniel',
+            last_name: 'Jaramillo',
+            email: 'daniel.jaramillo@example.com',
             country_code: '+57',
-            phone: '3001234567',
+            phone: '3256234567',
             notes: 'Potential client'
         };
 
         const result = await client.contacts.create(newContact);
-        console.log('✅ Contacto basico creado:', result);
+        console.log('✅ basic contact created:', result);
         return result;
     } catch (error) {
-        console.error('❌ Error al crear contacto basico:', error);
+        console.error('❌ Error creating basic contact:', error);
         throw error;
     }
 }
 
-// ejemplo 2: contacto completo con etiquetas y campos personalizados
+// complete contact example
 export async function completeContactExample() {
     try {
-        console.log('👤 Creando contacto completo...');
+        console.log('👤 creating complete contact...');
         
         const newContact: CreateContact = {
             first_name: 'Mary',
@@ -60,18 +60,18 @@ export async function completeContactExample() {
         };
 
         const result = await client.contacts.create(newContact);
-        console.log('✅ Contacto completo creado:', result);
+        console.log('✅ complete contact created:', result);
         return result;
     } catch (error) {
-        console.error('❌ Error al crear contacto completo:', error);
+        console.error('❌ Error creating complete contact:', error);
         throw error;
     }
 }
 
-// ejemplo 3: contacto de empresa
+// business contact example
 export async function businessContactExample() {
     try {
-        console.log('👤 Creando contacto de empresa...');
+        console.log('👤 creating business contact...');
         
         const newContact: CreateContact = {
             first_name: 'Carlos',
@@ -94,18 +94,18 @@ export async function businessContactExample() {
         };
 
         const result = await client.contacts.create(newContact);
-        console.log('✅ Contacto de empresa creado:', result);
+        console.log('✅ business contact created:', result);
         return result;
     } catch (error) {
-        console.error('❌ Error al crear contacto de empresa:', error);
+        console.error('❌ Error creating business contact:', error);
         throw error;
     }
 }
 
-    // ejemplo 4: contacto de ecommerce
+// ecommerce contact example
 export async function ecommerceContactExample() {
     try {
-        console.log('👤 Creando contacto de ecommerce...');
+        console.log('👤 creating ecommerce contact...');
         
         const newContact: CreateContact = {
             first_name: 'Ana',
@@ -128,18 +128,18 @@ export async function ecommerceContactExample() {
         };
 
         const result = await client.contacts.create(newContact);
-        console.log('✅ Contacto de ecommerce creado:', result);
+        console.log('✅ ecommerce contact created:', result);
         return result;
     } catch (error) {
-        console.error('❌ Error al crear contacto de ecommerce:', error);
+        console.error('❌ Error creating ecommerce contact:', error);
         throw error;
     }
 }
 
-// ejemplo 5: contacto bloqueado
+// blocked contact example
 export async function blockedContactExample() {
     try {
-        console.log('👤 Creando contacto bloqueado...');
+        console.log('👤 creating blocked contact...');
         
         const newContact: CreateContact = {
             first_name: 'Pedro',
@@ -159,37 +159,33 @@ export async function blockedContactExample() {
         };
 
         const result = await client.contacts.create(newContact);
-        console.log('✅ Contacto bloqueado creado:', result.data);
+        console.log('✅ blocked contact created:', result.data);
         return result;
     } catch (error) {
-        console.error('❌ Error al crear contacto bloqueado:', error);
+        console.error('❌ Error creating blocked contact:', error);
         throw error;
     }
 }
 
-// funcion para ejecutar todos los ejemplos
-export async function runAllExamples() {
-    console.log('🚀 Iniciando ejemplos de creacion de contactos...\n');
+// function to run all examples
+ async function runAllExamples() {
+    console.log('🚀 Starting contact creation examples...\n');
     
     try {
-        // ejecutar ejemplos uno por uno
         await basicContactExample();
-        console.log('---\n');
-        
+        console.log('----\n');
         await completeContactExample();
-        console.log('---\n');
-        
+        console.log('----\n');
         await businessContactExample();
-        console.log('---\n');
-        
+        console.log('----\n');
         await ecommerceContactExample();
-        console.log('---\n');
-        
+        console.log('----\n');
         await blockedContactExample();
-        console.log('---\n');
-        
-    console.log('🎉 Todos los ejemplos de creacion de contactos ejecutados exitosamente!');
+        console.log('----\n');
+        console.log('✅ All contact creation examples executed successfully!');
     } catch (error) {
-        console.error('💥 Error en la ejecucion de ejemplos:', error);
+        console.error('💥 Error executing examples:', error);
     }
 }
+
+runAllExamples();
