@@ -7,7 +7,7 @@ import { SendAttachment, SendAttachmentParams, SendMessage } from "../models/req
 import { ResponseTemplate, ResponseTemplateById, ResponseTemplateSyncMeta } from "../models/response/template.model";
 import { ResponseAllFlows, ResponseFlowResponses, ResponseSendFlow } from "../models/response/flow.model";
 import { GetFlowAssets, GetFlowDetail, GetFlowResponses, SendFlow } from "../models/request/flow.model";
-import { getFileType } from "../helpers/fileType.helper";
+import { getFileType, getTemplateFileType } from "../helpers/fileType.helper";
 
 
 export class WhatsappModule {
@@ -45,13 +45,15 @@ export class WhatsappModule {
 
     // POST https://api-ws.wasapi.io/api/v1/whatsapp-messages/send-template
     // Enviar mensaje de plantilla de WhatsApp soporte hasta 20 destinarios por envio
-    async sendTemplate({ recipients, template_id, contact_type, from_id, ...options }: SendTemplate): Promise<ResponseTemplate> {
-
+    async sendTemplate({ recipients, template_id, contact_type, from_id, url_file, ...options }: SendTemplate): Promise<ResponseTemplate> {
+        const fileType = url_file ? getTemplateFileType(url_file) : undefined;     
         const params = { 
             recipients, 
             template_id, 
             contact_type, 
             from_id: from_id || this.defaultFromId, 
+            file: fileType,
+            url_file,
             ...options 
         };
         const response = await this.client.post('/whatsapp-messages/send-template', params);
