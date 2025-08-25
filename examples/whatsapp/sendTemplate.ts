@@ -8,31 +8,27 @@ import { SendTemplate } from '../../src/wasapi/models';
 dotenv.config();
 
 /**
- * ejemplo de envio de mensaje de plantilla de whatsapp
+ * WhatsApp template sending examples
  */
 
-// configuracion del cliente con from_id incluido
+// client configuration with from_id included
 const client = new WasapiClient({
-    apiKey: process.env.API_KEY_WASAPI || '',
+    apiKey: process.env.API_KEY || '',
     from_id: constants.MY_FROM_ID
 });
-
-// Ejemplo de compatibilidad con constructor anterior
-// const client = new WasapiClient(process.env.API_KEY_WASAPI || '');
-
 const templateBase: SendTemplate = {
     recipients: constants.CLIENT_WA_ID,
-    template_id: constants.TEMPLATE_UUID,
+    template_id: '',
     contact_type: 'phone',
     chatbot_status: 'enable',
     conversation_status: 'unchanged'
-    // from_id se usa automáticamente desde la configuración del cliente
+    // from_id is automatically used from client configuration
 }
 
-// ejemplo 1: mensaje simple con variables
-export async function simpleTemplateExample() {
+// example 1: simple message
+async function simpleTemplateExample() {
     try {
-        console.log('📱 Enviando mensaje de plantilla simple...');
+        console.log('📱 sending simple template message...');
 
         const templateParams: SendTemplate = {
             ...templateBase,
@@ -40,18 +36,18 @@ export async function simpleTemplateExample() {
         };
 
         const result = await client.whatsapp.sendTemplate(templateParams);
-        console.log('✅ plantilla enviada exitosamente :', result);
+        console.log('✅ template message sent successfully:', result);
         return result;
     } catch (error) {
-        console.error('❌ Error al enviar plantilla simple:', error);
+        console.error('❌ Error sending simple template message:', error);
         throw error;
     }
 }
 
-// ejemplo 2: mensaje con variables
-export async function varsTemplateExample() {
+// example 2: message with variables
+async function varsTemplateExample() {
     try {
-        console.log('📱 Enviando mensaje de plantilla con variables...');
+        console.log('📱 sending template message with variables...');
 
         const templateParams: SendTemplate = {
             ...templateBase,
@@ -60,84 +56,60 @@ export async function varsTemplateExample() {
         };
 
         const result = await client.whatsapp.sendTemplate(templateParams);
-        console.log('✅ plantilla enviada exitosamente con variables:', result);
+        console.log('✅ template message sent successfully with variables:', result);
         return result;
     } catch (error) {
-        console.error('❌ Error al enviar plantilla con variables:', error);
+        console.error('❌ Error sending template message with variables:', error);
         throw error;
     }
 }
 
-// mensaje con archivo multimedia imagen o video
+// message with multimedia image or video
 
-export async function ImageTemplateExample() {
+ async function ImageTemplateExample() {
+
     try {
-        console.log('📱 Enviando mensaje de plantilla con archivo multimedia...');
+        console.log('📱 sending template message with multimedia image or video...');
 
         const templateParams: SendTemplate = {
             ...templateBase,
             template_id: constants.TEMPLATE_UUID_FILE_IMAGE,
-            file: 'image' as const,
-            file_name: 'image.jpg',
             url_file: constants.URL_FILE_IMAGE,
-
         };
 
         const result = await client.whatsapp.sendTemplate(templateParams);
-        console.log('✅ plantilla enviada exitosamente con archivo multimedia:', result);
+        console.log('✅ template message sent successfully with multimedia image or video:', result);
         return result;
     } catch (error) {
-        console.error('❌ Error al enviar plantilla con archivo multimedia:', error);
+        console.error('❌ Error sending template message with multimedia image or video:', error);
         throw error;
     }
 }  
 
-// mensaje con archivo multimedia pdf
+// message with multimedia pdf
 
-export async function PdfTemplateExample() {
+async function PdfTemplateExample() {
     try {
-        console.log('📱 Enviando mensaje de plantilla con archivo multimedia pdf...');
+        console.log('📱 sending template message with multimedia pdf...');
 
         const templateParams: SendTemplate = {
             ...templateBase,
             template_id: constants.TEMPLATE_UUID_FILE_PDF,
-            file: 'document' as const,
-            file_name: 'document.pdf',
             body_vars: createVarList('Camilo', 'wasapi', 'wasapi'),
             url_file: constants.URL_FILE_PDF,
         };
 
         const result = await client.whatsapp.sendTemplate(templateParams);
-        console.log('✅ plantilla enviada exitosamente con archivo multimedia pdf:', result);
+        console.log('✅ template message sent successfully with multimedia pdf:', result);
         return result;
     } catch (error) {
-        console.error('❌ Error al enviar plantilla con archivo multimedia pdf:', error);
-        throw error;
-    }
-}
-
-// ejemplo 3: mensaje con from_id personalizado (override)
-export async function customFromIdTemplateExample() {
-    try {
-        console.log('📱 Enviando mensaje de plantilla con from_id personalizado...');
-
-        const templateParams: SendTemplate = {
-            ...templateBase,
-            template_id: constants.TEMPLATE_UUID,
-            from_id: 99999, // Override del from_id por defecto
-        };
-
-        const result = await client.whatsapp.sendTemplate(templateParams);
-        console.log('✅ plantilla enviada con from_id personalizado:', result);
-        return result;
-    } catch (error) {
-        console.error('❌ Error al enviar plantilla con from_id personalizado:', error);
+        console.error('❌ Error sending template message with multimedia pdf:', error);
         throw error;
     }
 }
 
 // Function to run all examples
-export async function runAllExamples() {
+ async function runAllExamples() {
     console.log('🚀 Iniciando ejemplos de envio de plantilla\n');
 
     try {
@@ -153,12 +125,11 @@ export async function runAllExamples() {
 
         await PdfTemplateExample();
         console.log('---\n');
-
-        await customFromIdTemplateExample();
-        console.log('---\n');
-
-        console.log('🎉 Ejemplos de envio de plantilla ejecutados exitosamente!');
+        console.log('🎉 Template sending examples executed successfully!');
     } catch (error) {
-        console.error('💥 Error en la ejecucion de ejemplos:', error);
+        console.error('💥 Error executing template sending examples:', error);
     }
 }
+
+
+runAllExamples();
