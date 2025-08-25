@@ -44,7 +44,7 @@ export async function customFromIdExample() {
         const params : SendMessage = {
             message: 'Hello! This message uses a different from_id.',
             wa_id: constants.CLIENT_WA_ID,
-            from_id: 99999 // Override default from_id
+            from_id: 11689 // Override default from_id
         };
 
         const result = await client.whatsapp.sendMessage(params);
