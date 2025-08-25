@@ -56,7 +56,7 @@ export interface OnlineAgentsResponse {
 
   export interface MessagesResponse {
     success: boolean;
-    data: Messages;
+    messages: Messages;
     last_updated: string;
   }
 
