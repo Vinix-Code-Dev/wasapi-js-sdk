@@ -27,8 +27,8 @@ export class FunnelsModule {
     }
 
     //POST https://api-ws.wasapi.io/api/v1/funnels/stage/move-contact mover contacto a otro funnel
-    async moveContactToFunnel(params: { contactUuid: string, toStageUuid: string }): Promise<ResponseMoveContactToFunnel> {
-        const response = await this.client.post(`/funnels/stage/move-contact`, { contact_id: params.contactUuid, to_stage_id: params.toStageUuid });
+    async moveContactToFunnel(params: { funnelContactId: number, toStageId: number }): Promise<ResponseMoveContactToFunnel> {
+        const response = await this.client.post(`/funnels/stage/move-contact`, { contact_id: params.funnelContactId, to_stage_id: params.toStageId });
         return response.data as ResponseMoveContactToFunnel;
 
     }
