@@ -3,10 +3,10 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 /**
- * Ejemplo: Obtener total de campañas
+ * Example: Get total campaigns
  * 
- * Este ejemplo demuestra cómo obtener el total de campañas
- * en un rango de fechas específico.
+ * This example demonstrates how to get the total campaigns
+ * in a specific date range.
  */
 
 async function getTotalCampaigns() {

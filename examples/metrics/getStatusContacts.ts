@@ -3,10 +3,10 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 /**
- * Ejemplo: Obtener estado de los contactos
+ * Example: Get status of contacts
  * 
- * Este ejemplo demuestra cómo obtener el estado general
- * de los contactos en la plataforma.
+ * This example demonstrates how to get the status of the contacts
+ * in the platform.
  */
 
 async function getStatusContacts() {
