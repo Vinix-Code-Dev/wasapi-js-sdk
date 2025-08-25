@@ -6,5 +6,6 @@ export * from './request/message.model';
 export * from './request/contactWpp.model';
 export * from './request/bot.model';
 export * from './request/flow.model';
-export * from './response/whatsapp.model'
+export * from './response/whatsapp.model';
+export * from './request/bot.model';
 

@@ -3,6 +3,8 @@ import { Contact } from "./contact.model";
 export interface ResponseBotStatus {
     success: boolean;
     data: botContact[];
+    disabled: boolean;
+    permanent?: boolean;
 }
 
 
