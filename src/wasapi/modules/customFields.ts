@@ -19,8 +19,8 @@ export class CustomFieldsModule implements IModule {
     }
 
     // Post https://api-ws.wasapi.io/api/v1/custom-fields Crear un nuevo custom field
-    async create({ name }: CreateCustomField): Promise<ResponseCustomFieldById> {
-        const response = await this.client.post('/custom-fields', name);
+    async create(data: CreateCustomField): Promise<ResponseCustomFieldById> {
+        const response = await this.client.post('/custom-fields', data);
         return response.data as ResponseCustomFieldById;
 
     }
