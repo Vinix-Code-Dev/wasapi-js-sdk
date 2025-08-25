@@ -1,7 +1,7 @@
 export interface SendMessage {
     message: string;
     wa_id: string;
-    from_id?: string;
+    from_id?: number;
 }
 
 export interface SendAttachment {
@@ -17,7 +17,7 @@ export interface SendAttachment {
 }
 
 export interface SendAttachmentParams {
-    from_id?: string;
+    from_id?: number;
     wa_id: string;
     filePath: string;
     caption?: string;

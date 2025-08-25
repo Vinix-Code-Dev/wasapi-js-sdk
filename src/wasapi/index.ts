@@ -4,7 +4,7 @@ import { BotModule, CampaignsModule, ContactsModule, CustomFieldsModule, Funnels
 export interface WasapiConfig {
     apiKey: string;
     baseURL?: string;
-    from_id?: string | number;
+    from_id?: number;
 }
 
 class WasapiClient {

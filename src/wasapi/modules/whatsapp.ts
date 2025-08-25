@@ -11,9 +11,9 @@ import { getFileType } from "../helpers/fileType.helper";
 
 
 export class WhatsappModule {
-    private defaultFromId?: string | number;
+    private defaultFromId?: number;
 
-    constructor(private client: AxiosClient, defaultFromId?: string | number) {
+    constructor(private client: AxiosClient, defaultFromId?: number) {
         this.defaultFromId = defaultFromId;
     }
 
@@ -32,7 +32,7 @@ export class WhatsappModule {
     async sendAttachment({ from_id, wa_id, filePath, caption, filename }: SendAttachmentParams): Promise<ResponseAttachmentWPP> {
         const fileType = getFileType(filePath);
         const payload: SendAttachment = {
-            from_id: Number(from_id || this.defaultFromId),
+            from_id: from_id || this.defaultFromId,
             wa_id,
             file: fileType,
             [fileType]: filePath,
@@ -59,7 +59,7 @@ export class WhatsappModule {
     }
 
     // get https://api-ws.wasapi.io/api/v1/whatsapp-messages/{wa_id} cargar la conversacion de whatsapp con wa_id y from_id
-    async getConversation(params: { wa_id: string, from_id?: string, page?: number }): Promise<ResponseConversation> {
+    async getConversation(params: { wa_id: string, from_id?: number, page?: number }): Promise<ResponseConversation> {
 
         const response = await this.client.get(`/whatsapp-messages/${params.wa_id}?from_id=${params.from_id}&page=${params.page}`);
         return response.data as ResponseConversation;
