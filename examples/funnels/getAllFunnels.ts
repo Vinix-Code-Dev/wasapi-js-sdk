@@ -35,8 +35,8 @@ async function getAllFunnels() {
                 
                 if (funnel.stages && funnel.stages.length > 0) {
                     console.log(`   Etapas (${funnel.stages.length}):`);
-                    funnel.stages.forEach((stage, stageIndex) => {
-                        console.log(`     ${stageIndex + 1}. ${stage.name} (${stage.uuid})`);
+                    funnel.stages.forEach((stage) => {
+                        console.log(`     ${stage.id}. ${stage.name} (${stage.uuid})`);
                     });
                 }
             });
