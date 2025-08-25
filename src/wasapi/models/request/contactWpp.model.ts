@@ -1,6 +1,6 @@
 export interface SendContact {
     wa_id: string;
-    from_id: number;
+    from_id?: number;
     context_wam_id?: string | null;
     contacts: ContactWPP[];
 }
