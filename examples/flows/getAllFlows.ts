@@ -1,5 +1,3 @@
-// Ejemplos para obtener todos los flows de WhatsApp
-
 import constants from '../constants';
 import { WasapiClient } from '../../src/wasapi';
 import dotenv from 'dotenv';
@@ -7,32 +5,33 @@ import { GetFlowAssets, GetFlowResponses, SendFlow } from '../../src/wasapi/mode
 
 dotenv.config();
 
-const client = new WasapiClient(process.env.API_KEY_WASAPI || '');
+const client = new WasapiClient({
+    apiKey: process.env.API_KEY || '',
+    from_id: constants.MY_FROM_ID
+});
 
-export async function getAllFlowsExample() {
+async function getAllFlowsExample() {
     try {
-        // Obtener todos los flows de WhatsApp
+        // get all WhatsApp flows
         const flows = await client.whatsapp.getFlows();
         
-        console.log('=== Todos los Flows de WhatsApp ===');
-        console.log(`Éxito: ${flows.success}`);
-        
+        console.log('=== All WhatsApp Flows ===');        
         if (flows.data && flows.data.length > 0) {
-            console.log(`\nTotal de números de teléfono con flows: ${flows.data.length}`);
+            console.log(`\nTotal phone numbers with flows: ${flows.data.length}`);
             
             flows.data.forEach((phoneFlow, phoneIndex) => {
                 console.log(`\n📱 Teléfono ${phoneIndex + 1}:`);
                 console.log(`   ID: ${phoneFlow.phone.id}`);
-                console.log(`   Número: ${phoneFlow.phone.phone_number}`);
-                console.log(`   Nombre: ${phoneFlow.phone.display_name}`);
-                console.log(`   Éxito: ${phoneFlow.success}`);
+                console.log(`   Phone number: ${phoneFlow.phone.phone_number}`);
+                console.log(`   Name: ${phoneFlow.phone.display_name}`);
+                console.log(`   Success: ${phoneFlow.success}`);
                 
                 if (phoneFlow.error) {
-                    console.log(`   Error: ${phoneFlow.error}`);
+                    console.log(`   Error: ${phoneFlow.error}`); // error message
                 }
                 
                 if (phoneFlow.flows && phoneFlow.flows.data && phoneFlow.flows.data.length > 0) {
-                    console.log(`   Total de flows: ${phoneFlow.flows.data.length}`);
+                    console.log(`   Total flows: ${phoneFlow.flows.data.length}`);
                     
                     phoneFlow.flows.data.forEach((flow, flowIndex) => {
                         console.log(`\n   🔄 Flow ${flowIndex + 1}:`);
@@ -41,103 +40,90 @@ export async function getAllFlowsExample() {
                         console.log(`      Estado: ${flow.status}`);
                         
                         if (flow.categories && flow.categories.length > 0) {
-                            console.log(`      Categorías: ${flow.categories.join(', ')}`);
+                            console.log(`      Categories: ${flow.categories.join(', ')}`);
                         }
                         
                         if (flow.validation_errors && flow.validation_errors.length > 0) {
-                            console.log(`      Errores de validación: ${flow.validation_errors.length}`);
+                            console.log(`      Validation errors: ${flow.validation_errors.length}`);
                         }
                     });
                 } else {
-                    console.log('   No hay flows disponibles para este número.');
+                    console.log('   No flows available for this number.');
                 }
                 console.log('   ---');
             });
         } else {
-            console.log('No se encontraron flows de WhatsApp.');
+            console.log('No WhatsApp flows found.');
         }
     } catch (error) {
-        console.error('Error al obtener flows de WhatsApp:', error);
+        console.error('Error getting WhatsApp flows:', error);
     }
 }
 
-export async function sendFlowExample() {
+async function sendFlowExample() {
     try {
-        // Ejemplo de envío de un flow
-        console.log('\n=== Ejemplo de Envío de Flow ===');
+        console.log('\n=== Sending Flow Example ===');
         
         const flow : SendFlow = {
             wa_id: constants.CLIENT_WA_ID,
-            message: 'Hola, te invito a completar nuestro flujo de encuesta',
-            phone_id: parseInt(constants.MY_FROM_ID),
-            cta: 'Completar encuesta',
-            screen: 'welcome',
-            flow_id: 'flow_example_id', // Este ID debe ser reemplazado por un ID real
+            message: 'hello this is a test with a flow',
+            phone_id: 9128,
+            cta: 'Question Test',
+            screen: 'QUESTION_ONE',
+            flow_id: constants.FLOW_ID, 
             action: 'navigate' as const
         };
         
-        console.log('Parámetros del flow:');
-        console.log(JSON.stringify(flow, null, 2));
-        
-        // Nota: Este ejemplo está comentado porque requiere un flow_id válido
-        // const result = await client.whatsapp.sendFlow(flowParams);
-        // console.log('Resultado del envío:', result);
-        
-        console.log('⚠️  Nota: Este ejemplo requiere un flow_id válido para funcionar.');
+        console.log('Sending flow...');
+        const result = await client.whatsapp.sendFlow(flow);
+        console.log('✅ Flow sent successfully:', result);
     } catch (error) {
-        console.error('Error al enviar flow:', error);
+        console.error('Error sending flow:', error);
     }
 }
 
-export async function getFlowResponsesExample() {
+async function getFlowResponsesExample() {
     try {
-        // Ejemplo de obtención de respuestas de un flow
-        console.log('\n=== Ejemplo de Respuestas de Flow ===');
+        // Example of getting responses from a flow
+        console.log('\n=== Getting Flow Responses Example ===');
         
         const responseParams : GetFlowResponses = {
-            flow_id: 'flow_example_id', // Este ID debe ser reemplazado por un ID real
-            page: 1,
-            per_page: 10
+            flow_id: constants.FLOW_ID
         };
         
-        console.log('Parámetros de consulta:');
-        console.log(JSON.stringify(responseParams, null, 2));
+        const responses = await client.whatsapp.getFlowResponses(responseParams);
+        console.log('Flow responses:', responses);
         
-        // Nota: Este ejemplo está comentado porque requiere un flow_id válido
-        // const responses = await client.whatsapp.getFlowResponses(responseParams);
-        // console.log('Respuestas del flow:', responses);
-        
-        console.log('⚠️  Nota: Este ejemplo requiere un flow_id válido para funcionar.');
     } catch (error) {
-        console.error('Error al obtener respuestas del flow:', error);
+        console.error('Error getting flow responses:', error);
     }
 }
 
-export async function getFlowAssetsExample() {
+async function getFlowAssetsExample() {
     try {
-        // Ejemplo de obtención de assets de un flow
-        console.log('\n=== Ejemplo de Assets de Flow ===');
+        // Example of getting assets from a flow
+        console.log('\n=== Getting Flow Assets Example ===');
         
         const assetsParams : GetFlowAssets = {
-            flow_id: constants.FLOW_ID, // Este ID debe ser reemplazado por un ID real
-            phone_id: parseInt(constants.MY_FROM_ID)
+            flow_id: constants.FLOW_ID,
+            phone_id: 9128
         };
         
-        console.log('Parámetros de consulta:');
+        console.log('Flow assets parameters:');
         console.log(JSON.stringify(assetsParams, null, 2));
         
         const assets = await client.whatsapp.getFlowAssets(assetsParams);
-        console.log('Assets del flow:', assets);
+        console.log('Flow assets:', assets);
         
     } catch (error) {
-        console.error('Error al obtener assets del flow:', error);
+        console.error('Error getting flow assets:', error);
     }
 }
 
-export async function analyzeFlowCategoriesExample() {
+async function analyzeFlowCategoriesExample() {
     try {
-        // Analizar las categorías de flows disponibles
-        console.log('\n=== Análisis de Categorías de Flows ===');
+        // Analyze the categories of available flows
+        console.log('\n=== Analyzing Flow Categories Example ===');
         
         const flows = await client.whatsapp.getFlows();
         
@@ -148,10 +134,10 @@ export async function analyzeFlowCategoriesExample() {
             flows.data.forEach(phoneFlow => {
                 if (phoneFlow.flows && phoneFlow.flows.data) {
                     phoneFlow.flows.data.forEach(flow => {
-                        // Contar estados
+                        // Count states
                         statusCount[flow.status] = (statusCount[flow.status] || 0) + 1;
                         
-                        // Contar categorías
+                        // Count categories
                         if (flow.categories) {
                             flow.categories.forEach(category => {
                                 categoryCount[category] = (categoryCount[category] || 0) + 1;
@@ -161,31 +147,35 @@ export async function analyzeFlowCategoriesExample() {
                 }
             });
             
-            console.log('\n📊 Estadísticas de Estados:');
+            console.log('\n📊 Status statistics:');
             Object.entries(statusCount).forEach(([status, count]) => {
                 console.log(`   ${status}: ${count} flows`);
             });
             
-            console.log('\n📊 Estadísticas de Categorías:');
+            console.log('\n📊 Category statistics:');
             Object.entries(categoryCount).forEach(([category, count]) => {
                 console.log(`   ${category}: ${count} flows`);
             });
         } else {
-            console.log('No hay flows disponibles para analizar.');
+            console.log('No flows available to analyze.');
         }
     } catch (error) {
-        console.error('Error al analizar categorías de flows:', error);
+        console.error('Error analyzing flow categories:', error);
     }
 }
 
-export async function runAllExamples() {
-    console.log('🚀 Iniciando ejemplos de Flows de WhatsApp...\n');
+async function runAllExamples() {
+   console.log('🚀 Starting WhatsApp flows examples...\n');
     
-    //await getAllFlowsExample();
-        //await analyzeFlowCategoriesExample();
-        //await sendFlowExample();
-        //await getFlowResponsesExample();
-        await getFlowAssetsExample();
+    await getAllFlowsExample();
+    await sendFlowExample();
+    await getFlowResponsesExample();
+    await getFlowAssetsExample();
+    await analyzeFlowCategoriesExample();
     
-    console.log('\n✅ Todos los ejemplos de flows de WhatsApp han sido ejecutados.');
+    console.log('\n✅ All WhatsApp flows examples have been executed.');
 } 
+
+runAllExamples();
+
+
