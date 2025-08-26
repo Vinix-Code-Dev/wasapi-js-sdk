@@ -7,7 +7,7 @@ export interface WasapiConfig {
     from_id?: number;
 }
 
-class WasapiClient {
+export class WasapiClient {
     private client: AxiosClient;
     private config: WasapiConfig;
     public campaigns: CampaignsModule;
@@ -54,6 +54,4 @@ class WasapiClient {
     public async validateConnection(): Promise<boolean> {
         return await this.client.validateConnection();
     }
-}
-
-export { WasapiClient }; 
+} 
