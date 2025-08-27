@@ -25,7 +25,7 @@ export class ContactsModule implements IModule {
         return response.data as ResponseAllContacts;
     }
 
-    // GET https://api-ws.wasapi.io/api/v1/contacts/{wa_id} consulta un contacto por su uuid
+    // GET https://api-ws.wasapi.io/api/v1/contacts/{wa_id} consulta un contacto por su wa_id
     async getById(wa_id: string): Promise<ResponseContactById> {
         const response = await this.client.get(`/contacts/${wa_id}`);
         return response.data as ResponseContactById;
