@@ -46,8 +46,8 @@ export class ContactsModule implements IModule {
     }
 
     // DELETE https://api-ws.wasapi.io/api/v1/contacts/{wa_id} elimina un contacto existente
-    async delete(id: string): Promise<any> {
-        const response = await this.client.delete(`/contacts/${id}`);
+    async delete(wa_id: string): Promise<any> {
+        const response = await this.client.delete(`/contacts/${wa_id}`);
         return response.data;
     }
 
