@@ -9,4 +9,3 @@ El endpoint `GET https://api-ws.wasapi.io/api/v1/contacts?page={page}&search={se
 ```
 GET https://api-ws.wasapi.io/api/v1/contacts?page={page}&search={search}&labels={labels}
 ```
-JAM: https://jam.dev/c/0c78c273-7860-42cd-859d-5e22a8d72760
