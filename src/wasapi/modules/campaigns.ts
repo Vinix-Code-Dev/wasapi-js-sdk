@@ -13,9 +13,9 @@ export class CampaignsModule implements IModule {
         return response.data as ResponseAllCampaigns;
     }
 
-    // GET https://api-ws.wasapi.io/api/v1/campaigns/{campaign_id} consulta una campaña por su uuid (campaign_id)
-    async getById(campaign_id: string): Promise<ResponseCampaignById> {
-        const response = await this.client.get(`/campaigns/${campaign_id}`);
+    // GET https://api-ws.wasapi.io/api/v1/campaigns/{campaign_uuid} consulta una campaña por su uuid (campaign_uuid)
+    async getById(campaign_uuid: string): Promise<ResponseCampaignById> {
+        const response = await this.client.get(`/campaigns/${campaign_uuid}`);
         return response.data as ResponseCampaignById;
     }
 
