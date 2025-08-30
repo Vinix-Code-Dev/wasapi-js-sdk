@@ -1,4 +1,4 @@
-import { BaseContact, ContactCustomField } from "../shared/contact.model";
+import { BaseContact, ContactCustomField, ContactLabel } from "../shared/contact.model";
 import { FunnelContactStage } from "../shared/funnel.model";
 import { PaginatedResponse, ResponseById } from "./paginatedResponse";
 
@@ -11,6 +11,7 @@ export interface Contact extends BaseContact {
     created_at: string;
     updated_at: string;
     nameLabels: string;
+    labels: ContactLabel[];
     custom_fields: ContactCustomField[];
     funnel_contacts?: FunnelContactStage[]; // TODO: cambiar a FunnelContact
 }

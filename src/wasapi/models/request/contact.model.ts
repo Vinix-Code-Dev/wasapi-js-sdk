@@ -1,8 +1,9 @@
-import { BaseContact, ContactCustomField, ContactLabel } from "../shared/contact.model";
+import { BaseContact } from "../shared/contact.model";
 
 export interface CreateContact extends BaseContact {
     blocked?: boolean;
     unsubscribed?: boolean;
+    labels?: number[];
     custom_fields?: Record<string, unknown>;
 }
 
