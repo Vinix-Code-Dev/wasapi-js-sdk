@@ -25,6 +25,4 @@ export interface BaseContact {
   notes?: string;
   blocked?: boolean | number; 
   unsubscribed?: boolean | number;
-  labels?: ContactLabel[];
-  custom_fields?: ContactCustomField[] | Record<string, any>;
 }
