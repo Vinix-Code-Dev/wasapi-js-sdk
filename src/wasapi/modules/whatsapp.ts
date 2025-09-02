@@ -121,10 +121,22 @@ export class WhatsappModule {
         const response = await this.client.get('/whatsapp-flows');
         return response.data as ResponseAllFlows;
     }
+   // return the published flows of a phone
+    async getFlowsByPhoneId(from_id?: number): Promise<any> {
+        const phone_id = from_id || this.defaultFromId;
+        const status = 'PUBLISHED';
+        const flows = await this.getFlows();
+        const phone = flows.data.find(phone => phone.phone.id === phone_id);
+        if (!phone) {
+            throw new Error('Phone not found');
+        }
+        const publishedFlows = phone?.flows.data.filter(flow => flow.status === status);
+        return publishedFlows;
+    }
 
     // POST https://api-ws.wasapi.io/api/v1/whatsapp-flows enviar un mensaje con un flujo
     async sendFlow({ wa_id, message, phone_id, cta, screen, flow_id, action }: SendFlow): Promise<ResponseSendFlow> {
-        const params = { wa_id, message, phone_id, cta, screen, flow_id, action }
+        const params = { wa_id, message, phone_id: phone_id || this.defaultFromId, cta, screen, flow_id, action: action || 'navigate' }
         const response = await this.client.post('/whatsapp-flows', params);
         return response.data as ResponseSendFlow;
 
@@ -138,8 +150,14 @@ export class WhatsappModule {
 
     // POST https://api-ws.wasapi.io/api/v1/whatsapp-flows/{flow_id}/assets?phone_id={phone_id}  consultar los recursos de un flujo
     async getFlowAssets({ flow_id, phone_id }: GetFlowAssets): Promise<GetFlowDetail> {
-        const response = await this.client.post(`/whatsapp-flows/${flow_id}/assets?phone_id=${phone_id}`);
+        const from_id = phone_id || this.defaultFromId;
+        const response = await this.client.post(`/whatsapp-flows/${flow_id}/assets?phone_id=${from_id}`);
         return response.data as GetFlowDetail;
+    }
+     // return the screens of a flow
+    async getFlowScreens({ flow_id, phone_id }: GetFlowAssets): Promise<any> {
+        const assets = await this.getFlowAssets({ flow_id, phone_id });
+        return assets.data.screens;
     }
 
 }   
