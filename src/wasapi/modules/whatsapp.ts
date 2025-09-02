@@ -128,7 +128,7 @@ export class WhatsappModule {
         const flows = await this.getFlows();
         const phone = flows.data.find(phone => phone.phone.id === phone_id);
         if (!phone) {
-            throw new Error('Phone not found');
+            return []
         }
         const publishedFlows = phone?.flows.data.filter(flow => flow.status === status);
         return publishedFlows;
