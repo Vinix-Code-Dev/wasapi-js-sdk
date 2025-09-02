@@ -3,11 +3,11 @@ import { FlowDetail, Screen } from "../shared/flows.model";
 export interface SendFlow {
     wa_id: string;
     message: string;
-    phone_id: number;
+    phone_id?: number;
     cta: string;
     screen: string;
     flow_id: string;
-    action: 'navigate' | 'data_exchange';
+    action?: 'navigate' | 'data_exchange';
 }
 
 export interface GetFlowResponses {
@@ -18,7 +18,7 @@ export interface GetFlowResponses {
 
 export interface GetFlowAssets {
     flow_id: string;
-    phone_id: number;
+    phone_id?: number;
 }
 
 
