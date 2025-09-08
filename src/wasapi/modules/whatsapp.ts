@@ -17,7 +17,7 @@ export class WhatsappModule {
         this.defaultFromId = defaultFromId;
     }
 
-    //posthttps://api-ws.wasapi.io/api/v1/whatsapp-messages  params message, wa_id, from_id  crea un try catch para manejar el error
+    //posthttps://api-ws.wasapi.io/api/v1/whatsapp-messages 
     async sendMessage({ from_id, wa_id, message }: SendMessage): Promise<ResponseMessageWPP> {
         const params = { 
             from_id: from_id || this.defaultFromId, 
