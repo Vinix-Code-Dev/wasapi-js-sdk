@@ -4,8 +4,8 @@ export interface ChangeStatusParams {
     status: 'open' | 'hold' | 'closed';
     message?: string;
     agent_id?: number;
-    validate_assigned_status: 1 | 0;
-    send_end_message: boolean;
+    validate_assigned_status?: 1 | 0;
+    send_end_message?: boolean;
 }
 
 export interface message extends baseMessage {
