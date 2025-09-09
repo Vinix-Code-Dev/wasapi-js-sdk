@@ -8,4 +8,5 @@ export * from './request/bot.model';
 export * from './request/flow.model';
 export * from './response/whatsapp.model';
 export * from './request/bot.model';
+export * from './request/contact.model';
 

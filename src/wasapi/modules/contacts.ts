@@ -1,14 +1,14 @@
 import { IModule } from "../interfaces/IModule";
 import { AxiosClient } from "../client";
 import { ResponseAllContacts, ResponseContactById } from "../models/response/contact.model";
-import { CreateContact, SearchContactParams, UpdateContactParams } from "../models/request/contact.model";
+import { AddLabelContact, AssingAgentContact, CreateContact, RemoveLabelContact, SearchContactParams, UpdateContactParams } from "../models/request/contact.model";
 import { ExportContactsRequest, isValidExportContactsRequest } from "../validator/exportContacts";
 
 
 
 export class ContactsModule implements IModule {
     constructor(private client: AxiosClient) { }
-
+    protected enableMake: number = 1;
     // GET https://api-ws.wasapi.io/api/v1/contacts consulta todos los contactos
     async getAll(): Promise<ResponseAllContacts> {
         const response = await this.client.get('/contacts');
@@ -49,6 +49,23 @@ export class ContactsModule implements IModule {
     async delete(wa_id: string): Promise<any> {
         const response = await this.client.delete(`/contacts/${wa_id}`);
         return response.data;
+    }
+    // POST https://api-ws.wasapi.io/api/v1/contacts/{wa_id}/add-labels agrega etiquetas a un contacto
+    async addLabel({ contact_uuid, label_id }: AddLabelContact): Promise<ResponseContactById> {
+        const data = { labels: label_id, from_make: this.enableMake }
+        const response = await this.client.post(`/contacts/${contact_uuid}/add-labels`, data);
+        return response.data as ResponseContactById;
+    }
+    // POST https://api-ws.wasapi.io/api/v1/contacts/{wa_id}/remove-labels elimina etiquetas de un contacto
+    async removeLabel({ contact_uuid, label_id }: RemoveLabelContact): Promise<ResponseContactById> {
+        const data = { labels: label_id, from_make: this.enableMake }
+        const response = await this.client.post(`/contacts/${contact_uuid}/remove-labels`, data);
+        return response.data as ResponseContactById;
+    }
+    // POST https://api-ws.wasapi.io/api/v1/contacts/{wa_id}/assing-agent asigna un agente a un contacto en automatico
+    async assingAgentAutomatic({ contact_uuid }: AssingAgentContact): Promise<ResponseContactById> {
+            const response = await this.client.post(`/contacts/${contact_uuid}/assing-agent?from_make=${this.enableMake}`); 
+            return response.data as ResponseContactById;
     }
 
     /**
