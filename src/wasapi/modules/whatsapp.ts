@@ -8,6 +8,7 @@ import { ResponseTemplate, ResponseTemplateById, ResponseTemplateSyncMeta } from
 import { ResponseAllFlows, ResponseFlowResponses, ResponseSendFlow } from "../models/response/flow.model";
 import { GetFlowAssets, GetFlowDetail, GetFlowResponses, SendFlow } from "../models/request/flow.model";
 import { getFileType, getTemplateFileType } from "../helpers/fileType.helper";
+import { Template } from "../models/shared/template.model";
 
 
 export class WhatsappModule {
@@ -77,6 +78,19 @@ export class WhatsappModule {
     async getWhatsappTemplates(): Promise<ResponseTemplate> {
         const response = await this.client.get('/whatsapp-templates');
         return response.data as ResponseTemplate;
+    }
+    async getWhatsappTemplatesByPhoneId({app_id}: {app_id: number}): Promise<Template[]> {
+       const templates = await this.getWhatsappTemplates();
+       const templatesByPhoneId = templates.data.filter((template: any) => template.app_id === app_id);
+       if(templatesByPhoneId.length === 0) {
+        return [];
+       }
+       return templatesByPhoneId;
+    }
+
+    async getFieldsTemplate(template_uuid: string): Promise<any> {
+        const response = await this.client.get(`/make/template-fields/${template_uuid}`);
+        return response.data;
     }
 
     //https://api-ws.wasapi.io/api/v1/whatsapp-templates/{template_uuid} consultar una plantilla de whatsapp
