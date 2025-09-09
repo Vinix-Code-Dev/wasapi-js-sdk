@@ -79,7 +79,7 @@ export class WhatsappModule {
         const response = await this.client.get('/whatsapp-templates');
         return response.data as ResponseTemplate;
     }
-    async getWhatsappTemplatesByPhoneId({app_id}: {app_id: number}): Promise<Template[]> {
+    async getTemplatesByAppId({app_id}: {app_id: number}): Promise<Template[]> {
        const templates = await this.getWhatsappTemplates();
        const templatesByPhoneId = templates.data.filter((template: any) => template.app_id === app_id);
        if(templatesByPhoneId.length === 0) {
