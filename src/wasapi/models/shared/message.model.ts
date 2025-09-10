@@ -6,6 +6,7 @@ export interface ChangeStatusParams {
     agent_id?: number;
     validate_assigned_status?: 1 | 0;
     send_end_message?: boolean;
+    origin?:string;
 }
 
 export interface message extends baseMessage {
