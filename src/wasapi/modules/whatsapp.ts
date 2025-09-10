@@ -9,6 +9,7 @@ import { ResponseAllFlows, ResponseFlowResponses, ResponseSendFlow } from "../mo
 import { GetFlowAssets, GetFlowDetail, GetFlowResponses, SendFlow } from "../models/request/flow.model";
 import { getFileType, getTemplateFileType } from "../helpers/fileType.helper";
 import { Template } from "../models/shared/template.model";
+import { WhatsAppNumber } from "../models/shared/whatsappnumber.model";
 
 
 export class WhatsappModule {
@@ -81,12 +82,12 @@ export class WhatsappModule {
     }
     async getTemplatesByAppId({from_id}: {from_id: number}): Promise<Template[]> {
        const templates = await this.getWhatsappTemplates();
-       const templatesByPhoneId = templates.data.filter((template: any) => template.id === from_id);
-       if(templatesByPhoneId.length === 0) {
-        return [];
-       }
-       return templatesByPhoneId;
-    }
+        const templatesByPhoneId: Template[] = templates.data.filter((template: Template) => template.app.numbers.some((number: WhatsAppNumber) => number.id === from_id));
+        if(templatesByPhoneId.length === 0) {
+         return [];
+        }
+        return templatesByPhoneId;
+     }
 
     async getFieldsTemplate(template_uuid: string): Promise<any> {
         const response = await this.client.get(`/make/template-fields/${template_uuid}`);
