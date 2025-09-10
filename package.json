@@ -17,6 +17,9 @@
       "require": "./dist/cjs/wasapi/models/index.js"
     }
   },
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "lint": "eslint . --no-ignore",
     "dev": "npm run lint && nodemon ./src/app.ts",
