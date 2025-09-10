@@ -1,25 +1,25 @@
-# @laiyon/wasapi-sdk
+# @wasapi/js-sdk
 
-[![npm version](https://img.shields.io/npm/v/@laiyon/wasapi-sdk.svg)](https://www.npmjs.com/package/@laiyon/wasapi-sdk)
-[![npm downloads](https://img.shields.io/npm/dm/@laiyon/wasapi-sdk.svg)](https://www.npmjs.com/package/@laiyon/wasapi-sdk)
-[![Node.js version](https://img.shields.io/node/v/@laiyon/wasapi-sdk.svg)](https://nodejs.org/)
-[![License](https://img.shields.io/npm/l/@laiyon/wasapi-sdk.svg)](https://github.com/juanalvarezPro/@laiyon/wasapi-sdk/blob/main/LICENSE)
+[![npm version](https://img.shields.io/npm/v/@wasapi/js-sdk.svg)](https://www.npmjs.com/package/@wasapi/js-sdk)
+[![npm downloads](https://img.shields.io/npm/dm/@wasapi/js-sdk.svg)](https://www.npmjs.com/package/@wasapi/js-sdk)
+[![Node.js version](https://img.shields.io/node/v/@wasapi/js-sdk.svg)](https://nodejs.org/)
+[![License](https://img.shields.io/npm/l/@wasapi/js-sdk.svg)](https://github.com/juanalvarezPro/@wasapi/js-sdk/blob/main/LICENSE)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.0+-blue.svg)](https://www.typescriptlang.org/)
 
-Unofficial Wasapi SDK to quickly integrate with WhatsApp, campaigns, contacts, flows and more.
+Official Wasapi SDK to quickly integrate with WhatsApp, campaigns, contacts, flows and more.
 
 ## 🚀 Installation
 
 ```bash
-npm install @laiyon/wasapi-sdk
+npm install @wasapi/js-sdk
 # or
-yarn add @laiyon/wasapi-sdk
+yarn add @wasapi/js-sdk
 ```
 
 ## 📦 Import
 
 ```typescript
-import { WasapiClient } from '@laiyon/wasapi-sdk'
+import { WasapiClient } from '@wasapi/js-sdk'
 ```
 
 ## ⚡ Quick Start
@@ -27,7 +27,7 @@ import { WasapiClient } from '@laiyon/wasapi-sdk'
 ### 1. Client with from_id (Recommended for production)
 
 ```typescript
-import { WasapiClient } from '@laiyon/wasapi-sdk'
+import { WasapiClient } from '@wasapi/js-sdk'
 
 const client = new WasapiClient({
   apiKey: API_KEY,
@@ -46,7 +46,7 @@ if (isValid) {
 ### 2. Client without from_id (For specific cases)
 
 ```typescript
-import { WasapiClient } from '@laiyon/wasapi-sdk'
+import { WasapiClient } from '@wasapi/js-sdk'
 
 // Option A: API key only
 const client = new WasapiClient(API_KEY)
@@ -83,7 +83,7 @@ const result = await client.whatsapp.sendMessage({
 ### Send Template
 
 ```typescript
-import { SendTemplate } from '@laiyon/wasapi-sdk/models'
+import { SendTemplate } from '@wasapi/js-sdk/models'
 
 const template: SendTemplate = {
   recipients: '57300XXXXXXX',
@@ -140,8 +140,8 @@ For detailed documentation, visit: **[wasapi-sdk.juanalvarez.pro](https://wasapi
 
 ## 🔗 Links
 
-- 📦 [NPM Package](https://www.npmjs.com/package/@laiyon/wasapi-sdk)
-- 🐛 [Issues](https://github.com/juanalvarezPro/@laiyon/wasapi-sdk/issues)
+- 📦 [NPM Package](https://www.npmjs.com/package/@wasapi/js-sdk)
+- 🐛 [Issues](https://github.com/juanalvarezPro/@wasapi/js-sdk/issues)
 - 📚 [Documentation](https://wasapi-sdk.juanalvarez.pro)
 
 ## 📋 Requirements

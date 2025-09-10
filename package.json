@@ -1,7 +1,7 @@
 {
-  "name": "@laiyon/wasapi-sdk",
+  "name": "@wasapi/js-sdk",
   "version": "0.1.32",
-  "description": "SDK no oficial para Wasapi (WhatsApp, campañas, contactos, flujos, bots etc.)",
+  "description": "SDK oficial en JavaScript (Typescript) para Wasapi.",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
   "types": "dist/types/index.d.ts",
@@ -56,6 +56,9 @@
     "tsx": "^4.7.1",
     "typescript": "^5.4.3"
   },
-  "author": "juanalvarez.pro",
+  "author": {
+    "name": "Juan Camilo Alvarez",
+    "email": "camilo@wasapi.io"
+  },
   "license": "ISC"
 }
