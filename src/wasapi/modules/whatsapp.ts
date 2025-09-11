@@ -9,7 +9,7 @@ import { ResponseAllFlows, ResponseFlowResponses, ResponseSendFlow } from "../mo
 import { GetFlowAssets, GetFlowDetail, GetFlowResponses, SendFlow } from "../models/request/flow.model";
 import { getFileType, getTemplateFileType } from "../helpers/fileType.helper";
 import { Template } from "../models/shared/template.model";
-import { WhatsAppNumber } from "../models/shared/whatsappnumber.model";
+import { WhassappNumberWithApp, WhatsAppNumber } from "../models/shared/whatsappnumber.model";
 
 
 export class WhatsappModule {
@@ -81,8 +81,9 @@ export class WhatsappModule {
         return response.data as ResponseTemplate;
     }
     async getTemplatesByAppId({from_id}: {from_id: number}): Promise<Template[]> {
+       const app_id = await this.getAppIdByFromId(from_id);
        const templates = await this.getWhatsappTemplates();
-        const templatesByPhoneId: Template[] = templates.data.filter((template: Template) => template.app.numbers.some((number: WhatsAppNumber) => number.id === from_id));
+        const templatesByPhoneId: Template[] = templates.data.filter((template: Template) => template.app_id === app_id);
         if(templatesByPhoneId.length === 0) {
          return [];
         }
@@ -92,6 +93,12 @@ export class WhatsappModule {
     async getFieldsTemplate(template_uuid: string): Promise<any> {
         const response = await this.client.get(`/make/template-fields/${template_uuid}`);
         return response.data;
+    }
+    async getAppIdByFromId(from_id: number): Promise<any> {
+        const response = await this.getWhatsappNumbers();
+        const foundApp: WhassappNumberWithApp = response.data.find((app: WhassappNumberWithApp) => app.id === from_id);
+        const app_id = foundApp.app_id;
+        return app_id;
     }
 
     //https://api-ws.wasapi.io/api/v1/whatsapp-templates/{template_uuid} consultar una plantilla de whatsapp
