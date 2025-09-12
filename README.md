@@ -2,7 +2,6 @@
 
 [![npm version](https://img.shields.io/npm/v/@wasapi/js-sdk.svg)](https://www.npmjs.com/package/@wasapi/js-sdk)
 [![npm downloads](https://img.shields.io/npm/dm/@wasapi/js-sdk.svg)](https://www.npmjs.com/package/@wasapi/js-sdk)
-[![Node.js version](https://img.shields.io/node/v/@wasapi/js-sdk.svg)](https://nodejs.org/)
 [![License](https://img.shields.io/npm/l/@wasapi/js-sdk.svg)](https://github.com/juanalvarezPro/@wasapi/js-sdk/blob/main/LICENSE)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.0+-blue.svg)](https://www.typescriptlang.org/)
 
@@ -142,9 +141,21 @@ For detailed documentation, visit: **[wasapi-sdk.juanalvarez.pro](https://wasapi
 
 - 📦 [NPM Package](https://www.npmjs.com/package/@wasapi/js-sdk)
 - 🐛 [Issues](https://github.com/juanalvarezPro/@wasapi/js-sdk/issues)
-- 📚 [Documentation](https://wasapi-sdk.juanalvarez.pro)
+- 📚 [Documentation](https://juanalvarez.pro)
 
 ## 📋 Requirements
 
 - Node.js >= 18
 - Wasapi API Key
+
+<div align="center">
+
+**⭐ ¡Dale una estrella a este repositorio si te resulta útil! ⭐**
+
+Desarrollado con ❤️ por **[Juan Alvarez](https://juanalvarez.pro)**
+
+[![n8n](https://img.shields.io/badge/n8n-Community%20Node-brightgreen)](https://n8n.io)
+[![Wasapi](https://img.shields.io/badge/Wasapi-API%20Integration-blue)](https://wasapi.com)
+[![Developer](https://img.shields.io/badge/Developer-Juan%20Alvarez-purple)](https://juanalvarez.pro)
+
+</div>
