@@ -16,4 +16,6 @@ export interface SendTemplate {
     cta_var?: TemplateVariable[];
     chatbot_status?: 'enable' | 'disable' | 'disable_permanently';
     conversation_status?: 'open' | 'hold' | 'closed' | 'unchanged';
+    agent_id?: number;
+    origin?: 'n8m' | 'make';
 }
