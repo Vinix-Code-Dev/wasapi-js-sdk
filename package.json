@@ -1,6 +1,6 @@
 {
   "name": "@wasapi/js-sdk",
-  "version": "0.1.36",
+  "version": "0.1.37",
   "description": "SDK oficial en JavaScript (Typescript) para Wasapi.",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
