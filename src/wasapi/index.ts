@@ -1,5 +1,5 @@
 import { AxiosClient } from "./client";
-import { BotModule, CampaignsModule, ContactsModule, CustomFieldsModule, FunnelsModule, LabelsModule, MetricsModule, UserModule, WhatsappModule, WorkflowModule } from "./modules";
+import { BotModule, CampaignsModule, ContactsModule, CustomFieldsModule, FunnelsModule, LabelsModule, MetricsModule, UserModule, WhatsappModule, WorkflowModule, ConversationsModule, ReportsModule } from "./modules";
 
 export interface WasapiConfig {
     apiKey: string;
@@ -20,6 +20,8 @@ export class WasapiClient {
     public user: UserModule;
     public whatsapp: WhatsappModule;
     public workflow: WorkflowModule;
+    public conversations: ConversationsModule;
+    public reports: ReportsModule;
     
     constructor(config: WasapiConfig | string) {
         if (typeof config === 'string') {
@@ -39,6 +41,8 @@ export class WasapiClient {
         this.user = new UserModule(this.client);
         this.whatsapp = new WhatsappModule(this.client, this.config.from_id);
         this.workflow = new WorkflowModule(this.client);
+        this.conversations = new ConversationsModule(this.client);
+        this.reports = new ReportsModule(this.client);
     }
     
     // Method to get client instance
