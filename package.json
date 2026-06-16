@@ -1,6 +1,6 @@
 {
   "name": "@wasapi/js-sdk",
-  "version": "0.1.38",
+  "version": "2.0.0",
   "description": "SDK oficial en JavaScript (Typescript) para Wasapi.",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
@@ -24,7 +24,9 @@
     "lint": "eslint . --no-ignore",
     "dev": "npm run lint && nodemon ./src/app.ts",
     "build": "rollup -c rollup.config.mjs",
-    "prepare": "npm run build"
+    "prepare": "npm run build",
+    "test": "jest",
+    "test:watch": "jest --watch"
   },
   "files": [
     "dist",
@@ -45,17 +47,20 @@
     "axios": "^1.11.0"
   },
   "devDependencies": {
-    "@types/mime-types": "^3.0.1",
-    "dotenv": "^17.2.1",
-    "express": "^5.1.0",
     "@types/express": "^5.0.3",
+    "@types/jest": "^30.0.0",
+    "@types/mime-types": "^3.0.1",
     "@types/node": "^20.11.30",
     "@typescript-eslint/eslint-plugin": "^7.2.0",
     "@typescript-eslint/parser": "^7.4.0",
+    "dotenv": "^17.2.1",
     "eslint": "^8.52.0",
+    "express": "^5.1.0",
+    "jest": "^30.4.2",
     "nodemon": "^3.1.0",
     "rollup": "^4.10.0",
     "rollup-plugin-typescript2": "^0.36.0",
+    "ts-jest": "^29.4.11",
     "tsx": "^4.7.1",
     "typescript": "^5.4.3"
   },

@@ -11,3 +11,8 @@ node_modules
 .DS_Store
 
 src/app.ts
+
+# Tests (no publicar)
+__tests__/
+jest.config.js
+tsconfig.test.json
