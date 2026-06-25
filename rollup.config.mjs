@@ -38,6 +38,17 @@ export default [
                 useTsconfigDeclarationDir: true,
                 clean: true,
             }),
+            {
+                name: 'emit-package-json',
+                generateBundle(options) {
+                    const type = options.format === 'es' ? 'module' : 'commonjs'
+                    this.emitFile({
+                        type: 'asset',
+                        fileName: 'package.json',
+                        source: JSON.stringify({ type }),
+                    })
+                },
+            },
         ],
     },
 ]
